@@ -43,6 +43,7 @@ end
 local function CoLoadAssetBundleAsync(self, path, progress_callback)
 	assert(path ~= nil and type(path) == "string" and #path > 0, "path err : "..path)
 	local assetbundleName = AssetBundleUtility.AssetBundlePathToAssetBundleName(path)
+	--todo 添加QFramework的ResMgr调用， 可尝试把资源加载替换为ResMgr
 	local loader = AssetBundleManager:LoadAssetBundleAsync(assetbundleName)
 	coroutine.waitforasyncop(loader, progress_callback)
     loader:Dispose()
