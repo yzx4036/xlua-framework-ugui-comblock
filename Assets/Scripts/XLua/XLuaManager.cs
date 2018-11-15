@@ -19,7 +19,7 @@ using XLua;
 public class XLuaManager : MonoSingleton<XLuaManager>
 {
     public const string luaAssetbundleAssetName = "Lua";
-    public const string luaScriptsFolder = "LuaScripts";
+    public const string luaScriptsFolder = @"../LuaScripts";
     const string commonMainScriptName = "Common.Main";
     const string gameMainScriptName = "GameMain";
     const string hotfixMainScriptName = "XLua.HotfixMain";
