@@ -97,6 +97,7 @@ public class XLuaManager : MonoSingleton<XLuaManager>
         {
             try
             {
+                Debug.Log(">>>>"+ scriptContent);
                 luaEnv.DoString(scriptContent);
             }
             catch (System.Exception ex)
