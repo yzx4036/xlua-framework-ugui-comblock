@@ -27,7 +27,7 @@ local function Stop()
 end
 
 HotfixMain.modules = modules
-HotfixMain.Start = Start
-HotfixMain.Stop = Stop
+HotfixMain.Start = Start --C#调用
+HotfixMain.Stop = Stop --C#调用
 
 return HotfixMain

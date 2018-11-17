@@ -3,6 +3,7 @@
 -- 单例类
 --]]
 
+---@class Singleton
 local Singleton = BaseClass("Singleton");
 
 local function __init(self)
@@ -24,6 +25,9 @@ local function GetInstance(self)
 		rawset(self, "Instance", self.New())
 	end
 	assert(self.Instance ~= nil)
+
+	--print(">>>>><<<<< self._class_type.super %s",self.super.__cname)
+	--print(">>>>><<<<< self.Instance.super %s",self.super.__cname)
 	return self.Instance
 end
 

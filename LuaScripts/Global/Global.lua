@@ -17,6 +17,7 @@ require "Framework.Common.ConstClass"
 
 -- 创建全局模块
 Config = require "Global.Config"
+---@type Singleton
 Singleton = require "Framework.Common.Singleton"
 Updatable = require "Framework.Common.Updatable"
 UpdatableSingleton = require "Framework.Common.UpdatableSingleton"
@@ -66,6 +67,7 @@ UIWindowNames = require "UI.Config.UIWindowNames"
 UIConfig = require "UI.Config.UIConfig"
 
 -- res
+---@type ResourcesManager
 ResourcesManager = require "Framework.Resource.ResourcesManager"
 GameObjectPool = require "Framework.Resource.GameObjectPool"
 

@@ -63,6 +63,7 @@ local function OnApplicationQuit()
 end
 
 -- GameMain公共接口，其它的一律为私有接口，只能在本模块访问
+-- GameMain公共接口特殊， C#侧的LuaManager调用Lua， 开始或结束Lua端GameMain的生命周期
 GameMain.Start = Start
 GameMain.OnLevelWasLoaded = OnLevelWasLoaded
 GameMain.OnApplicationQuit = OnApplicationQuit
