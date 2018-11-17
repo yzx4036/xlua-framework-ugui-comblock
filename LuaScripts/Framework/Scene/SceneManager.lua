@@ -6,6 +6,7 @@
 -- 2、场景loading的UI窗口这里统一管理，由于这个窗口很简单，更新进度数据时直接写Model层
 --]]
 
+---@class SceneManager:Singleton
 local SceneManager = BaseClass("SceneManager", Singleton)
 
 -- 构造函数
@@ -22,7 +23,7 @@ end
 -- 切换场景：内部使用协程
 local function CoInnerSwitchScene(self, scene_config)
 	-- 打开loading界面
-	local uimgr_instance = UIManager:GetInstance()
+	local uimgr_instance = SingleGet.UIManager()
 	uimgr_instance:OpenWindow(UIWindowNames.UILoading)
 	local window = uimgr_instance:GetWindow(UIWindowNames.UILoading)
 	local model = window.Model
@@ -30,7 +31,7 @@ local function CoInnerSwitchScene(self, scene_config)
 	coroutine.waitforframes(1)
 	-- 等待资源管理器加载任务结束，否则很多Unity版本在切场景时会有异常，甚至在真机上crash
 	coroutine.waitwhile(function()
-		return ResourcesManager:GetInstance():IsProsessRunning()
+		return SingleGet.ResourcesManager():IsProsessRunning()
 	end)
 	-- 清理旧场景
 	if self.current_scene then
@@ -43,10 +44,10 @@ local function CoInnerSwitchScene(self, scene_config)
 	model.value = model.value + 0.01
 	coroutine.waitforframes(1)
 	-- 清理资源缓存
-	GameObjectPool:GetInstance():Cleanup(true)
+	SingleGet.GameObjectPool():Cleanup(true)
 	model.value = model.value + 0.01
 	coroutine.waitforframes(1)
-	ResourcesManager:GetInstance():Cleanup()
+	SingleGet.ResourcesManager():Cleanup()
 	model.value = model.value + 0.01
 	coroutine.waitforframes(1)
 	-- 同步加载loading场景

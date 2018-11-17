@@ -6,7 +6,7 @@
 local UIBattleMainCtrl = BaseClass("UIBattleMainCtrl", UIBaseCtrl)
 
 local function Back(self)
-	SceneManager:GetInstance():SwitchScene(SceneConfig.HomeScene)
+	SingleGet.SceneManager():SwitchScene(SceneConfig.HomeScene)
 end
 
 UIBattleMainCtrl.Back = Back

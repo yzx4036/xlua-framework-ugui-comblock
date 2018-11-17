@@ -6,7 +6,10 @@
 -- 2、tolua的event没有使用weak表，直接使用tolua的更新系统会导致脚本被event持有引用而无法释放---除非每次都记得手动去释放
 --]]
 
+---@type Messenger
 local Messenger = require "Framework.Common.Messenger"
+
+---@class UpdateManager:Singleton
 local UpdateManager = BaseClass("UpdateManager", Singleton)
 local UpdateMsgName = "Update"
 local LateUpdateMsgName = "LateUpdateMsgName"

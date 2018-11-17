@@ -15,6 +15,7 @@
 -- 3、换句话说：广播发出，回调一定会被调用，但回调参数中的实例对象，可能已经被销毁，所以回调函数一定要注意判空
 --]]
 
+---@class Messenger
 local Messenger = BaseClass("Messenger");
 
 local function __init(self)

@@ -10,6 +10,7 @@
 local Messenger = require "Framework.Common.Messenger"
 local unpack = unpack or table.unpack
 
+---@class DataManager:Singleton
 local DataManager = BaseClass("DataManager", Singleton);
 
 

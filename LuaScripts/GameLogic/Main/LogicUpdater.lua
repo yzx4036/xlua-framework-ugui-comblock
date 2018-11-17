@@ -3,12 +3,13 @@
 -- 游戏逻辑Updater，游戏逻辑模块可能需要严格的驱动顺序
 --]]
 
+---@class LogicUpdater:UpdatableSingleton
 local LogicUpdater = BaseClass("LogicUpdater", UpdatableSingleton)
 local traceback = debug.traceback
 
 local function Update(self)
 	local delta_time = Time.deltaTime
-	local hallConnector = HallConnector:GetInstance()
+	local hallConnector = SingleGet.HallConnector()
 	local status,err = pcall(hallConnector.Update, hallConnector)
 	if not status then
 		Logger.LogError("hallConnector update err : "..err.."\n"..traceback())

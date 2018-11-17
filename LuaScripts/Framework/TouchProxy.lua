@@ -291,8 +291,8 @@ function M.OnTouchClick(eventData)
 	end
 
 	-- if info then info("屏幕点击position:" .. eventData.Position.x .. "|" .. eventData.Position.y) end
-	UIManager:GetInstance():CheckOutClick(eventData.Position);
-	UIManager:GetInstance():CheckComponentClick(eventData.Position);
+	SingleGet.UIManager():CheckOutClick(eventData.Position);
+	SingleGet.UIManager():CheckComponentClick(eventData.Position);
 end
 
 function M.OnTouchPress(eventData)

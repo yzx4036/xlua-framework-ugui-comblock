@@ -13,7 +13,6 @@
 local ResourcesManager = BaseClass("ResourcesManager", Singleton)
 local AssetBundleManager = CS.AssetBundles.AssetBundleManager.Instance
 local AssetBundleUtility = CS.AssetBundles.AssetBundleUtility
-local base = Singleton
 -- 是否有加载任务正在进行
 local function IsProsessRunning(self)
 	return AssetBundleManager.IsProsessRunning
@@ -84,11 +83,6 @@ local function Cleanup(self)
 	-- TODO：Lua脚本要重新加载，暂时吧，后面缓缓策略
 	local luaAssetbundleName = CS.XLuaManager.Instance.AssetbundleName
 	AssetBundleManager:AddAssetbundleAssetsCache(luaAssetbundleName)
-end
-
----@return ResourcesManager
-local function GetInstance(self)
-	base.GetInstance(self)
 end
 
 ResourcesManager.IsProsessRunning = IsProsessRunning

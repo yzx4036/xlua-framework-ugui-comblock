@@ -10,7 +10,7 @@ local base = UIBaseModel
 local function OnCreate(self)
 	base.OnCreate(self)
 	-- 保持Model
-	UIManager:GetInstance():SetKeepModel(self.__ui_name, true)
+	SingleGet.UIManager():SetKeepModel(self.__ui_name, true)
 	-- cs单例对象
 	self.cs_obj = CS.UINoticeTip.Instance
 end

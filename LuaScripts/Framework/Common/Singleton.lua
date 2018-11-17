@@ -26,8 +26,6 @@ local function GetInstance(self)
 	end
 	assert(self.Instance ~= nil)
 
-	--print(">>>>><<<<< self._class_type.super %s",self.super.__cname)
-	--print(">>>>><<<<< self.Instance.super %s",self.super.__cname)
 	return self.Instance
 end
 

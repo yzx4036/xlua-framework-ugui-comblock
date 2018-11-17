@@ -38,7 +38,7 @@ local function OnEnable(self)
 end
 
 local function SetServerInfo(self, select_svr_id)
-	local server_data = ServerData:GetInstance()
+	local server_data = SingleGet.ServerData()
 	local select_svr = server_data.servers[select_svr_id]
 	if select_svr ~= nil then
 		self.area_name = LangUtil.GetServerAreaName(select_svr.area_id)
@@ -48,7 +48,7 @@ end
 
 -- 刷新全部数据
 local function OnRefresh(self)
-	local client_data = ClientData:GetInstance()
+	local client_data = SingleGet.ClientData()
 	self.account = client_data.account
 	self.password = client_data.password
 	self.client_app_ver = client_data.app_version

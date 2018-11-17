@@ -10,6 +10,7 @@
 --]]
 
 local Messenger = require "Framework.Common.Messenger"
+---@class UIManager:Singleton
 local UIManager = BaseClass("UIManager", Singleton)
 
 -- UIRoot路径
@@ -24,6 +25,9 @@ local Resolution = Vector2.New(1024, 768)
 local MaxOderPerWindow = 10
 -- cs Tip
 local UINoticeTip = CS.UINoticeTip.Instance
+
+--region --公有方法，暴露给外部调用
+--endregion
 
 -- 构造函数
 local function __init(self)
@@ -163,7 +167,7 @@ local function InnerOpenWindow(self, target, ...)
 	elseif not target.IsLoading then
 		target.IsLoading = true
 		local params = SafePack(...)
-		GameObjectPool:GetInstance():GetGameObjectAsync(target.PrefabPath, function(go)
+		SingleGet.GameObjectPool():GetGameObjectAsync(target.PrefabPath, function(go)
 			if IsNull(go) then
 				return
 			end
@@ -295,7 +299,7 @@ end
 local function InnerDestroyWindow(self, ui_name, target, include_keep_model)
 	self:Broadcast(UIMessageNames.UIFRAME_ON_WINDOW_DESTROY, target)
 	-- 说明：一律缓存，如果要真的清理，那是清理缓存时需要管理的功能
-	GameObjectPool:GetInstance():RecycleGameObject(self.windows[ui_name].PrefabPath, target.View.gameObject)
+	SingleGet.GameObjectPool():RecycleGameObject(self.windows[ui_name].PrefabPath, target.View.gameObject)
 	if include_keep_model then
 		self.keep_model[ui_name] = nil
 		InnerDelete(target.Model)
@@ -430,7 +434,7 @@ local function PopWindowStack(self)
 	local end_index = table.count(self.__window_stack)
 	for i = bg_index + 1, end_index  do
 		local ui_name = self.__window_stack[i]
-		UIManager:GetInstance():OpenWindow(ui_name)
+		SingleGet.UIManager():OpenWindow(ui_name)
 	end
 	self.__enable_record = true
 end

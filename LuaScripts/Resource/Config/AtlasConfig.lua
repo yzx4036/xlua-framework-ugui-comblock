@@ -3,6 +3,7 @@
 -- 图集配置
 --]]
 
+---@class AtlasConfig
 local AtlasConfig = {
 	Comm = {
 		Name = "Comm",

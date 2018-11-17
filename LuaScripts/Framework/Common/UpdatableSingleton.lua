@@ -3,6 +3,7 @@
 -- 可更新单例脚本，等效于MonoSignleton
 --]]
 
+---@class UpdatableSingleton:Updatable
 local UpdatableSingleton = BaseClass("UpdatableSingleton", Updatable)
 
 local function __init(self)

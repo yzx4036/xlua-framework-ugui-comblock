@@ -12,17 +12,17 @@ local function SetSelectedServer(self, svr_id)
 		Logger.LogError("svr_id nil")
 		return
 	end
-	local servers = ServerData:GetInstance().servers
+	local servers = SingleGet.ServerData().servers
 	if servers[svr_id] == nil then
 		-- TODO：错误弹窗
 		Logger.LogError("no svr_id : "..tostring(svr_id))
 		return
 	end
-	ClientData:GetInstance():SetLoginServerID(svr_id)
+	SingleGet.ClientData():SetLoginServerID(svr_id)
 end
 
 local function CloseSelf(self)
-	UIManager:GetInstance():CloseWindow(UIWindowNames.UILoginServer)
+	SingleGet.UIManager():CloseWindow(UIWindowNames.UILoginServer)
 end
 
 UILoginServerCtrl.SetSelectedServer = SetSelectedServer

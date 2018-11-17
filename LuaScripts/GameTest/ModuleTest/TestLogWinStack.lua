@@ -3,7 +3,7 @@
 --]]
 
 local function Run()
-	local stack = UIManager:GetInstance().__window_stack
+	local stack = SingleGet.UIManager().__window_stack
 	print(table.dump(stack))
 end
 

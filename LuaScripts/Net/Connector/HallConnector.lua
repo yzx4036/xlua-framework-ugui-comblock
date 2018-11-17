@@ -3,6 +3,7 @@
 -- 大厅网络连接器
 --]]
 
+---@class HallConnector:Singleton
 local HallConnector = BaseClass("HallConnector", Singleton)
 local SendMsgDefine = require "Net.Config.SendMsgDefine"
 local NetUtil = require "Net.Util.NetUtil"

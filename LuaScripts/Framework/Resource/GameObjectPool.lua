@@ -6,6 +6,7 @@
 -- 2、缓存分为两部分：从资源层加载的原始GameObject(Asset)，从GameObject实例化出来的多个Inst
 --]]
 
+---@class GameObjectPool:Singleton
 local GameObjectPool = BaseClass("GameObjectPool", Singleton)
 local __cacheTransRoot = nil
 local __goPool = {}
@@ -92,7 +93,7 @@ local function PreLoadGameObjectAsync(self, path, inst_count, callback, ...)
 	end
 	
 	local args = SafePack(...)
-	ResourcesManager:GetInstance():LoadAsync(path, typeof(CS.UnityEngine.GameObject), function(go)
+	SingleGet.ResourcesManager():LoadAsync(path, typeof(CS.UnityEngine.GameObject), function(go)
 		if not IsNull(go) then
 			CacheAndInstGameObject(self, path, go, inst_count)
 		end
@@ -109,7 +110,7 @@ local function CoPreLoadGameObjectAsync(self, path, inst_count, progress_callbac
 		return
 	end
 	
-	local go = ResourcesManager:GetInstance():CoLoadAsync(path, typeof(CS.UnityEngine.GameObject), progress_callback)
+	local go = SingleGet.ResourcesManager():CoLoadAsync(path, typeof(CS.UnityEngine.GameObject), progress_callback)
 	if not IsNull(go) then
 		CacheAndInstGameObject(self, path, go, inst_count)
 	end

@@ -3,6 +3,7 @@
 -- 场景基类，各场景类从这里继承：提供统一的场景加载和初始化步骤，负责资源预加载
 --]]
 
+---@class BaseScene
 local BaseScene = BaseClass("BaseScene")
 
 -- 构造函数，别重写，初始化放OnInit
@@ -63,12 +64,12 @@ local function CoOnPrepare(self)
 	end
 
 	for res_path,res_type in pairs(self.preload_resources) do
-		ResourcesManager:GetInstance():CoLoadAsync(res_path, res_type, ProgressCallback)
+		SingleGet.ResourcesManager():CoLoadAsync(res_path, res_type, ProgressCallback)
 		finish_count = finish_count + 1
 		coroutine.yieldreturn(finish_count * progress_slice)
 	end
 	for res_path,inst_count in pairs(self.preload_prefab) do
-		GameObjectPool:GetInstance():CoPreLoadGameObjectAsync(res_path, inst_count, ProgressCallback)
+		SingleGet.GameObjectPool():CoPreLoadGameObjectAsync(res_path, inst_count, ProgressCallback)
 		finish_count = finish_count + 1
 		coroutine.yieldreturn(finish_count * progress_slice)
 	end
