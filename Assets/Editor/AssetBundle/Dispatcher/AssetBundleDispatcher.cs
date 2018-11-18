@@ -12,78 +12,98 @@ using UnityEditor;
 
 namespace AssetBundles
 {
-    public enum AssetBundleDispatcherFilterType
-    {
-        Root,
-        Children,
-        ChildrenFoldersOnly,
-        ChildrenFilesOnly,
-    }
-
-    public class AssetBundleDispatcher
-    {
-        string assetsPath;
-        AssetBundleImporter importer;
-        AssetBundleDispatcherConfig config;
-
-        public AssetBundleDispatcher(AssetBundleDispatcherConfig config)
+        public enum AssetBundleDispatcherFilterType
         {
-            this.config = config;
-            assetsPath = AssetBundleUtility.PackagePathToAssetsPath(config.PackagePath);
-            importer = AssetBundleImporter.GetAtPath(assetsPath);
-            if (importer == null)
-            {
-                Debug.LogError("Asset path err : " + assetsPath);
-            }
+                Root,
+                Children,
+                ChildrenFoldersOnly,
+                ChildrenFilesOnly,
+                FairyGUI, //fairygui包需特殊处理，分别打desc_bundle res_bundle
         }
 
-        public void RunCheckers(bool checkChannel)
+        public class AssetBundleDispatcher
         {
-            switch (config.Type)
-            {
-                case AssetBundleDispatcherFilterType.Root:
-                    CheckRoot(checkChannel);
-                    break;
-                case AssetBundleDispatcherFilterType.Children:
-                case AssetBundleDispatcherFilterType.ChildrenFoldersOnly:
-                case AssetBundleDispatcherFilterType.ChildrenFilesOnly:
-                    CheckChildren(checkChannel);
-                    break;
-            }
-        }
+                string assetsPath;
+                AssetBundleImporter importer;
+                AssetBundleDispatcherConfig config;
 
-        void CheckRoot(bool checkChannel)
-        {
-            var checkerConfig = new AssetBundleCheckerConfig(config.PackagePath, config.CheckerFilters);
-            AssetBundleChecker.Run(checkerConfig, checkChannel);
-        }
-
-        void CheckChildren(bool checkChannel)
-        {
-            var childrenImporters = importer.GetChildren();
-            var checkerConfig = new AssetBundleCheckerConfig();
-            foreach (var childrenImport in childrenImporters)
-            {
-                if (config.Type == AssetBundleDispatcherFilterType.ChildrenFilesOnly && !childrenImport.IsFile)
+                public AssetBundleDispatcher(AssetBundleDispatcherConfig config)
                 {
-                    continue;
-                }
-                else if (config.Type == AssetBundleDispatcherFilterType.ChildrenFoldersOnly && childrenImport.IsFile)
-                {
-                    continue;
+                        this.config = config;
+                        assetsPath = AssetBundleUtility.PackagePathToAssetsPath(config.PackagePath);
+                        importer = AssetBundleImporter.GetAtPath(assetsPath);
+                        if (importer == null)
+                        {
+                                Debug.LogError("Asset path err : " + assetsPath);
+                        }
                 }
 
-                checkerConfig.CheckerFilters = config.CheckerFilters;
-                checkerConfig.PackagePath = childrenImport.packagePath;
-                AssetBundleChecker.Run(checkerConfig, checkChannel);
-            }
-        }
+                public void RunCheckers(bool checkChannel)
+                {
+                        switch (config.Type)
+                        {
+                                case AssetBundleDispatcherFilterType.Root:
+                                        CheckRoot(checkChannel);
+                                        break;
+                                case AssetBundleDispatcherFilterType.Children:
+                                case AssetBundleDispatcherFilterType.ChildrenFoldersOnly:
+                                case AssetBundleDispatcherFilterType.ChildrenFilesOnly:
+                                        CheckChildren(checkChannel);
+                                        break;
+                                case AssetBundleDispatcherFilterType.FairyGUI:
+                                        break;
+                        }
+                }
 
-        public static void Run(AssetBundleDispatcherConfig config, bool checkChannel)
-        {
-            var dispatcher = new AssetBundleDispatcher(config);
-            dispatcher.RunCheckers(checkChannel);
-            AssetDatabase.Refresh();
+                void CheckRoot(bool checkChannel)
+                {
+                        var checkerConfig = new AssetBundleCheckerConfig(config.PackagePath, config.CheckerFilters);
+                        AssetBundleChecker.Run(checkerConfig, checkChannel);
+                }
+
+                void CheckChildren(bool checkChannel)
+                {
+                        var childrenImporters = importer.GetChildren();
+                        var checkerConfig = new AssetBundleCheckerConfig();
+                        foreach (var childrenImport in childrenImporters)
+                        {
+                                if (config.Type == AssetBundleDispatcherFilterType.ChildrenFilesOnly && !childrenImport.IsFile)
+                                {
+                                        continue;
+                                }
+                                else if (config.Type == AssetBundleDispatcherFilterType.ChildrenFoldersOnly && childrenImport.IsFile)
+                                {
+                                        continue;
+                                }
+
+                                checkerConfig.CheckerFilters = config.CheckerFilters;
+                                checkerConfig.PackagePath = childrenImport.packagePath;
+                                AssetBundleChecker.Run(checkerConfig, checkChannel);
+                        }
+                }
+
+                void CheckFairyGUISource(bool checkChannel)
+                {
+                        var childrenImporters = importer.GetChildren();
+                        var checkerConfig = new AssetBundleCheckerConfig();
+                        foreach (var childrenImport in childrenImporters)
+                        {
+                                if (config.Type == AssetBundleDispatcherFilterType.FairyGUI && !childrenImport.IsFile)
+                                {
+                                        continue;
+                                }
+
+                                checkerConfig.CheckerFilters = config.CheckerFilters;
+                                checkerConfig.PackagePath = childrenImport.packagePath;
+                                AssetBundleChecker.Run(checkerConfig, checkChannel);
+                        }
+                }
+
+                public static void Run(AssetBundleDispatcherConfig config, bool checkChannel)
+                {
+                        var dispatcher = new AssetBundleDispatcher(config);
+                        dispatcher.RunCheckers(checkChannel);
+                        AssetDatabase.Refresh();
+                }
         }
-    }
 }
