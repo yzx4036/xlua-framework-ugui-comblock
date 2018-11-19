@@ -7,7 +7,7 @@
 local LogicUpdater = BaseClass("LogicUpdater", UpdatableSingleton)
 local traceback = debug.traceback
 
-local function Update(self)
+function LogicUpdater:Update()
 	local delta_time = Time.deltaTime
 	local hallConnector = SingleGet.HallConnector()
 	local status,err = pcall(hallConnector.Update, hallConnector)
@@ -16,18 +16,13 @@ local function Update(self)
 	end
 end
 
-local function LateUpdate(self)
+function LogicUpdater:LateUpdate()
 end
 
-local function FixedUpdate(self)
+function LogicUpdater:FixedUpdate()
 end
 
-local function Dispose(self)
+function LogicUpdater:Dispose()
 end
-
-LogicUpdater.Update = Update
-LogicUpdater.LateUpdate = LateUpdate
-LogicUpdater.FixedUpdate = FixedUpdate
-LogicUpdater.Dispose = Dispose
 
 return LogicUpdater

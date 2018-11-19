@@ -1,4 +1,4 @@
-local BaseWindow = class("BaseWindow")
+local BaseWindow = BaseClass("BaseWindow")
 
 function BaseWindow:ctor(parentPage)
   self.window= nil
@@ -20,7 +20,6 @@ end
 function BaseWindow:SetDepends(...)
   local arg = {...}
   for i,v in ipairs(arg) do
-      log(">>>>>>>>>>BaseWindow:SetDepends")
       self.window:AddUISource(CS.FairyGame.UISource(v))
   end
 end
@@ -35,7 +34,7 @@ function BaseWindow:Create()
 end
 
 function BaseWindow:OnInit()
-  log(">>>>>BaseWindow:OnInit....")
+  --log(">>>>>BaseWindow:OnInit....")
   if not string.isNilOrEmpty(self._itemId) then
         if self.asyncCreate then
             UIPackage.CreateObjectAsync(self._packageName, self._itemId, 
@@ -43,7 +42,7 @@ function BaseWindow:OnInit()
                     function(obj)  
                         self.window.contentPane = obj
                         self.contentPane = self.window.contentPane
-                        log(">>>>>CreateObjectCallback:"..type(self.contentPane ))
+                        --log(">>>>>CreateObjectCallback:"..type(self.contentPane ))
                         self:OnInit2()
                         if self.window.isShowing then
                             self:DoShowAnimation()
@@ -150,7 +149,7 @@ function BaseWindow:DoHideAnimation()
 end
 
 function BaseWindow:CallOnShown()
-  log("BaseWindow:CallOnShown")
+  --log("BaseWindow:CallOnShown")
   self.window:SetScale(1, 1)
   self.window.alpha = 1
   self.window.xy = self._originPos
@@ -187,7 +186,7 @@ end
 
 function BaseWindow:Destroy()
   self.mainCom:Dispose();
-  self.mainCom = null;
+  self.mainCom = nil;
   self:OnRealseWidget();
 end
 

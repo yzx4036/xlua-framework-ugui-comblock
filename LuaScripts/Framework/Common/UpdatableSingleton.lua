@@ -29,7 +29,7 @@ local function GetInstance(self)
 end
 
 -- 不要重写
-local function Delete(self)
+local function Destory(self)
 	self.Instance = nil
 end
 

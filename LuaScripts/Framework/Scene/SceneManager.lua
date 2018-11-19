@@ -9,17 +9,6 @@
 ---@class SceneManager:Singleton
 local SceneManager = BaseClass("SceneManager", Singleton)
 
--- 构造函数
-local function __init(self)
-	-- 成员变量
-	-- 当前场景
-	self.current_scene = nil
-	-- 是否忙
-	self.busing = false
-	-- 场景对象
-	self.scenes = {}
-end
-
 -- 切换场景：内部使用协程
 local function CoInnerSwitchScene(self, scene_config)
 	-- 打开loading界面
@@ -104,9 +93,20 @@ local function CoInnerSwitchScene(self, scene_config)
 	self.busing = false
 end
 
+-- 构造函数
+function SceneManager:__init()
+	-- 成员变量
+	-- 当前场景
+	self.current_scene = nil
+	-- 是否忙
+	self.busing = false
+	-- 场景对象
+	self.scenes = {}
+end
+
 -- 切换场景
-local function SwitchScene(self, scene_config)
-	assert(scene_config ~= LaunchScene and scene_config ~= LoadingScene)
+function SceneManager:SwitchScene(scene_config)
+	assert(scene_config ~= nil)
 	assert(scene_config.Type ~= nil)
 	if self.busing then 
 		return
@@ -120,14 +120,10 @@ local function SwitchScene(self, scene_config)
 end
 
 -- 析构函数
-local function __delete(self)
+function SceneManager:__delete()
 	for _, scene in pairs(self.scenes) do
 		scene:Delete()
 	end
 end
-
-SceneManager.__init = __init
-SceneManager.SwitchScene = SwitchScene
-SceneManager.__delete = __delete
 
 return SceneManager;
