@@ -1,3 +1,4 @@
+---@class BaseWindow
 local BaseWindow = BaseClass("BaseWindow")
 
 function BaseWindow:ctor(parentPage)

@@ -120,6 +120,7 @@ HallConnector = require "Net.Connector.HallConnector"
 
 --加载FairyGUI 相关
 require "Framework.UI.FairyGUI.FairyGUI"
+---@type BaseWindow
 BaseWindow = require "Framework.UI.FairyGUI.BaseWindow"
 
 -- 单例类初始化

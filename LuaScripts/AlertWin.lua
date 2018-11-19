@@ -1,3 +1,4 @@
+---@class AlertWin:BaseWindow
 local AlertWin = class("AlertWin", BaseWindow)
 
 function AlertWin:ctor()
