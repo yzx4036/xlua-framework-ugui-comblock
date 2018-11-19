@@ -17,135 +17,163 @@ using System.Collections.Generic;
 
 namespace AssetBundles
 {
-        public class AssetBundleCheckerFilter
-        {
-                public string RelativePath;
-                public string ObjectFilter;
+    public class AssetBundleCheckerFilter
+    {
+        public string RelativePath;
+        public string ObjectFilter;
 
-                public AssetBundleCheckerFilter(string relativePath, string objectFilter)
-                {
-                        RelativePath = relativePath;
-                        ObjectFilter = objectFilter;
-                }
+        public AssetBundleCheckerFilter(string relativePath, string objectFilter)
+        {
+            RelativePath = relativePath;
+            ObjectFilter = objectFilter;
+        }
+    }
+
+    public class AssetBundleCheckerConfig
+    {
+        public string PackagePath = string.Empty;
+        public List<AssetBundleCheckerFilter> CheckerFilters = null;
+
+        public AssetBundleCheckerConfig()
+        {
         }
 
-        public class AssetBundleCheckerConfig
+        public AssetBundleCheckerConfig(string packagePath, List<AssetBundleCheckerFilter> checkerFilters)
         {
-                public string PackagePath = string.Empty;
-                public List<AssetBundleCheckerFilter> CheckerFilters = null;
+            PackagePath = packagePath;
+            CheckerFilters = checkerFilters;
+        }
+    }
 
-                public AssetBundleCheckerConfig()
-                {
-                }
+    public class AssetBundleChecker
+    {
+        string assetsPath;
+        AssetBundleImporter importer;
+        AssetBundleCheckerConfig config;
 
-                public AssetBundleCheckerConfig(string packagePath, List<AssetBundleCheckerFilter> checkerFilters)
-                {
-                        PackagePath = packagePath;
-                        CheckerFilters = checkerFilters;
-                }
+        public AssetBundleChecker(AssetBundleCheckerConfig config)
+        {
+            this.config = config;
+            assetsPath = AssetBundleUtility.PackagePathToAssetsPath(config.PackagePath);
+            importer = AssetBundleImporter.GetAtPath(assetsPath);
         }
 
-        public class AssetBundleChecker
+        public void CheckAssetBundleName()
         {
-                string assetsPath;
-                AssetBundleImporter importer;
-                AssetBundleCheckerConfig config;
+            if (!importer.IsValid)
+            {
+                return;
+            }
 
-                public AssetBundleChecker(AssetBundleCheckerConfig config)
+            var checkerFilters = config.CheckerFilters;
+            if (checkerFilters == null || checkerFilters.Count == 0)
+            {
+                importer.assetBundleName = assetsPath;
+            }
+            else
+            {
+                foreach (var checkerFilter in checkerFilters)
                 {
-                        this.config = config;
-                        assetsPath = AssetBundleUtility.PackagePathToAssetsPath(config.PackagePath);
-                        importer = AssetBundleImporter.GetAtPath(assetsPath);
-                }
-
-                public void CheckAssetBundleName()
-                {
-                        if (!importer.IsValid)
-                        {
-                                return;
-                        }
-
-                        var checkerFilters = config.CheckerFilters;
-                        if (checkerFilters == null || checkerFilters.Count == 0)
-                        {
-                                importer.assetBundleName = assetsPath;
-                        }
-                        else
-                        {
-                                foreach (var checkerFilter in checkerFilters)
-                                {
-                                        var relativePath = assetsPath;
-                                        if (!string.IsNullOrEmpty(checkerFilter.RelativePath))
-                                        {
-                                                relativePath = Path.Combine(assetsPath, checkerFilter.RelativePath);
-                                        }
-                                        var imp = AssetBundleImporter.GetAtPath(relativePath);
-                                        if (imp == null)
-                                        {
-                                                continue;
-                                        }
-                                        if (imp.IsFile)
-                                        {
-                                                importer.assetBundleName = assetsPath;
-                                                continue;
-                                        }
-                                        string[] objGuids = AssetDatabase.FindAssets(checkerFilter.ObjectFilter, new string[] { relativePath });
-                                        foreach (var guid in objGuids)
-                                        {
-                                                var path = AssetDatabase.GUIDToAssetPath(guid);
-                                                imp = AssetBundleImporter.GetAtPath(path);
-                                                imp.assetBundleName = assetsPath;
-                                        }
-                                }
-                        }
-                }
-
-                public void CheckChannelName()
-                {
-                        string channelAssetPath = Path.Combine(AssetBundleConfig.ChannelFolderName, config.PackagePath);
-                        channelAssetPath = AssetBundleUtility.PackagePathToAssetsPath(channelAssetPath) + ".bytes";
-                        if (!File.Exists(channelAssetPath))
-                        {
-                                GameUtility.SafeWriteAllText(channelAssetPath, "None");
-                                AssetDatabase.Refresh();
-                        }
-
-                        var imp = AssetBundleImporter.GetAtPath(channelAssetPath);
+                    var relativePath = assetsPath;
+                    if (!string.IsNullOrEmpty(checkerFilter.RelativePath))
+                    {
+                        relativePath = Path.Combine(assetsPath, checkerFilter.RelativePath);
+                    }
+                    var imp = AssetBundleImporter.GetAtPath(relativePath);
+                    if (imp == null)
+                    {
+                        continue;
+                    }
+                    if (imp.IsFile)
+                    {
+                        importer.assetBundleName = assetsPath;
+                        continue;
+                    }
+                    string[] objGuids = AssetDatabase.FindAssets(checkerFilter.ObjectFilter, new string[] { relativePath });
+                    foreach (var guid in objGuids)
+                    {
+                        var path = AssetDatabase.GUIDToAssetPath(guid);
+                        imp = AssetBundleImporter.GetAtPath(path);
                         imp.assetBundleName = assetsPath;
+                    }
                 }
-
-                public static void Run(AssetBundleCheckerConfig config, bool checkChannel, bool isFairyGui = false)
-                {
-                        var checker = new AssetBundleChecker(config);
-                        checker.CheckAssetBundleName();
-                        if (checkChannel)
-                        {
-                                checker.CheckChannelName();
-                        }
-                        AssetDatabase.Refresh();
-                }
-
-                ///// <summary>
-                ///// 得到合适的AssetBundleName
-                ///// </summary>
-                //public static string ConvertToAssetBundleName(string fullPath, bool isFairyGUIres)
-                //{
-                //        if (string.IsNullOrEmpty(fullPath))
-                //                return fullPath;
-
-                //        int position = fullPath.LastIndexOf(".");
-                //        fullPath = position > -1 ? fullPath.Substring(0, position) : fullPath;
-
-                //        if (isFairyGUIres)
-                //        {
-                //                int isResIndex = fullPath.IndexOf("@");
-                //                if (isResIndex > -1)
-                //                        fullPath = fullPath.Substring(0, isResIndex) + "_res";
-                //                Debug.Log(">>>>>>>>>>:" + fullPath);
-                //        }
-
-                //        return fullPath + Common.EXTENSION;
-                //}
-
+            }
         }
+
+        ///// <summary>
+        ///// 得到合适的FairyGUI AssetBundleName
+        ///// </summary>
+        public void CheckFairyGUIAssetBundleName()
+        {
+            if (!importer.IsValid)
+            {
+                return;
+            }
+            var checkerFilters = config.CheckerFilters;
+            if (checkerFilters == null || checkerFilters.Count == 0)
+            {
+                importer.assetBundleName = assetsPath;
+            }
+            else
+            {
+                foreach (var checkerFilter in checkerFilters)
+                {
+                    var relativePath = assetsPath;
+                    if (!string.IsNullOrEmpty(checkerFilter.RelativePath))
+                    {
+                        relativePath = Path.Combine(assetsPath, checkerFilter.RelativePath);
+                    }
+                    var imp = AssetBundleImporter.GetAtPath(relativePath);
+                    if (imp == null)
+                    {
+                        continue;
+                    }
+                    if (imp.IsFile)
+                    {
+                        int position = relativePath.LastIndexOf(".");
+                        relativePath = position > -1 ? relativePath.Substring(0, position) : relativePath;
+
+                        int isResIndex = relativePath.IndexOf("@");
+                        if (isResIndex > -1)
+                            relativePath = relativePath.Substring(0, isResIndex) + "_res";
+                        //Debug.Log(">>>>>>>>>>:" + relativePath);
+                    }
+                    importer.assetBundleName = relativePath;
+                }
+            }
+        }
+
+
+
+
+        public void CheckChannelName()
+        {
+            string channelAssetPath = Path.Combine(AssetBundleConfig.ChannelFolderName, config.PackagePath);
+            channelAssetPath = AssetBundleUtility.PackagePathToAssetsPath(channelAssetPath) + ".bytes";
+            if (!File.Exists(channelAssetPath))
+            {
+                GameUtility.SafeWriteAllText(channelAssetPath, "None");
+                AssetDatabase.Refresh();
+            }
+
+            var imp = AssetBundleImporter.GetAtPath(channelAssetPath);
+            imp.assetBundleName = assetsPath;
+        }
+
+        public static void Run(AssetBundleCheckerConfig config, bool checkChannel, bool isFairyGui = false)
+        {
+            var checker = new AssetBundleChecker(config);
+
+            if (isFairyGui)
+                checker.CheckFairyGUIAssetBundleName();
+            else
+                checker.CheckAssetBundleName();
+            if (checkChannel)
+            {
+                checker.CheckChannelName();
+            }
+            AssetDatabase.Refresh();
+        }
+    }
 }
+
