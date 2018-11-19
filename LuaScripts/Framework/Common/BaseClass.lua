@@ -89,3 +89,57 @@ function BaseClass(classname, super)
  
 	return class_type
 end
+
+
+--[[--
+如果对象是指定类或其子类的实例，返回 true，否则返回 false
+
+~~~ lua
+
+local Animal = class("Animal")
+local Duck = class("Duck", Animal)
+
+print(iskindof(Duck.new(), "Animal")) -- 输出 true
+
+~~~
+
+@param mixed obj 要检查的对象
+@param string classname 类名
+
+@return boolean ]]--
+function IsKindOf(obj, classname)
+	local t = type(obj)
+	local mt
+	if t == "table" then
+		mt = getmetatable(obj)
+	elseif t == "userdata" then
+		mt = tolua.getpeer(obj)
+	end
+
+	while mt do
+		if mt.__cname == classname then
+			return true
+		end
+		mt = mt.super
+	end
+
+	return false
+end
+
+function HandlerNoArg(obj, method)
+	return function()
+		return method(obj)
+	end
+end
+
+function HandlerArg1(obj, method, arg1)
+	return function(arg1)
+		return method(obj,arg1)
+	end
+end
+
+function Handler(obj, method, ...)
+	return function(...)
+		return method(obj, ...)
+	end
+end
