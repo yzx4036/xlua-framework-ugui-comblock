@@ -34,7 +34,7 @@ local function SetSpriteName(self, sprite_name)
 		return
 	end
 	
-	AtlasManager:GetInstance():LoadImageAsync(self.atlas_config, sprite_name, function(sprite, sprite_name)
+	SingleGet.AtlasManager():LoadImageAsync(self.atlas_config, sprite_name, function(sprite, sprite_name)
 		-- 预设已经被销毁
 		if IsNull(self.unity_uiimage) then
 			return

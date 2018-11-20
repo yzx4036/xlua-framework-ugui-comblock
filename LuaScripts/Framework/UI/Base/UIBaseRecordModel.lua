@@ -14,7 +14,7 @@ local function OnCreate(self)
 	-- 是否启用记录
 	self.__enable_record = false
 	-- 保持Model
-	UIManager:GetInstance():SetKeepModel(self.__ui_name, true)
+	SingleGet.UIManager():SetKeepModel(self.__ui_name, true)
 end
 
 -- 打开
@@ -22,7 +22,7 @@ local function OnEnable(self, ...)
 	base.OnEnable(self, ...)
 	-- 重新打开上次保留的窗口
 	table.walk(self.__window_stack, function(index, ui_name)
-		UIManager:GetInstance():OpenWindow(ui_name)
+		SingleGet.UIManager():OpenWindow(ui_name)
 	end)
 	self.__enable_record = true
 end
@@ -45,7 +45,7 @@ local function OnWindowOpen(self, window)
 	
 	table.insert(self.__window_stack, window.Name)
 	-- 保持Model
-	UIManager:GetInstance():SetKeepModel(window.Name, true)
+	SingleGet.UIManager():SetKeepModel(window.Name, true)
 end
 
 -- 出栈
@@ -66,7 +66,7 @@ local function OnWindowClose(self, window)
 		for i = 0, length - index do
 			local ui_name = table.remove(self.__window_stack, length - i)
 			-- 取消保持Model
-			UIManager:GetInstance():SetKeepModel(ui_name, false)
+			SingleGet.UIManager():SetKeepModel(ui_name, false)
 		end
 	end
 end

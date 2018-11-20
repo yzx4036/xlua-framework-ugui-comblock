@@ -90,7 +90,7 @@ local function OnCreate(self)
 		self.timer_value = self.timer_value + 1
 		self.test_timer_text:SetText(tostring(self.timer_value))
 	end
-	self.timer = TimerManager:GetInstance():GetTimer(1, self.timer_action , self)
+	self.timer = SingleGet.TimerManager():GetTimer(1, self.timer_action , self)
 	-- 启动定时器
 	self.timer:Start()
 	-- 启动协程

@@ -71,10 +71,10 @@ local function FetchAreaList(servers)
 end
 
 local function OnRefresh(self)
-	local server_data = ServerData:GetInstance()
+	local server_data = SingleGet.ServerData()
 	self.recommend_servers = FetchRecommendList(server_data.servers)
 	self.area_ids, self.area_servers = FetchAreaList(server_data.servers)
-	self.selected_server_id = ClientData:GetInstance().login_server_id
+	self.selected_server_id = SingleGet.ClientData().login_server_id
 end
 
 local function OnServerListChg(self)

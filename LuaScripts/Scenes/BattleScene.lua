@@ -29,7 +29,7 @@ local function OnComplete(self)
 	base.OnComplete(self)
 	
 	-- 创建角色
-	local chara = GameObjectPool:GetInstance():GetGameObjectAsync(chara_res_path, function(inst)
+	local chara = SingleGet.GameObjectPool():GetGameObjectAsync(chara_res_path, function(inst)
 		if IsNull(inst) then
 			error("Load chara res err!")
 			do return end
@@ -44,7 +44,7 @@ local function OnComplete(self)
 		inst.transform:SetParent(chara_root.transform)
 		inst.transform.localPosition = Vector3.New(-7.86, 50, 5.85)
 		
-		UIManager:GetInstance():OpenWindow(UIWindowNames.UIBattleMain)
+		SingleGet.UIManager():OpenWindow(UIWindowNames.UIBattleMain)
 		
 		-- 启动角色控制
 		self.charaAnim = CharacterAnimation.New()
@@ -55,7 +55,7 @@ end
 -- 离开场景
 local function OnLeave(self)
 	self.charaAnim = nil
-	UIManager:GetInstance():CloseWindow(UIWindowNames.UIBattleMain)
+	SingleGet.UIManager():CloseWindow(UIWindowNames.UIBattleMain)
 	base.OnLeave(self)
 end
 

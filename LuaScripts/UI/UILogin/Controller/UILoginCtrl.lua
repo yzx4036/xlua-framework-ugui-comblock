@@ -25,7 +25,7 @@ local function OnConnect(self, sender, result, msg)
 	msg.app_ver = ""
 	msg.package_id = ""
 	msg.res_ver = ""
-	HallConnector:GetInstance():SendMessage(msd_id, msg)
+	SingleGet.HallConnector():SendMessage(msd_id, msg)
 end
 
 local function OnClose(self, sender, result, msg)
@@ -36,7 +36,7 @@ local function OnClose(self, sender, result, msg)
 end
 
 local function ConnectServer(self)
-	HallConnector:GetInstance():Connect("192.168.1.245", 10020, Bind(self, OnConnect), Bind(self, OnClose))
+	SingleGet.HallConnector():Connect("192.168.1.245", 10020, Bind(self, OnConnect), Bind(self, OnClose))
 end
 
 local function LoginServer(self, name, password)
@@ -61,15 +61,15 @@ local function LoginServer(self, name, password)
 	    end;
 	end
 	
-	ClientData:GetInstance():SetAccountInfo(name, password)
+	SingleGet.ClientData():SetAccountInfo(name, password)
 	
 	-- TODO
 	--ConnectServer(self)
-	SceneManager:GetInstance():SwitchScene(SceneConfig.HomeScene)
+	SingleGet.SceneManager():SwitchScene(SceneConfig.HomeScene)
 end
 
 local function ChooseServer(self)
-	UIManager:GetInstance():OpenWindow(UIWindowNames.UILoginServer)
+	SingleGet.UIManager():OpenWindow(UIWindowNames.UILoginServer)
 end
 
 UILoginCtrl.LoginServer = LoginServer

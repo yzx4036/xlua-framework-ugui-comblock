@@ -3,9 +3,9 @@
 --]]
 
 local function Run()
-	local target = UIManager:GetInstance():GetWindow(UIWindowNames.UILogin, true, true)
+	local target = SingleGet.UIManager():GetWindow(UIWindowNames.UILogin, true, true)
 	if target then
-		SceneManager:GetInstance():SwitchScene(SceneConfig.HomeScene)
+		SingleGet.SceneManager():SwitchScene(SceneConfig.HomeScene)
 	end
 end
 

@@ -5,25 +5,27 @@
 
 local Logger = BaseClass("Logger")
 
-local function Log(msg)
+local function Log(msg, ...)
+	local _string = string.format(msg, ...)
 	if Config.Debug then
-		print(debug.traceback(msg, 2))
+		print(debug.traceback(_string, 2))
 	else
-		CS.Logger.Log(debug.traceback(msg, 2))
+		CS.Logger.Log(debug.traceback(_string, 2))
 	end
 end
 
-local function LogError(msg)
+local function LogError(msg, ...)
+	local _string = string.format(msg, ...)
 	if Config.Debug then
-		error(msg, 2)
+		error(_string, 2)
 	else
-		CS.Logger.LogError(debug.traceback(msg, 2))
+		CS.Logger.LogError(debug.traceback(_string, 2))
 	end
 end
 
 -- 重定向event错误处理函数
-event_err_handle = function(msg)
-	LogError(msg)
+event_err_handle = function(msg, ...)
+	LogError(msg, ...)
 end
 
 Logger.Log = Log

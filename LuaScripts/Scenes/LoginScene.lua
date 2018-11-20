@@ -17,12 +17,12 @@ end
 -- 准备工作
 local function OnComplete(self)
 	base.OnComplete(self)
-	UIManager:GetInstance():OpenWindow(UIWindowNames.UILogin)
+	SingleGet.UIManager():OpenWindow(UIWindowNames.UILogin)
 end
 
 -- 离开场景
 local function OnLeave(self)
-	UIManager:GetInstance():CloseWindow(UIWindowNames.UILogin)
+	SingleGet.UIManager():CloseWindow(UIWindowNames.UILogin)
 	base.OnLeave(self)
 end
 

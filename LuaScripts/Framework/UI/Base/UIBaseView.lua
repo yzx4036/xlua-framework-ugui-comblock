@@ -83,14 +83,14 @@ end
 local function AddUIListener(self, msg_name, callback)
 	local bindFunc = Bind(self, callback)
 	AddCallback(self.__ui_callback, msg_name, bindFunc)
-	UIManager:GetInstance():AddListener(msg_name, bindFunc)
+	SingleGet.UIManager():AddListener(msg_name, bindFunc)
 end
 
 -- 注销UI数据监听事件，别重写
 local function RemoveUIListener(self, msg_name, callback)
 	local bindFunc = GetCallback(self.__ui_callback, msg_name)
 	RemoveCallback(self.__ui_callback, msg_name, bindFunc)
-	UIManager:GetInstance():RemoveListener(msg_name, bindFunc)
+	SingleGet.UIManager():RemoveListener(msg_name, bindFunc)
 end
 
 -- 关闭：窗口隐藏

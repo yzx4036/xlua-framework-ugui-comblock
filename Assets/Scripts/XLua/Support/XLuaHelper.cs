@@ -162,5 +162,11 @@ public static class XLuaHelperExporter
     public static List<Type> CSharpCallLua = new List<Type>()
     {
     };
+
+    //黑名单
+    [BlackList]
+    public static List<List<string>> BlackList = new List<List<string>>()  {
+        new List<string>(){ "System.Type", "IsSZArray"},
+    };
 }
 #endif

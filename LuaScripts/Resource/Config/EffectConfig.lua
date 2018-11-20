@@ -3,6 +3,7 @@
 -- 特效
 --]]
 
+---@class EffectConfig
 local EffectConfig = {
 	UITaskFinish = {
 		Name = "UITaskFinish",

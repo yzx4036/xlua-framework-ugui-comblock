@@ -26,7 +26,7 @@ local function OnCreate(self, layer)
 		self.gameObject = self.unity_canvas.gameObject
 	end
 	self.unity_canvas.renderMode = CS.UnityEngine.RenderMode.ScreenSpaceCamera
-	self.unity_canvas.worldCamera = UIManager:GetInstance().UICamera
+	self.unity_canvas.worldCamera = SingleGet.UIManager().UICamera
 	self.unity_canvas.planeDistance = layer.PlaneDistance
 	self.unity_canvas.sortingLayerName = SortingLayerNames.UI
 	self.unity_canvas.sortingOrder = layer.OrderInLayer
@@ -38,7 +38,7 @@ local function OnCreate(self, layer)
 	end
 	self.unity_canvas_scaler.uiScaleMode = CS.UnityEngine.UI.CanvasScaler.ScaleMode.ScaleWithScreenSize
 	self.unity_canvas_scaler.screenMatchMode = CS.UnityEngine.UI.CanvasScaler.ScreenMatchMode.MatchWidthOrHeight
-	self.unity_canvas_scaler.referenceResolution = UIManager:GetInstance().Resolution
+	self.unity_canvas_scaler.referenceResolution = SingleGet.UIManager().Resolution
 	
 	-- raycaster
 	self.unity_graphic_raycaster = UIUtil.FindComponent(self.transform, typeof(CS.UnityEngine.UI.GraphicRaycaster))
@@ -54,14 +54,14 @@ end
 -- pop window order
 local function PopWindowOder(self)
 	local cur = self.top_window_order
-	self.top_window_order = self.top_window_order + UIManager:GetInstance().MaxOderPerWindow
+	self.top_window_order = self.top_window_order + SingleGet.UIManager().MaxOderPerWindow
 	return cur
 end
 
 -- push window order
 local function PushWindowOrder(self)
 	assert(self.top_window_order > self.min_window_order)
-	self.top_window_order = self.top_window_order - UIManager:GetInstance().MaxOderPerWindow
+	self.top_window_order = self.top_window_order - SingleGet.UIManager().MaxOderPerWindow
 end
 
 -- 销毁

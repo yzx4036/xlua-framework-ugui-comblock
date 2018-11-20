@@ -75,8 +75,14 @@ function endswith(target_string, start_pattern, plain)
 	return find_pos_end == #target_string
 end
 
+--判断字符串对象
+function IsEmptyString(v)
+	return v == nil or v == ""
+end
+
 string.split = split
 string.join = join
 string.contains = contains
 string.startswith = startswith
 string.endswith = endswith
+string.IsEmptyString = IsEmptyString

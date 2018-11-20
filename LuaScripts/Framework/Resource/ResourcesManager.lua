@@ -9,10 +9,10 @@
 -- 5、理论上做到逻辑层脚本对AB名字是完全透明的，所有资源只有packagePath的概念，这里对路径进行处理
 --]]
 
+---@class ResourcesManager:Singleton
 local ResourcesManager = BaseClass("ResourcesManager", Singleton)
 local AssetBundleManager = CS.AssetBundles.AssetBundleManager.Instance
 local AssetBundleUtility = CS.AssetBundles.AssetBundleUtility
-
 -- 是否有加载任务正在进行
 local function IsProsessRunning(self)
 	return AssetBundleManager.IsProsessRunning
@@ -42,6 +42,7 @@ end
 -- 异步加载AssetBundle：协程形式
 local function CoLoadAssetBundleAsync(self, path, progress_callback)
 	assert(path ~= nil and type(path) == "string" and #path > 0, "path err : "..path)
+	--print(">??????????????????????>%s",self.base._class_type.__cname)
 	local assetbundleName = AssetBundleUtility.AssetBundlePathToAssetBundleName(path)
 	--todo 添加QFramework的ResMgr调用， 可尝试把资源加载替换为ResMgr
 	local loader = AssetBundleManager:LoadAssetBundleAsync(assetbundleName)
@@ -91,5 +92,6 @@ ResourcesManager.CoLoadAssetBundleAsync = CoLoadAssetBundleAsync
 ResourcesManager.LoadAsync = LoadAsync
 ResourcesManager.CoLoadAsync = CoLoadAsync
 ResourcesManager.Cleanup = Cleanup
+ResourcesManager.GetInstance = GetInstance
 
 return ResourcesManager

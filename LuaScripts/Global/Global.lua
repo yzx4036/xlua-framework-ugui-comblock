@@ -16,9 +16,15 @@ require "Framework.Common.DataClass"
 require "Framework.Common.ConstClass"
 
 -- 创建全局模块
+---@type Config
 Config = require "Global.Config"
+---@type SingleGet
+SingleGet = require "Global.SingleGet"
+---@type Singleton
 Singleton = require "Framework.Common.Singleton"
+---@type Updatable
 Updatable = require "Framework.Common.Updatable"
+---@type UpdatableSingleton
 UpdatableSingleton = require "Framework.Common.UpdatableSingleton"
 SortingLayerNames = require "Global.SortingLayerNames"
 Logger = require "Framework.Logger.Logger"
@@ -26,12 +32,17 @@ require "Framework.Updater.Coroutine"
 
 -- game data
 DataMessageNames = require "DataCenter.Config.DataMessageNames"
+---@type DataManager
 DataManager = require "DataCenter.DataManager"
+---@type ClientData
 ClientData = require "DataCenter.ClientData.ClientData"
+---@type ServerData
 ServerData = require "DataCenter.ServerData.ServerData"
+---@type UserData
 UserData = require "DataCenter.UserData.UserData"
 
 -- game config
+---@type LangUtil
 LangUtil = require "Config.LangUtil"
 
 -- ui base
@@ -66,38 +77,58 @@ UIWindowNames = require "UI.Config.UIWindowNames"
 UIConfig = require "UI.Config.UIConfig"
 
 -- res
+---@type ResourcesManager
 ResourcesManager = require "Framework.Resource.ResourcesManager"
+---@type GameObjectPool
 GameObjectPool = require "Framework.Resource.GameObjectPool"
 
 -- update & time
+---@type Timer
 Timer = require "Framework.Updater.Timer"
+---@type TimerManager
 TimerManager = require "Framework.Updater.TimerManager"
+---@type UpdateManager
 UpdateManager = require "Framework.Updater.UpdateManager"
+---@type LogicUpdater
 LogicUpdater = require "GameLogic.Main.LogicUpdater"
 
 -- scenes
+---@type BaseScene
 BaseScene = require "Framework.Scene.Base.BaseScene"
+---@type SceneManager
 SceneManager = require "Framework.Scene.SceneManager"
+---@type SceneConfig
 SceneConfig = require "Scenes.Config.SceneConfig"
 
 -- atlas
+---@type AtlasConfig
 AtlasConfig = require "Resource.Config.AtlasConfig"
+---@type AtlasManager
 AtlasManager = require "Framework.Resource.AtlasManager"
 
 -- effect
+---@type EffectConfig
 EffectConfig = require "Resource.Config.EffectConfig"
+---@type BaseEffect
 BaseEffect = require "Framework.Resource.Effect.Base.BaseEffect"
+---@type EffectManager
 EffectManager = require "Framework.Resource.Effect.EffectManager"
 
 -- net
+---@type HallConnector
 HallConnector = require "Net.Connector.HallConnector"
 
+--加载FairyGUI 相关
+require "Framework.UI.FairyGUI.FairyGUI"
+---@type BaseWindow
+BaseWindow = require "Framework.UI.FairyGUI.BaseWindow"
+
 -- 单例类初始化
-UIManager:GetInstance()
-DataManager:GetInstance()
-ResourcesManager:GetInstance()
-UpdateManager:GetInstance()
-SceneManager:GetInstance()
-AtlasManager:GetInstance()
-LogicUpdater:GetInstance()
-HallConnector:GetInstance()
+SingleGet.UIManager()
+SingleGet.DataManager()
+SingleGet.ResourcesManager()
+SingleGet.UpdateManager()
+SingleGet.SceneManager()
+SingleGet.AtlasManager()
+SingleGet.LogicUpdater()
+SingleGet.HallConnector()

@@ -7,6 +7,7 @@
 -- 3、图片名称带后缀
 --]]
 
+---@class AtlasManager:Singleton
 local AtlasManager = BaseClass("AtlasManager", Singleton)
 local sprite_type = typeof(CS.UnityEngine.Sprite)
 
@@ -15,7 +16,7 @@ local function LoadImageAsync(self, atlas_config, image_name, callback, ...)
 	local atlas_path = atlas_config.AtlasPath
 	local image_path = atlas_path.."/"..image_name
 	
-	ResourcesManager:GetInstance():LoadAsync(image_path, sprite_type, function(sprite, ...)
+	SingleGet.ResourcesManager():LoadAsync(image_path, sprite_type, function(sprite, ...)
 		if callback then
 			callback(not IsNull(sprite) and sprite or nil, ...)
 		end
@@ -24,7 +25,7 @@ end
 
 -- 从图集异步加载图片：协程方式
 local function CoLoadImageAsync(self, atlas_config, image_name, progress_callback)
-	local sprite = ResourcesManager:GetInstance():CoLoadAsync(path, sprite_type, progress_callback)
+	local sprite = SingleGet.ResourcesManager():CoLoadAsync(path, sprite_type, progress_callback)
 	return not IsNull(sprite) and sprite or nil
 end
 

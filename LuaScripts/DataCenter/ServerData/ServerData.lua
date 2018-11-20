@@ -14,6 +14,7 @@ local ServerItemData = {
 	recommend = true,
 }
 
+---@class ServerData:Singleton
 local ServerData = BaseClass("ServerData", Singleton)
 local ServerItem = DataClass("ServerItem", ServerItemData)
 
@@ -33,7 +34,7 @@ local function ParseServerList(self, servers)
 		item.recommend = v.recommend
 		self.servers[item.server_id] = item
 	end
-	DataManager:GetInstance():Broadcast(DataMessageNames.ON_SERVER_LIST_CHG, self)
+	SingleGet.DataManager():Broadcast(DataMessageNames.ON_SERVER_LIST_CHG, self)
 end
 
 ServerData.ParseServerList = ParseServerList

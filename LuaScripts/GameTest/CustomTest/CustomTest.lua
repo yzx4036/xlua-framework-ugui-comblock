@@ -5,7 +5,7 @@
 
 local function Run()
 	local scene_mgr = CS.UnityEngine.SceneManagement.SceneManager
-	UIManager:GetInstance():DestroyAllWindow()
+	SingleGet.UIManager():DestroyAllWindow()
 	scene_mgr.LoadScene("ProtoBuffer")
 end
 

@@ -6,6 +6,7 @@
 -- 2、Type决定加载哪个逻辑场景，多个逻辑场景可以使用同一个物理场景
 --]]
 
+---@class SceneConfig
 local SceneConfig = {
 	-- 启动场景
 	LaunchScene = {

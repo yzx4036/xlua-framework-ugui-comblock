@@ -6,6 +6,7 @@
 -- 2、定时器使用stop停止，一旦停止逻辑层脚本就应该将引用置空，因为它随后会被管理类回收，引用已经不再正确
 --]]
 
+---@class Timer
 local Timer = BaseClass("Timer")
 
 -- 构造函数

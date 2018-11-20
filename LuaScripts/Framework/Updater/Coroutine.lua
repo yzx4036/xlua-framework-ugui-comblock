@@ -250,7 +250,7 @@ end
 -- 等同于Unity侧的yield return new WaitForFixedUpdate
 local function waitforfixedupdate()
 	local co = coroutine.running() or error ("coroutine.waitforfixedupdate must be run in coroutine")
-	local timer = TimerManager:GetInstance():GetCoFixedTimer()
+	local timer = SingleGet.TimerManager():GetCoFixedTimer()
 	local action = __GetAction(co, timer)
 	
 	timer:Init(0, __Action, action, true, true)
@@ -263,7 +263,7 @@ end
 local function waitforframes(frames)
 	assert(type(frames) == "number" and frames >= 1 and math.floor(frames) == frames)
 	local co = coroutine.running() or error ("coroutine.waitforframes must be run in coroutine")
-	local timer = TimerManager:GetInstance():GetCoTimer()
+	local timer = SingleGet.TimerManager():GetCoTimer()
 	local action = __GetAction(co, timer)
 	
 	timer:Init(frames, __Action, action, true, true)
@@ -277,7 +277,7 @@ end
 local function waitforseconds(seconds)
 	assert(type(seconds) == "number" and seconds >= 0)
 	local co = coroutine.running() or error ("coroutine.waitforsenconds must be run in coroutine")
-	local timer = TimerManager:GetInstance():GetCoTimer()
+	local timer = SingleGet.TimerManager():GetCoTimer()
 	local action = __GetAction(co, timer)
 	
 	timer:Init(seconds, __Action, action, true)
@@ -301,7 +301,7 @@ end
 local function waitforasyncop(async_operation, callback)
 	assert(async_operation)
 	local co = coroutine.running() or error ("coroutine.waitforasyncop must be run in coroutine")
-	local timer = TimerManager:GetInstance():GetCoTimer()
+	local timer = SingleGet.TimerManager():GetCoTimer()
 	local action = __GetAction(co, timer, __AsyncOpCheck, SafePack(co, async_operation, callback), true)
 	
 	timer:Init(1, __Action, action, false, true)
@@ -315,7 +315,7 @@ end
 local function waituntil(func, ...)
 	assert(func)
 	local co = coroutine.running() or error ("coroutine.waituntil must be run in coroutine")
-	local timer = TimerManager:GetInstance():GetCoTimer()
+	local timer = SingleGet.TimerManager():GetCoTimer()
 	local action = __GetAction(co, timer, func, SafePack(...), true)
 	
 	timer:Init(1, __Action, action, false, true)
@@ -329,7 +329,7 @@ end
 local function waitwhile(func, ...)
 	assert(func)
 	local co = coroutine.running() or error ("coroutine.waitwhile must be run in coroutine")
-	local timer = TimerManager:GetInstance():GetCoTimer()
+	local timer = SingleGet.TimerManager():GetCoTimer()
 	local action = __GetAction(co, timer, func, SafePack(...), false)
 	
 	timer:Init(1, __Action, action, false, true)
@@ -342,7 +342,7 @@ end
 -- 等同于Unity侧的yield return new WaitForEndOfFrame
 local function waitforendofframe()
 	local co = coroutine.running() or error ("coroutine.waitforendofframe must be run in coroutine")
-	local timer = TimerManager:GetInstance():GetCoLateTimer()
+	local timer = SingleGet.TimerManager():GetCoLateTimer()
 	local action = __GetAction(co, timer)
 	
 	timer:Init(0, __Action, action, true, true)

@@ -3,6 +3,7 @@
 -- 可更新单例脚本，等效于MonoSignleton
 --]]
 
+---@class UpdatableSingleton:Updatable
 local UpdatableSingleton = BaseClass("UpdatableSingleton", Updatable)
 
 local function __init(self)
@@ -28,7 +29,7 @@ local function GetInstance(self)
 end
 
 -- 不要重写
-local function Delete(self)
+local function Destory(self)
 	self.Instance = nil
 end
 
