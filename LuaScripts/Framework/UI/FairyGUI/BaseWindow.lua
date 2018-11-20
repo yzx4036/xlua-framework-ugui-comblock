@@ -1,15 +1,20 @@
 ---@class BaseWindow
 local BaseWindow = BaseClass("BaseWindow")
 
-function BaseWindow:ctor(parentPage)
-  self.window= nil
-  self.contentPane = nil
-  self.vars = {}
-  self.EventDelegates = {}
-  self._originPos = Vector2.zero
-  self.animation = { "eject", "shrink"}
-  self.asyncCreate = false
-  self:Create()
+function BaseWindow:__init()
+    self.window= nil
+    self.contentPane = nil
+    self.vars = {}
+    self.EventDelegates = {}
+    self._originPos = Vector2.zero
+    self.animation = { "eject", "shrink"}
+    self.asyncCreate = false
+    self:Create()
+    self:__OnInit()
+end
+
+function BaseWindow:__OnInit()
+
 end
 
 function BaseWindow:SetContentSource(pkg, item)
@@ -19,10 +24,10 @@ function BaseWindow:SetContentSource(pkg, item)
 end
 
 function BaseWindow:SetDepends(...)
-  local arg = {...}
-  for i,v in ipairs(arg) do
-      self.window:AddUISource(CS.FairyGame.UISource(v))
-  end
+    local arg = {...}
+    for i,v in ipairs(arg) do
+        self.window:AddUISource(CS.FairyGame.UISource(v))
+    end
 end
 
 function BaseWindow:Create()
@@ -35,29 +40,36 @@ function BaseWindow:Create()
 end
 
 function BaseWindow:OnInit()
-  --log(">>>>>BaseWindow:OnInit....")
-  if not string.isNilOrEmpty(self._itemId) then
+    --log(">>>>>BaseWindow:OnInit....")
+    if not string.IsEmptyString(self._itemId) then
         if self.asyncCreate then
-            UIPackage.CreateObjectAsync(self._packageName, self._itemId, 
-                UIPackage.CreateObjectCallback(
-                    function(obj)  
-                        self.window.contentPane = obj
-                        self.contentPane = self.window.contentPane
-                        --log(">>>>>CreateObjectCallback:"..type(self.contentPane ))
-                        self:OnInit2()
-                        if self.window.isShowing then
-                            self:DoShowAnimation()
-                        end
-                    end
-                ))
+            UIPackage.CreateObjectAsync(self._packageName, self._itemId,
+                  UIPackage.CreateObjectCallback(
+                          function(obj)
+                              self.window.contentPane = obj
+                              self.contentPane = self.window.contentPane
+                              --log(">>>>>CreateObjectCallback:"..type(self.contentPane ))
+                              if self.contentPane == nil then
+                                  Logger.LogError(">>>加载面板资源出错")
+                                  return
+                              end
+                              self:OnInit2()
+                              if self.window.isShowing then
+                                  self:DoShowAnimation()
+                              end
+                          end))
         else
-          self.window.contentPane = UIPackage.CreateObject(self._packageName, self._itemId)
-          self.contentPane = self.window.contentPane
-          self:OnInit2()
+            self.window.contentPane = UIPackage.CreateObject(self._packageName, self._itemId)
+            self.contentPane = self.window.contentPane
+            if self.contentPane == nil then
+                Logger.LogError(">>>加载面板资源出错")
+                return
+            end
+            self:OnInit2()
         end
-  else
-    self:OnInit2()
-  end
+    --else
+    --    self:OnInit2()
+    end
 end
 
 
@@ -169,7 +181,8 @@ end
 
 function BaseWindow:Show()
   if not self.contentPane then
-    self:Create()
+      Logger.Log(">>>>>self.contentPane")
+      self:Create()
   end
   if not self.window.isShowing then
     self.window:Show()

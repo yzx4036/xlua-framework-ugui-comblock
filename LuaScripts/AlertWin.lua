@@ -1,11 +1,11 @@
 ---@class AlertWin:BaseWindow
-local AlertWin = class("AlertWin", BaseWindow)
+local AlertWin = BaseClass("AlertWin", BaseWindow)
+function AlertWin:__OnInit()
+    Logger.Log(">>>AlertWin:__init %s",self.vars)
 
-function AlertWin:ctor()
-    BaseWindow.ctor(self)
     self:SetContentSource("Common", "AlertWindow")
     self.asyncCreate = false
-  self.window:Init()
+    self.window:Init()
 end
 
 function AlertWin:InternalOpen(msg, callback)
@@ -22,6 +22,7 @@ function AlertWin:OnInitWidget()
 end
 
 function AlertWin:OnShown()
+    Logger.Log(">>>AlertWin:ctor %s",self.vars)
     if self.vars.alertSound == '' then
         self.vars.alertSound = UIPackage.GetItemAsset("Sucai", "alert")
     end
