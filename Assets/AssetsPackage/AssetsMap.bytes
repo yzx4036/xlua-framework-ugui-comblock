@@ -1,4 +1,3 @@
-assetsmap_bytes.assetbundle,AssetsMap.bytes
 effect/common.assetbundle,Effect/Common/Materials/models_fx_R.mat
 effect/common.assetbundle,Effect/Common/Materials/models_fx_RGB.mat
 effect/common.assetbundle,Effect/Common/Texture/Matcap_Encode2.png
@@ -6,6 +5,7 @@ effect/common.assetbundle,Effect/Common/Texture/models_fx.png
 effect/common.assetbundle,Effect/Common/Texture/models_fx_a.png
 effect/prefab/ui/ef_ui_pet_rank_yellow_test_prefab.assetbundle,Effect/Prefab/UI/ef_ui_pet_rank_yellow_test.prefab
 effect/prefab/ui/ef_ui_taskfinish_prefab.assetbundle,Effect/Prefab/UI/ef_ui_TaskFinish.prefab
+lua.assetbundle,Lua/AlertWin.lua.bytes
 lua.assetbundle,Lua/Common/LuaUtil.lua.bytes
 lua.assetbundle,Lua/Common/Main.lua.bytes
 lua.assetbundle,Lua/Common/StringUtil.lua.bytes
@@ -17,6 +17,7 @@ lua.assetbundle,Lua/Common/Tools/list.lua.bytes
 lua.assetbundle,Lua/Common/Tools/lpeg/re.lua.bytes
 lua.assetbundle,Lua/Common/Tools/ltn12.lua.bytes
 lua.assetbundle,Lua/Common/Tools/mime.lua.bytes
+lua.assetbundle,Lua/Common/Tools/print_r.lua.bytes
 lua.assetbundle,Lua/Common/Tools/socket.lua.bytes
 lua.assetbundle,Lua/Common/Tools/socket/ftp.lua.bytes
 lua.assetbundle,Lua/Common/Tools/socket/headers.lua.bytes
@@ -93,6 +94,9 @@ lua.assetbundle,Lua/Framework/UI/Component/UIText.lua.bytes
 lua.assetbundle,Lua/Framework/UI/Component/UIToggleButton.lua.bytes
 lua.assetbundle,Lua/Framework/UI/Component/UIWrapComponent.lua.bytes
 lua.assetbundle,Lua/Framework/UI/Component/UIWrapGroup.lua.bytes
+lua.assetbundle,Lua/Framework/UI/FairyGUI/BasePage.lua.bytes
+lua.assetbundle,Lua/Framework/UI/FairyGUI/BaseWindow.lua.bytes
+lua.assetbundle,Lua/Framework/UI/FairyGUI/FairyGUI.lua.bytes
 lua.assetbundle,Lua/Framework/UI/Message/UIMessageNames.lua.bytes
 lua.assetbundle,Lua/Framework/UI/UILayers.lua.bytes
 lua.assetbundle,Lua/Framework/UI/UIManager.lua.bytes
@@ -113,6 +117,7 @@ lua.assetbundle,Lua/GameTest/ModuleTest/TestLogWinStack.lua.bytes
 lua.assetbundle,Lua/GameTest/ModuleTest/TestNoticeTip.lua.bytes
 lua.assetbundle,Lua/Global/Config.lua.bytes
 lua.assetbundle,Lua/Global/Global.lua.bytes
+lua.assetbundle,Lua/Global/SingleGet.lua.bytes
 lua.assetbundle,Lua/Global/SortingLayerNames.lua.bytes
 lua.assetbundle,Lua/Net/Config/MsgIDDefine.lua.bytes
 lua.assetbundle,Lua/Net/Config/MsgIDMap.lua.bytes
@@ -361,16 +366,15 @@ ui/atlas/role.assetbundle,UI/Atlas/Role/ui_role_66.png
 ui/fonts/system_art_ttf.assetbundle,UI/Fonts/system_art.TTF
 ui/fonts/system_ttf.assetbundle,UI/Fonts/system.TTF
 ui/prefabs/common/uinoticetip_prefab.assetbundle,UI/Prefabs/Common/UINoticeTip.prefab
-ui/prefabs/fairyguires/denglu@atlas_inq93!a_png.assetbundle,UI/Prefabs/FairyGUIRes/DengLu@atlas_inq93!a.png
-ui/prefabs/fairyguires/denglu@atlas_inq93_png.assetbundle,UI/Prefabs/FairyGUIRes/DengLu@atlas_inq93.png
-ui/prefabs/fairyguires/denglu@atlas0!a_png.assetbundle,UI/Prefabs/FairyGUIRes/DengLu@atlas0!a.png
-ui/prefabs/fairyguires/denglu@atlas0_png.assetbundle,UI/Prefabs/FairyGUIRes/DengLu@atlas0.png
-ui/prefabs/fairyguires/denglu@sprites_bytes.assetbundle,UI/Prefabs/FairyGUIRes/DengLu@sprites.bytes
-ui/prefabs/fairyguires/denglu_bytes.assetbundle,UI/Prefabs/FairyGUIRes/DengLu.bytes
+ui/prefabs/fairyguires/denglu.assetbundle,UI/Prefabs/FairyGUIRes/DengLu.bytes
+ui/prefabs/fairyguires/denglu_res.assetbundle,UI/Prefabs/FairyGUIRes/DengLu@atlas_inq93!a.png
+ui/prefabs/fairyguires/denglu_res.assetbundle,UI/Prefabs/FairyGUIRes/DengLu@atlas_inq93.png
+ui/prefabs/fairyguires/denglu_res.assetbundle,UI/Prefabs/FairyGUIRes/DengLu@atlas0!a.png
+ui/prefabs/fairyguires/denglu_res.assetbundle,UI/Prefabs/FairyGUIRes/DengLu@atlas0.png
+ui/prefabs/fairyguires/denglu_res.assetbundle,UI/Prefabs/FairyGUIRes/DengLu@sprites.bytes
 ui/prefabs/view/uibattlemain_prefab.assetbundle,UI/Prefabs/View/UIBattleMain.prefab
 ui/prefabs/view/uilaunch_prefab.assetbundle,UI/Prefabs/View/UILaunch.prefab
 ui/prefabs/view/uiloading_prefab.assetbundle,UI/Prefabs/View/UILoading.prefab
 ui/prefabs/view/uilogin_prefab.assetbundle,UI/Prefabs/View/UILogin.prefab
 ui/prefabs/view/uiloginserver_prefab.assetbundle,UI/Prefabs/View/UILoginServer.prefab
 ui/prefabs/view/uitestmain_prefab.assetbundle,UI/Prefabs/View/UITestMain.prefab
-variantsmap_bytes.assetbundle,VariantsMap.bytes
