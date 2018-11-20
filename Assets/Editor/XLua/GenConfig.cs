@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using XLua;
+using FairyGUI;
 
 public static class GenConfig
 {
@@ -30,7 +31,7 @@ public static class GenConfig
         typeof(Action<string>),
         typeof(UnityEngine.Debug),
         typeof(Delegate),
-        typeof(Dictionary<string, GameObject>),
+        //typeof(Dictionary<string, GameObject>),
         typeof(UnityEngine.Events.UnityEvent),
 
         // unity结合lua，这部分导出很多功能在lua侧重新实现，没有实现的功能才会跑到cs侧
@@ -92,6 +93,53 @@ public static class GenConfig
         // 其它
         typeof(PlayerPrefs),
         typeof(System.GC),
+
+        //fairygui
+        typeof(EventContext),
+        typeof(EventDispatcher),
+        typeof(EventListener),
+        typeof(InputEvent),
+        typeof(DisplayObject),
+        typeof(Container),
+        typeof(Stage),
+        typeof(FairyGUI.Controller),
+        typeof(GObject),
+        typeof(GGraph),
+        typeof(GGroup),
+        typeof(GImage),
+        typeof(GLoader),
+        //typeof(PlayState),
+        typeof(GMovieClip),
+        typeof(TextFormat),
+        typeof(GTextField),
+        typeof(GRichTextField),
+        typeof(GTextInput),
+        typeof(GComponent),
+        typeof(GList),
+        typeof(GRoot),
+        typeof(GLabel),
+        typeof(GButton),
+        typeof(GComboBox),
+        typeof(GProgressBar),
+        typeof(GSlider),
+        typeof(PopupMenu),
+        typeof(ScrollPane),
+        typeof(Transition),
+        typeof(UIPackage),
+        typeof(Window),
+        typeof(GObjectPool),
+        typeof(Relations),
+        typeof(RelationType),
+        typeof(Timers),
+        typeof(LuaUIHelper),
+        typeof(GLuaComponent),
+        typeof(GLuaLabel),
+        typeof(GLuaButton),
+        typeof(GLuaProgressBar),
+        typeof(GLuaSlider),
+        typeof(GLuaComboBox),
+        typeof(LuaWindow),
+        //typeof(TweenUtils),
     };
 
     //C#静态调用Lua的配置（包括事件的原型），仅可以配delegate，interface
@@ -133,5 +181,5 @@ public static class GenConfig
 		new List<string>(){"System.IO.DirectoryInfo", "Create", "System.Security.AccessControl.DirectorySecurity"},
 		new List<string>(){"UnityEngine.MonoBehaviour", "runInEditMode"},
 		new List<string>(){"UnityEngine.UI.Text", "OnRebuildRequested"},
-	};
+    };
 }
