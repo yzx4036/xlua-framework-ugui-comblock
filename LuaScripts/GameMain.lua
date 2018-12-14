@@ -47,8 +47,6 @@ local function Start()
 		Initilize()
 		EnterGame()
 	end)
-	--local _wind = require("AlertWin").New()
-	--_wind:Show()
 
 end
 
