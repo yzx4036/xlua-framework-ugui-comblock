@@ -5,7 +5,6 @@ effect/common.assetbundle,Effect/Common/Texture/models_fx.png
 effect/common.assetbundle,Effect/Common/Texture/models_fx_a.png
 effect/prefab/ui/ef_ui_pet_rank_yellow_test_prefab.assetbundle,Effect/Prefab/UI/ef_ui_pet_rank_yellow_test.prefab
 effect/prefab/ui/ef_ui_taskfinish_prefab.assetbundle,Effect/Prefab/UI/ef_ui_TaskFinish.prefab
-lua.assetbundle,Lua/AlertWin.lua.bytes
 lua.assetbundle,Lua/Common/LuaUtil.lua.bytes
 lua.assetbundle,Lua/Common/Main.lua.bytes
 lua.assetbundle,Lua/Common/StringUtil.lua.bytes
@@ -94,9 +93,6 @@ lua.assetbundle,Lua/Framework/UI/Component/UIText.lua.bytes
 lua.assetbundle,Lua/Framework/UI/Component/UIToggleButton.lua.bytes
 lua.assetbundle,Lua/Framework/UI/Component/UIWrapComponent.lua.bytes
 lua.assetbundle,Lua/Framework/UI/Component/UIWrapGroup.lua.bytes
-lua.assetbundle,Lua/Framework/UI/FairyGUI/BasePage.lua.bytes
-lua.assetbundle,Lua/Framework/UI/FairyGUI/BaseWindow.lua.bytes
-lua.assetbundle,Lua/Framework/UI/FairyGUI/FairyGUI.lua.bytes
 lua.assetbundle,Lua/Framework/UI/Message/UIMessageNames.lua.bytes
 lua.assetbundle,Lua/Framework/UI/UILayers.lua.bytes
 lua.assetbundle,Lua/Framework/UI/UIManager.lua.bytes
@@ -366,12 +362,6 @@ ui/atlas/role.assetbundle,UI/Atlas/Role/ui_role_66.png
 ui/fonts/system_art_ttf.assetbundle,UI/Fonts/system_art.TTF
 ui/fonts/system_ttf.assetbundle,UI/Fonts/system.TTF
 ui/prefabs/common/uinoticetip_prefab.assetbundle,UI/Prefabs/Common/UINoticeTip.prefab
-ui/prefabs/fairyguires/denglu.assetbundle,UI/Prefabs/FairyGUIRes/DengLu.bytes
-ui/prefabs/fairyguires/denglu_res.assetbundle,UI/Prefabs/FairyGUIRes/DengLu@atlas_inq93!a.png
-ui/prefabs/fairyguires/denglu_res.assetbundle,UI/Prefabs/FairyGUIRes/DengLu@atlas_inq93.png
-ui/prefabs/fairyguires/denglu_res.assetbundle,UI/Prefabs/FairyGUIRes/DengLu@atlas0!a.png
-ui/prefabs/fairyguires/denglu_res.assetbundle,UI/Prefabs/FairyGUIRes/DengLu@atlas0.png
-ui/prefabs/fairyguires/denglu_res.assetbundle,UI/Prefabs/FairyGUIRes/DengLu@sprites.bytes
 ui/prefabs/view/uibattlemain_prefab.assetbundle,UI/Prefabs/View/UIBattleMain.prefab
 ui/prefabs/view/uilaunch_prefab.assetbundle,UI/Prefabs/View/UILaunch.prefab
 ui/prefabs/view/uiloading_prefab.assetbundle,UI/Prefabs/View/UILoading.prefab
