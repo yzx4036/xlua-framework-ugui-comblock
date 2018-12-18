@@ -140,6 +140,10 @@ public static class XLuaHelper
             return typeof(Callback<,,>).MakeGenericType(paramTypes);
         }
     }
+        //public static Type CallLua(params Type[] paramTypes)
+        //{
+
+        //}
 }
 
 #if UNITY_EDITOR

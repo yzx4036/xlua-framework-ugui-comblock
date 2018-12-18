@@ -91,7 +91,7 @@ public class XLuaManager : MonoSingleton<XLuaManager>
         OnInit();
     }
 
-    public void SafeDoString(string scriptContent)
+    public object[] SafeDoString(string scriptContent)
     {
         if (luaEnv != null)
         {
@@ -106,6 +106,7 @@ public class XLuaManager : MonoSingleton<XLuaManager>
                 Logger.LogError(msg, null);
             }
         }
+                return null;
     }
 
     public void StartHotfix(bool restart = false)
