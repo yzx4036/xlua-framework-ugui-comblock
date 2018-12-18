@@ -13,34 +13,27 @@ local unpack = unpack or table.unpack
 ---@class DataManager:Singleton
 local DataManager = BaseClass("DataManager", Singleton);
 
-
-local function __init(self)
+function DataManager:__init()
 	self.data_message_center = Messenger.New()
 end
 
-local function __delete(self)
+function DataManager:__delete()
 	self.data_message_center = nil
 end
 
 -- 注册消息
-local function AddListener(self, e_type, e_listener, ...)
+function DataManager:AddListener(e_type, e_listener, ...)
 	self.data_message_center:AddListener(e_type, e_listener, ...)
 end
 
 -- 发送消息
-local function Broadcast(self, e_type, ...)
+function DataManager:Broadcast(e_type, ...)
 	self.data_message_center:Broadcast(e_type, ...)
 end
 
 -- 注销消息
-local function RemoveListener(self, e_type, e_listener)
+function DataManager:RemoveListener(e_type, e_listener)
 	self.data_message_center:RemoveListener(e_type, e_listener)
 end
-
-DataManager.__init = __init
-DataManager.__delete = __delete
-DataManager.AddListener = AddListener
-DataManager.Broadcast = Broadcast
-DataManager.RemoveListener = RemoveListener
 
 return DataManager;

@@ -24,7 +24,7 @@ local function __init(self)
 end
 
 -- 解析网络数据
-local function ParseServerList(self, servers)
+function ServerData:ParseServerList(servers)
 	self.servers = {}
 	for _,v in pairs(servers) do
 		local item = ServerItem.New()
@@ -37,6 +37,5 @@ local function ParseServerList(self, servers)
 	SingleGet.DataManager():Broadcast(DataMessageNames.ON_SERVER_LIST_CHG, self)
 end
 
-ServerData.ParseServerList = ParseServerList
 
 return ServerData
