@@ -52,7 +52,7 @@ public class XLuaManager : MonoSingleton<XLuaManager>
         if (luaEnv != null)
         {
             luaEnv.AddLoader(CustomLoader);
-            luaEnv.AddBuildin("pb", XLua.LuaDLL.Lua.LoadPb);
+            //luaEnv.AddBuildin("pb", XLua.LuaDLL.Lua.LoadPb);
         }
         else
         {
