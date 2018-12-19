@@ -8,9 +8,4 @@ public class LoadExamples : MonoBehaviour {
 		SceneManager.LoadScene(level);
 
 	}
-
-    public void LoadMain()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
 }

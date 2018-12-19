@@ -32,14 +32,9 @@ public class LoadLevelScript : MonoBehaviour {
 	
 	public void LoadButton(){
 		SceneManager.LoadScene("Button-Event-Input");
-    }
-
-    public void LoadStart()
-    {
-        SceneManager.LoadScene("_StartScene");
-    }
-
-    public void LoadFPS(){
+	}
+	
+	public void LoadFPS(){
 		SceneManager.LoadScene("FPS_Example");
 	}
 	

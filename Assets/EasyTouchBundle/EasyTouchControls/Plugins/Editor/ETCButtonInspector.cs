@@ -272,14 +272,11 @@ public class ETCButtonInspector : Editor {
 
 		if (GUI.changed){
 			EditorUtility.SetDirty(t);
-#if UNITY_5_3_OR_NEWER
-            if (!Application.isPlaying)
-            {
-                EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
-            }
-#endif
-        }
+			#if UNITY_5_3_OR_NEWER
+			EditorSceneManager.MarkSceneDirty( EditorSceneManager.GetActiveScene());
+			#endif
+		}
 
 
-    }
+	}
 }

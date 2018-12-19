@@ -38,27 +38,36 @@ public class QuickTap : QuickBase {
 
 	void Update(){
 		currentGesture = EasyTouch.current;
-		
-		if (!is2Finger){
-			if (currentGesture.type == EasyTouch.EvtType.On_DoubleTap && actionTriggering == ActionTriggering.Double_Tap){
-				DoAction(currentGesture);
-			}
-			
-			if (currentGesture.type == EasyTouch.EvtType.On_SimpleTap && actionTriggering== ActionTriggering.Simple_Tap){
-				DoAction(currentGesture);
-			}
-			
-		}
-		else{
-			
-			if (currentGesture.type == EasyTouch.EvtType.On_DoubleTap2Fingers && actionTriggering== ActionTriggering.Double_Tap){
-				DoAction(currentGesture);
-			}
-			
-			if (currentGesture.type == EasyTouch.EvtType.On_SimpleTap2Fingers && actionTriggering== ActionTriggering.Simple_Tap){
-				DoAction(currentGesture);
-			}
-		}
+
+            if (currentGesture != null)
+            {
+                if (!is2Finger)
+                {
+                    if (currentGesture.type == EasyTouch.EvtType.On_DoubleTap && actionTriggering == ActionTriggering.Double_Tap)
+                    {
+                        DoAction(currentGesture);
+                    }
+
+                    if (currentGesture.type == EasyTouch.EvtType.On_SimpleTap && actionTriggering == ActionTriggering.Simple_Tap)
+                    {
+                        DoAction(currentGesture);
+                    }
+
+                }
+                else
+                {
+
+                    if (currentGesture.type == EasyTouch.EvtType.On_DoubleTap2Fingers && actionTriggering == ActionTriggering.Double_Tap)
+                    {
+                        DoAction(currentGesture);
+                    }
+
+                    if (currentGesture.type == EasyTouch.EvtType.On_SimpleTap2Fingers && actionTriggering == ActionTriggering.Simple_Tap)
+                    {
+                        DoAction(currentGesture);
+                    }
+                }
+            }
 	}
 	#endregion
 

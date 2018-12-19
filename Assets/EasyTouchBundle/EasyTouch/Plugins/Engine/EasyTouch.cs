@@ -523,6 +523,7 @@ public class EasyTouch : MonoBehaviour {
 		}
 	}
 
+
 	void LateUpdate(){
 
 		// single gesture
@@ -530,7 +531,7 @@ public class EasyTouch : MonoBehaviour {
 			_currentGestures.RemoveAt(0);	
 		}
 		else{
-			_currentGestures[0] = new Gesture();
+                _currentGestures[0] = null;// new Gesture();
 		}
 		_currentGesture = _currentGestures[0];
 
@@ -1549,7 +1550,7 @@ public class EasyTouch : MonoBehaviour {
 
 		// Direct Acces 
 		int result = _currentGestures.FindIndex( delegate(Gesture obj) {
-			return obj.type == gesture.type && obj.fingerIndex == gesture.fingerIndex;
+			return obj!=null && obj.type == gesture.type && obj.fingerIndex == gesture.fingerIndex;
 		}
 		);
 

@@ -1,8 +1,7 @@
 fileFormatVersion: 2
 guid: df85c5346108ee847b34882c23c85b9e
-NativeFormatImporter:
+PrefabImporter:
   externalObjects: {}
-  mainObjectFileID: 0
   userData: 
   assetBundleName: effect/prefab/ui/ef_ui_taskfinish_prefab.assetbundle
   assetBundleVariant: 

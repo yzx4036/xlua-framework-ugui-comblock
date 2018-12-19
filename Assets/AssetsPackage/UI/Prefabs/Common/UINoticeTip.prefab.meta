@@ -1,8 +1,7 @@
 fileFormatVersion: 2
 guid: bd06f2bbb1b46924d842a7c55fde4a8e
-NativeFormatImporter:
+PrefabImporter:
   externalObjects: {}
-  mainObjectFileID: 0
   userData: 
   assetBundleName: ui/prefabs/common/uinoticetip_prefab.assetbundle
   assetBundleVariant: 
