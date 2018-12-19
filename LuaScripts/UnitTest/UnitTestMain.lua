@@ -7,7 +7,7 @@
 local ClassTest = require "UnitTest.ClassTest"
 local SingletonTest = require "UnitTest.SingletonTest"
 local MessengerTest = require "UnitTest.MessengerTest"
-local ProtobufTest = require "UnitTest.ProtobufTest"
+--local ProtobufTest = require "UnitTest.ProtobufTest"
 local LoggerTest = require "UnitTest.LoggerTest"
 local LuaUtilTest = require "UnitTest.LuaUtilTest"
 local TableUtilTest = require "UnitTest.TableUtilTest"
@@ -30,7 +30,7 @@ local function Run()
 	ClassTest.Run()
 	SingletonTest.Run()
 	MessengerTest.Run()
-	ProtobufTest.Run()
+	--ProtobufTest.Run()
 	LoggerTest.Run()
 	LuaUtilTest.Run()
 	TableUtilTest.Run()
