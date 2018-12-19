@@ -272,6 +272,11 @@ ui/atlas/comm.assetbundle,UI/Atlas/Comm/ui_role_42.png
 ui/atlas/comm.assetbundle,UI/Atlas/Comm/ui_role_43.png
 ui/atlas/comm.assetbundle,UI/Atlas/Comm/ui_role_44.png
 ui/atlas/comm.assetbundle,UI/Atlas/Comm/ui_role_63.png
+ui/atlas/etcsprites.assetbundle,UI/Atlas/ETCSprites/ETCDefaultSprite.png
+ui/atlas/etcsprites.assetbundle,UI/Atlas/ETCSprites/FPS.png
+ui/atlas/etcsprites.assetbundle,UI/Atlas/ETCSprites/frame01.png
+ui/atlas/etcsprites.assetbundle,UI/Atlas/ETCSprites/frame02.png
+ui/atlas/etcsprites.assetbundle,UI/Atlas/ETCSprites/RadioButton.png
 ui/atlas/group.assetbundle,UI/Atlas/Group/ui_group_01.png
 ui/atlas/group.assetbundle,UI/Atlas/Group/ui_group_02.png
 ui/atlas/group.assetbundle,UI/Atlas/Group/ui_group_03.png
