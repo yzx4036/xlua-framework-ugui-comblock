@@ -8,9 +8,10 @@
 -- 4、Ctrl层是无状态的，不能保存变量--调试模式下强制
 --]]
 
+---@class UIBaseCtrl
 local UIBaseCtrl = BaseClass("UIBaseCtrl")
 
-local function __init(self, model)
+function UIBaseCtrl:__init(model)
 	assert(model ~= nil)
 	-- 强制不能直接写变量
 	if Config.Debug then
@@ -27,11 +28,8 @@ local function __init(self, model)
 	end
 end
 
-local function __delete(self)
+function UIBaseCtrl__delete()
 	self.model = nil
 end
-
-UIBaseCtrl.__init = __init
-UIBaseCtrl.__delete = __delete
 
 return UIBaseCtrl

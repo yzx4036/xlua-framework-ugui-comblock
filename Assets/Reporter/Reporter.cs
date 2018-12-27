@@ -2047,7 +2047,7 @@ public class Reporter : MonoBehaviour {
        // float startTime = Time.realtimeSinceStartup;
 		WWW www = new WWW( url );
 		yield return www ;
-		
+                Debug.LogError("uil "+url);
 		if( !string.IsNullOrEmpty( www.error ) )
 		{
 			Debug.LogError( www.error );

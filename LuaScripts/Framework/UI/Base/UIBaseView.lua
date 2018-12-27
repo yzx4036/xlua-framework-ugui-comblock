@@ -9,12 +9,13 @@
 -- 5、任何情况下不要在游戏逻辑代码操作界面刷新---除了打开、关闭界面
 --]]
 
+---@class UIBaseView:UIBaseContainer
 local UIBaseView = BaseClass("UIBaseView", UIBaseContainer)
 local base = UIBaseContainer
 
 -- 构造函数：必须把基类需要的所有参数列齐---即使在这里不用，提高代码可读性
 -- 子类别再写构造函数，初始化工作放OnCreate
-local function __init(self, holder, var_arg, model, ctrl)
+function UIBaseView:__init(holder, var_arg, model, ctrl)
 	assert(model ~= nil)
 	assert(ctrl ~= nil)
 	self.ctrl = ctrl
@@ -37,7 +38,7 @@ local function __init(self, holder, var_arg, model, ctrl)
 end
 
 -- 创建：资源加载完毕
-local function OnCreate(self)
+function UIBaseView:OnCreate()
 	base.OnCreate(self)
 	-- 窗口画布
 	self.canvas = self:AddComponent(UICanvas, "", 0)
@@ -51,18 +52,18 @@ local function OnCreate(self)
 end
 
 -- 打开：窗口显示
-local function OnEnable(self)
+function UIBaseView:OnEnable()
 	self.base_order = self.holder:PopWindowOder()
 	base.OnEnable(self)
 	self:OnAddListener()
 end
 
 -- 注册消息
-local function OnAddListener(self)
+function UIBaseView:OnAddListener()
 end
 
 -- 注销消息
-local function OnRemoveListener(self)
+function UIBaseView:OnRemoveListener()
 end
 
 local function AddCallback(keeper, msg_name, callback)
@@ -80,28 +81,28 @@ local function RemoveCallback(keeper, msg_name, callback)
 end
 
 -- 注册UI数据监听事件，别重写
-local function AddUIListener(self, msg_name, callback)
+function UIBaseView:AddUIListener(msg_name, callback)
 	local bindFunc = Bind(self, callback)
 	AddCallback(self.__ui_callback, msg_name, bindFunc)
 	SingleGet.UIManager():AddListener(msg_name, bindFunc)
 end
 
 -- 注销UI数据监听事件，别重写
-local function RemoveUIListener(self, msg_name, callback)
+function UIBaseView:RemoveUIListener(msg_name, callback)
 	local bindFunc = GetCallback(self.__ui_callback, msg_name)
 	RemoveCallback(self.__ui_callback, msg_name, bindFunc)
 	SingleGet.UIManager():RemoveListener(msg_name, bindFunc)
 end
 
 -- 关闭：窗口隐藏
-local function OnDisable(self)
+function UIBaseView:OnDisable()
 	self:OnRemoveListener()
 	base.OnDisable(self)
 	self.holder:PushWindowOrder()
 end
 
 -- 销毁：窗口销毁
-local function OnDestroy(self)
+function UIBaseView:OnDestroy()
 	for k,v in pairs(self.__ui_callback) do
 		self:RemoveUIListener(k, v)
 	end
@@ -111,14 +112,14 @@ local function OnDestroy(self)
 	base.OnDestroy(self)
 end
 
-UIBaseView.__init = __init
-UIBaseView.OnCreate = OnCreate
-UIBaseView.OnEnable = OnEnable
-UIBaseView.OnAddListener = OnAddListener
-UIBaseView.OnRemoveListener = OnRemoveListener
-UIBaseView.OnDisable = OnDisable
-UIBaseView.AddUIListener = AddUIListener
-UIBaseView.RemoveUIListener = RemoveUIListener
-UIBaseView.OnDestroy = OnDestroy
+function UIBaseView:OnDestroy()
+    for k,v in pairs(self.__ui_callback) do
+        self:RemoveUIListener(k, v)
+    end
+    self.model = nil
+    self.ctrl = nil
+    self.__ui_callback = nil
+    base.OnDestroy(self)
+end
 
 return UIBaseView

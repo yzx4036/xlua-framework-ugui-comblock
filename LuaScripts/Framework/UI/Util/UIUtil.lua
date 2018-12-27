@@ -3,6 +3,7 @@
 -- UI工具类
 --]]
 
+---@class UIUtil
 local UIUtil = {}
 
 local function GetChild(trans, index)
@@ -21,11 +22,19 @@ local function FindComponent(trans, ctype, path)
 	if targetTrans == nil then
 		return nil
 	end
-	local cmp = targetTrans:GetComponent(ctype)
-	if cmp ~= nil then
+
+    local cmp = targetTrans:GetComponent(ctype)
+
+    if cmp ~= nil then
 		return cmp
 	end
 	return targetTrans:GetComponentInChildren(ctype)
+end
+
+---@param trans UnityEngine.Transform
+local function FindGameObject(trans, path)
+    local _tf = trans:Find(path)
+	return IsNull(_tf) or _tf.gameObject
 end
 
 local function FindTrans(trans, path)
@@ -80,6 +89,7 @@ end
 
 UIUtil.GetChild = GetChild
 UIUtil.FindComponent = FindComponent
+UIUtil.FindGameObject = FindGameObject
 UIUtil.FindTrans = FindTrans
 UIUtil.FindText = FindText
 UIUtil.FindImage = FindImage

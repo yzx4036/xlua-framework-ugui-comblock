@@ -6,7 +6,7 @@
 -- 窗口配置
 local UIBattleMain = {
 	Name = UIWindowNames.UIBattleMain,
-	Layer = UILayers.BackgroudLayer,
+	Layer = UILayers.BackgroundLayer,
 	Model = nil,
 	Ctrl = require "UI.UIBattle.Controller.UIBattleMainCtrl",
 	View = require "UI.UIBattle.View.UIBattleMainView",

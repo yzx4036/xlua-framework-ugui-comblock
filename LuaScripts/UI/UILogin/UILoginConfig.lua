@@ -16,7 +16,7 @@
 -- 窗口配置
 local UILogin = {
 	Name = UIWindowNames.UILogin,
-	Layer = UILayers.BackgroudLayer,
+	Layer = UILayers.BackgroundLayer,
 	Model = require "UI.UILogin.Model.UILoginModel",
 	Ctrl = require "UI.UILogin.Controller.UILoginCtrl",
 	View = require "UI.UILogin.View.UILoginView",

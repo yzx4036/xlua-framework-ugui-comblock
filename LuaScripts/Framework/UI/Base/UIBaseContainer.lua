@@ -8,19 +8,20 @@
 -- 4、很重要：子组件必须保证名字互斥，即一个不同的名字要保证对应于Unity中一个不同的Transform
 --]]
 
+---@class UIBaseContainer:UIBaseComponent
 local UIBaseContainer = BaseClass("UIBaseContainer", UIBaseComponent)
 -- 基类，用来调用基类方法
 local base = UIBaseComponent
 
 -- 创建
-local function OnCreate(self)
+function UIBaseContainer:OnCreate()
 	base.OnCreate(self)
 	self.components = {}
 	self.length = 0
 end
 
 -- 打开
-local function OnEnable(self)
+function UIBaseContainer:OnEnable()
 	base.OnEnable(self)
 	self:Walk(function(component)
 		component:OnEnable()
@@ -28,7 +29,7 @@ local function OnEnable(self)
 end
 
 -- 遍历：注意，这里是无序的
-local function Walk(self, callback, component_class)
+function UIBaseContainer:Walk(callback, component_class)
 	for _,components in pairs(self.components) do
 		for cmp_class,component in pairs(components) do
 			if component_class == nil then
@@ -55,7 +56,7 @@ local function RecordComponent(self, name, component_class, component)
 end
 
 -- 子组件改名回调
-local function OnComponentSetName(self, component, new_name)
+function UIBaseContainer:OnComponentSetName(component, new_name)
 	AddNewRecordIfNeeded(self, new_name)
 	-- 该名字对应Unity的Transform下挂载的所有脚本都要改名
 	local old_name = component:GetName()
@@ -68,7 +69,7 @@ local function OnComponentSetName(self, component, new_name)
 end
 
 -- 子组件销毁
-local function OnComponentDestroy(self, component)
+function UIBaseContainer:OnComponentDestroy(component)
 	self.length = self.length - 1
 end
 
@@ -79,10 +80,13 @@ end
 --    A）inst:AddComponent(ComponentTypeClass, relative_path)
 --    B）inst:AddComponent(ComponentTypeClass, child_index)
 --    C）inst:AddComponent(ComponentTypeClass, unity_gameObject)
-local function AddComponent(self, component_target, var_arg, ...)
+---@param component_target
+---@return UIBaseComponent
+function UIBaseContainer:AddComponent(component_target, var_arg, ...)
 	assert(component_target.__ctype == ClassType.class)
 	local component_inst = nil
 	local component_class = nil
+
 	if type(var_arg) == "table" and var_arg.__ctype == ClassType.instance then
 		component_inst = var_arg
 		component_class = var_arg._class_type
@@ -100,7 +104,7 @@ local function AddComponent(self, component_target, var_arg, ...)
 end
 
 -- 获取组件
-local function GetComponent(self, name, component_class)
+function UIBaseContainer:GetComponent(name, component_class)
 	local components = self.components[name]
 	if components == nil then
 		return nil
@@ -120,7 +124,7 @@ end
 -- 获取一系列组件：2种重载方式
 -- 1、获取一个类别的组件
 -- 2、获取某个name（Transform）下的所有组件
-local function GetComponents(self, component_target)
+function UIBaseContainer:GetComponents(component_target)
 	local components = {}
 	if type(component_target) == "table" then
 		self:Walk(function(component)
@@ -135,12 +139,12 @@ local function GetComponents(self, component_target)
 end
 
 -- 获取组件个数
-local function GetComponentsCount(self)
+function UIBaseContainer:GetComponentsCount()
 	return self.length
 end
 
 -- 移除组件
-local function RemoveComponent(self, name, component_class)
+function UIBaseContainer:RemoveComponent(name, component_class)
 	local component = self:GetComponent(name, component_class)
 	if component ~= nil then
 		local cmp_class = component._class_type
@@ -152,7 +156,7 @@ end
 -- 移除一系列组件：2种重载方式
 -- 1、移除一个类别的组件
 -- 2、移除某个name（Transform）下的所有组件
-local function RemoveComponents(self, component_target)
+function UIBaseContainer:RemoveComponents(component_target)
 	local components = self:GetComponents(component_target)
 	for _,component in pairs(components) do
 		local cmp_name = component:GetName()
@@ -164,7 +168,7 @@ local function RemoveComponents(self, component_target)
 end
 
 -- 关闭
-local function OnDisable(self)
+function UIBaseContainer:OnDisable()
 	base.OnDisable(self)
 	self:Walk(function(component)
 		component:OnDisable()
@@ -172,7 +176,7 @@ local function OnDisable(self)
 end
 
 -- 销毁
-local function OnDestroy(self)
+function UIBaseContainer:OnDestroy()
 	self:Walk(function(component)
 		-- 说明：现在一个组件可以被多个容器持有，但是holder只有一个，所以由holder去释放
 		if component.holder == self then
@@ -182,19 +186,5 @@ local function OnDestroy(self)
 	self.components = nil
 	base.OnDestroy(self)
 end
-
-UIBaseContainer.OnCreate = OnCreate
-UIBaseContainer.OnEnable = OnEnable
-UIBaseContainer.Walk = Walk
-UIBaseContainer.OnComponentSetName = OnComponentSetName
-UIBaseContainer.OnComponentDestroy = OnComponentDestroy
-UIBaseContainer.AddComponent = AddComponent
-UIBaseContainer.GetComponent = GetComponent
-UIBaseContainer.GetComponents = GetComponents
-UIBaseContainer.GetComponentsCount = GetComponentsCount
-UIBaseContainer.RemoveComponent = RemoveComponent
-UIBaseContainer.RemoveComponents = RemoveComponents
-UIBaseContainer.OnDisable = OnDisable
-UIBaseContainer.OnDestroy = OnDestroy
 
 return UIBaseContainer

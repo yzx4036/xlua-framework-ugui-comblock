@@ -1,7 +1,8 @@
 fileFormatVersion: 2
 guid: 8848373ddad57b14b89c8ed824964dec
-PrefabImporter:
+NativeFormatImporter:
   externalObjects: {}
+  mainObjectFileID: 0
   userData: 
   assetBundleName: ui/prefabs/view/uiloginserver_prefab.assetbundle
   assetBundleVariant: 

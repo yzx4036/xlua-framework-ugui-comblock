@@ -8,6 +8,7 @@
 -- self.xxx_btn = self:AddComponent(UIButton, var_arg)--添加孩子，各种重载方式查看UIBaseContainer
 --]]
 
+---@class UIButton:UIBaseContainer
 local UIButton = BaseClass("UIButton", UIBaseContainer)
 local base = UIBaseContainer
 

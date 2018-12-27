@@ -3,6 +3,7 @@
 -- UILayers配置
 --]]
 
+---@class UILayers
 local UILayers = {
 	-- 场景UI，如：点击建筑查看建筑信息---一般置于场景之上，界面UI之下
 	SceneLayer = {
@@ -11,7 +12,7 @@ local UILayers = {
 		OrderInLayer = 0,
 	},
 	-- 背景UI，如：主界面---一般情况下用户不能主动关闭，永远处于其它UI的最底层
-	BackgroudLayer = {
+	BackgroundLayer = {
 		Name = "BackgroudLayer",
 		PlaneDistance = 900,
 		OrderInLayer = 1000,

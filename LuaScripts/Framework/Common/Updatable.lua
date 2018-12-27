@@ -42,25 +42,21 @@ local function RemoveUpdate(self)
 end
 
 -- 构造函数
-local function __init(self)
+function Updatable:__init()
 	self:EnableUpdate(true)
 end
 
 -- 析构函数
-local function __delete(self)
+function Updatable:__delete()
 	self:EnableUpdate(false)
 end
 
 -- 是否启用更新
-local function EnableUpdate(self, enable)
+function Updatable:EnableUpdate(enable)
 	RemoveUpdate(self)
 	if enable then
 		AddUpdate(self)
 	end
 end
-
-Updatable.__init = __init
-Updatable.__delete = __delete
-Updatable.EnableUpdate = EnableUpdate
 
 return Updatable

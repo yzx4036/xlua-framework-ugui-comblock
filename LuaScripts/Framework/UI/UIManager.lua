@@ -240,7 +240,7 @@ function UIManager:OpenWindow(ui_name, ...)
 
     -- 窗口记录
     local layer = UIConfig[ui_name].Layer
-    if layer == UILayers.BackgroudLayer then
+    if layer == UILayers.BackgroundLayer then
         local bg_index = self:GetLastBgWindowIndexInWindowStack()
         if bg_index == -1 or self.__window_stack[bg_index] ~= target.Name then
             self:AddToWindowStack(target.Name)
@@ -263,7 +263,7 @@ function UIManager:CloseWindow(ui_name)
 
     -- 窗口记录
     local layer = UIConfig[ui_name].Layer
-    if layer == UILayers.BackgroudLayer then
+    if layer == UILayers.BackgroundLayer then
         if target.Name == self.__window_stack[table.count(self.__window_stack)] then
             self:RemoveFormWindowStack(target.Name, true)
             --self:PopWindowStack()
@@ -422,7 +422,7 @@ function UIManager:GetLastBgWindowIndexInWindowStack()
     local bg_index = -1
     for i = 1, table.count(self.__window_stack) do
         local ui_name = self.__window_stack[i]
-        if UIConfig[ui_name].Layer == UILayers.BackgroudLayer then
+        if UIConfig[ui_name].Layer == UILayers.BackgroundLayer then
             bg_index = i
         end
     end

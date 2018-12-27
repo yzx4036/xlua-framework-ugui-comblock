@@ -10,7 +10,7 @@
 
         public virtual string GetCompanyName()
         {
-            return "chivas";
+            return "EyeSoft";
         }
 
         public abstract string GetBundleID();

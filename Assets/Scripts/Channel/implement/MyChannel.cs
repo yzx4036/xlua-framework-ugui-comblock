@@ -13,7 +13,7 @@
 
 namespace GameChannel
 {
-    public class TestChannel : BaseChannel
+    public class MyChannel : BaseChannel
     {
         public override void Init()
         {

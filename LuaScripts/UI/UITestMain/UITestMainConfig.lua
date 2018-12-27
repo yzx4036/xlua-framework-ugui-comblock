@@ -6,7 +6,7 @@
 -- 窗口配置
 local UITestMain = {
 	Name = UIWindowNames.UITestMain,
-	Layer = UILayers.BackgroudLayer,
+	Layer = UILayers.BackgroundLayer,
 	Model = nil,
 	Ctrl = require "UI.UITestMain.Controller.UITestMainCtrl",
 	View = require "UI.UITestMain.View.UITestMainView",

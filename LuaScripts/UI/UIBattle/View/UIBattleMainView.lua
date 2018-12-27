@@ -2,14 +2,14 @@
 -- added by wsh @ 2018-02-26
 -- UIBattleMain视图层
 --]]
-
+---@class UIBattleMainView:UIBaseView
 local UIBattleMainView = BaseClass("UIBattleMainView", UIBaseView)
 local base = UIBaseView
 
 -- 各个组件路径
 local back_btn_path = "BackBtn"
 
-local function OnCreate(self)
+function UIBattleMainView:OnCreate()
 	base.OnCreate(self)
 	
 	-- 控制角色
@@ -21,11 +21,11 @@ local function OnCreate(self)
 	end)
 end
 
-local function OnEnable(self)
+function UIBattleMainView:OnEnable()
 	base.OnEnable(self)
 end
 
-local function LateUpdate(self)
+function UIBattleMainView:LateUpdate()
 	if IsNull(self.chara) then
 		self.chara = CS.UnityEngine.GameObject.FindGameObjectWithTag("Player")
 	end
@@ -44,13 +44,8 @@ local function LateUpdate(self)
 	-- 示例代码略
 end
 
-local function OnDestroy(self)
+function UIBattleMainView:OnDestroy()
 	base.OnDestroy(self)
 end
-
-UIBattleMainView.OnCreate = OnCreate
-UIBattleMainView.OnEnable = OnEnable
-UIBattleMainView.LateUpdate = LateUpdate
-UIBattleMainView.OnDestroy = OnDestroy
 
 return UIBattleMainView
