@@ -75,7 +75,7 @@ public static class GenConfig
         typeof(UnityEngine.UI.GridLayoutGroup),
         typeof(UnityEngine.UI.ContentSizeFitter),
         typeof(UnityEngine.UI.Slider),
-
+        typeof(UnityEngine.U2D.SpriteAtlas),
         // easy touch
         // TODO：后续需要什么脚本再添加进来
         typeof(ETCArea),

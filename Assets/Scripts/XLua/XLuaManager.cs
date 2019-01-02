@@ -1,5 +1,7 @@
 ﻿using AssetBundles;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 using XLua;
 
@@ -18,222 +20,260 @@ using XLua;
 [LuaCallCSharp]
 public class XLuaManager : MonoSingleton<XLuaManager>
 {
-    public const string luaAssetbundleAssetName = "Lua";
-    public const string luaScriptsFolder = @"../LuaScripts";
-    const string commonMainScriptName = "Common.Main";
-    const string gameMainScriptName = "GameMain";
-    const string hotfixMainScriptName = "XLua.HotfixMain";
-    LuaEnv luaEnv = null;
-    LuaUpdater luaUpdater = null;
+        public const string luaAssetbundleAssetName = "Lua";
+        public const string luaScriptsFolder = @"../LuaScripts";
+        const string commonMainScriptName = "Common.Main";
+        const string gameMainScriptName = "GameMain";
+        const string hotfixMainScriptName = "XLua.HotfixMain";
+        LuaEnv luaEnv = null;
+        LuaUpdater luaUpdater = null;
 
-    protected override void Init()
-    {
-        base.Init();
-        string path = AssetBundleUtility.PackagePathToAssetsPath(luaAssetbundleAssetName);
-        AssetbundleName = AssetBundleUtility.AssetBundlePathToAssetBundleName(path);
-        InitLuaEnv();
-    }
-
-    public bool HasGameStart
-    {
-        get;
-        protected set;
-    }
-
-    public LuaEnv GetLuaEnv()
-    {
-        return luaEnv;
-    }
-
-    void InitLuaEnv()
-    {
-        luaEnv = new LuaEnv();
-        HasGameStart = false;
-        if (luaEnv != null)
+        protected override void Init()
         {
-            luaEnv.AddLoader(CustomLoader);
-            //luaEnv.AddBuildin("pb", XLua.LuaDLL.Lua.LoadPb);
+                base.Init();
+                string path = AssetBundleUtility.PackagePathToAssetsPath(luaAssetbundleAssetName);
+                AssetbundleName = AssetBundleUtility.AssetBundlePathToAssetBundleName(path);
+                InitLuaEnv();
         }
-        else
+
+        public bool HasGameStart
         {
-            Logger.LogError("InitLuaEnv null!!!");
+                get;
+                protected set;
         }
-    }
 
-    // 这里必须要等待资源管理模块加载Lua AB包以后才能初始化
-    public void OnInit()
-    {
-        if (luaEnv != null)
+        public LuaEnv GetLuaEnv()
         {
-            LoadScript(commonMainScriptName);
-            luaUpdater = gameObject.GetComponent<LuaUpdater>();
-            if (luaUpdater == null)
-            {
-                luaUpdater = gameObject.AddComponent<LuaUpdater>();
-            }
-            luaUpdater.OnInit(luaEnv);
+                return luaEnv;
         }
-    }
 
-    public string AssetbundleName
-    {
-        get;
-        protected set;
-    }
-
-    // 重启虚拟机：热更资源以后被加载的lua脚本可能已经过时，需要重新加载
-    // 最简单和安全的方式是另外创建一个虚拟器，所有东西一概重启
-    public void Restart()
-    {
-        StopHotfix();
-        Dispose();
-        InitLuaEnv();
-        OnInit();
-    }
-
-    public object[] SafeDoString(string scriptContent)
-    {
-        if (luaEnv != null)
+        void InitLuaEnv()
         {
-            try
-            {
-                Debug.Log(">>>>"+ scriptContent);
-                luaEnv.DoString(scriptContent);
-            }
-            catch (System.Exception ex)
-            {
-                string msg = string.Format("xLua exception : {0}\n {1}", ex.Message, ex.StackTrace);
-                Logger.LogError(msg, null);
-            }
+                luaEnv = new LuaEnv();
+                HasGameStart = false;
+                if (luaEnv != null)
+                {
+                        luaEnv.AddLoader(CustomLoader);
+                        //luaEnv.AddBuildin("pb", XLua.LuaDLL.Lua.LoadPb);
+                }
+                else
+                {
+                        Logger.LogError("InitLuaEnv null!!!");
+                }
         }
+
+        // 这里必须要等待资源管理模块加载Lua AB包以后才能初始化
+        public void OnInit()
+        {
+                if (luaEnv != null)
+                {
+                        LoadScript(commonMainScriptName);
+                        luaUpdater = gameObject.GetComponent<LuaUpdater>();
+                        if (luaUpdater == null)
+                        {
+                                luaUpdater = gameObject.AddComponent<LuaUpdater>();
+                        }
+                        luaUpdater.OnInit(luaEnv);
+                }
+        }
+
+        public string AssetbundleName
+        {
+                get;
+                protected set;
+        }
+
+        // 重启虚拟机：热更资源以后被加载的lua脚本可能已经过时，需要重新加载
+        // 最简单和安全的方式是另外创建一个虚拟器，所有东西一概重启
+        public void Restart()
+        {
+                StopHotfix();
+                Dispose();
+                InitLuaEnv();
+                OnInit();
+        }
+
+        public object[] SafeDoString(string scriptContent)
+        {
+                if (luaEnv != null)
+                {
+                        try
+                        {
+                                luaEnv.DoString(scriptContent);
+                        }
+                        catch (System.Exception ex)
+                        {
+                                string msg = string.Format("xLua exception : {0}\n {1}", ex.Message, ex.StackTrace);
+                                Logger.LogError(msg, null);
+                        }
+                }
                 return null;
-    }
-
-    public void StartHotfix(bool restart = false)
-    {
-        if (luaEnv == null)
-        {
-            return;
         }
 
-        if (restart)
+        public void StartHotfix(bool restart = false)
         {
-            StopHotfix();
-            ReloadScript(hotfixMainScriptName);
+                if (luaEnv == null)
+                {
+                        return;
+                }
+
+                if (restart)
+                {
+                        StopHotfix();
+                        ReloadScript(hotfixMainScriptName);
+                }
+                else
+                {
+                        LoadScript(hotfixMainScriptName);
+                }
+                SafeDoString("HotfixMain.Start()");
         }
-        else
+
+        public void StopHotfix()
         {
-            LoadScript(hotfixMainScriptName);
+                SafeDoString("HotfixMain.Stop()");
         }
-        SafeDoString("HotfixMain.Start()");
-    }
 
-    public void StopHotfix()
-    {
-        SafeDoString("HotfixMain.Stop()");
-    }
-
-    public void StartGame()
-    {
-        if (luaEnv != null)
+        public void StartGame()
         {
-            LoadScript(gameMainScriptName);
-            SafeDoString("GameMain.Start()");
-            HasGameStart = true;
+                if (luaEnv != null)
+                {
+                        LoadScript(gameMainScriptName);
+                        SafeDoString("GameMain.Start()");
+                        HasGameStart = true;
+                }
         }
-    }
-    
-    public void ReloadScript(string scriptName)
-    {
-        SafeDoString(string.Format("package.loaded['{0}'] = nil", scriptName));
-        LoadScript(scriptName);
-    }
 
-    void LoadScript(string scriptName)
-    {
-        SafeDoString(string.Format("require('{0}')", scriptName));
-    }
+        public void ReloadScript(string scriptName)
+        {
+                SafeDoString(string.Format("package.loaded['{0}'] = nil", scriptName));
+                LoadScript(scriptName);
+        }
 
-    public static byte[] CustomLoader(ref string filepath)
-    {
-        string scriptPath = string.Empty;
-        filepath = filepath.Replace(".", "/") + ".lua";
+        void LoadScript(string scriptName)
+        {
+                SafeDoString(string.Format("require('{0}')", scriptName));
+        }
+
+        public static byte[] CustomLoader(ref string filepath)
+        {
+                string scriptPath = string.Empty;
+                filepath = filepath.Replace(".", "/") + ".lua";
 #if UNITY_EDITOR
-        if (AssetBundleConfig.IsEditorMode)
-        {
-            scriptPath = Path.Combine(Application.dataPath, luaScriptsFolder);
-            scriptPath = Path.Combine(scriptPath, filepath);
-            //Logger.Log("Load lua script : " + scriptPath);
-            return GameUtility.SafeReadAllBytes(scriptPath);
-        }
+                if (AssetBundleConfig.IsEditorMode)
+                {
+                        scriptPath = Path.Combine(Application.dataPath, luaScriptsFolder);
+                        scriptPath = Path.Combine(scriptPath, filepath);
+                        //Logger.Log("Load lua script : " + scriptPath);
+                        return GameUtility.SafeReadAllBytes(scriptPath);
+                }
 #endif
 
-        scriptPath = string.Format("{0}/{1}.bytes", luaAssetbundleAssetName, filepath);
-        string assetbundleName = null;
-        string assetName = null;
-        bool status = AssetBundleManager.Instance.MapAssetPath(scriptPath, out assetbundleName, out assetName);
-        if (!status)
-        {
-            Logger.LogError("MapAssetPath failed : " + scriptPath);
-            return null;
+                scriptPath = string.Format("{0}/{1}.bytes", luaAssetbundleAssetName, filepath);
+                string assetbundleName = null;
+                string assetName = null;
+                bool status = AssetBundleManager.Instance.MapAssetPath(scriptPath, out assetbundleName, out assetName);
+                if (!status)
+                {
+                        Logger.LogError("MapAssetPath failed : " + scriptPath);
+                        return null;
+                }
+                var asset = AssetBundleManager.Instance.GetAssetCache(assetName) as TextAsset;
+                if (asset != null)
+                {
+                        //Logger.Log("Load lua script : " + scriptPath);
+                        return asset.bytes;
+                }
+                Logger.LogError("Load lua script failed : " + scriptPath + ", You should preload lua assetbundle first!!!");
+                return null;
         }
-        var asset = AssetBundleManager.Instance.GetAssetCache(assetName) as TextAsset;
-        if (asset != null)
-        {
-            //Logger.Log("Load lua script : " + scriptPath);
-            return asset.bytes;
-        }
-        Logger.LogError("Load lua script failed : " + scriptPath + ", You should preload lua assetbundle first!!!");
-        return null;
-    }
 
-    private void Update()
-    {
-        if (luaEnv != null)
+        private void Update()
         {
-            luaEnv.Tick();
+                if (luaEnv != null)
+                {
+                        luaEnv.Tick();
 
-            if (Time.frameCount % 100 == 0)
-            {
-                luaEnv.FullGc();
-            }
+                        if (Time.frameCount % 100 == 0)
+                        {
+                                luaEnv.FullGc();
+                        }
+                }
         }
-    }
 
-    private void OnLevelWasLoaded()
-    {
-        if (luaEnv != null && HasGameStart)
+        private void OnLevelWasLoaded()
         {
-            SafeDoString("GameMain.OnLevelWasLoaded()");
+                if (luaEnv != null && HasGameStart)
+                {
+                        SafeDoString("GameMain.OnLevelWasLoaded()");
+                }
         }
-    }
 
-    private void OnApplicationQuit()
-    {
-        if (luaEnv != null && HasGameStart)
+        private void OnApplicationQuit()
         {
-            SafeDoString("GameMain.OnApplicationQuit()");
+                if (luaEnv != null && HasGameStart)
+                {
+                        SafeDoString("GameMain.OnApplicationQuit()");
+                }
         }
-    }
 
-    public override void Dispose()
-    {
-        if (luaUpdater != null)
+        Dictionary<string, LuaFunction> luaFunctionList = new Dictionary<string, LuaFunction>();
+        StringBuilder sb = new StringBuilder();
+        public object[] CallLuaFunction(string module, string function, params object[] args)
         {
-            luaUpdater.OnDispose();
+                LuaFunction func = null;
+                sb.Clear();
+                string fullName = function;
+                if (module != null)
+                        fullName = sb.AppendFormat("{0}.{1}", module, function).ToString();
+
+                if (!luaFunctionList.TryGetValue(fullName, out func))
+                {
+                        LuaTable tempTable = luaEnv.Global;
+
+                        if (module != null)
+                        {
+                                string[] tempModule = module.Split('.');
+                                for (int i = 0; i < tempModule.Length; i++)
+                                {
+                                        var table = tempTable.Get<LuaTable>(tempModule[i]);
+                                        if (table == null) return null;
+                                        tempTable = table;
+                                }
+                                if (tempTable == null) return null;
+                        }
+                        func = tempTable.Get<LuaFunction>(function);
+                        luaFunctionList.Add(fullName, func);
+                }
+                if (func != null)
+                {
+                        if (args.Length > 0)
+                                return func.Call(args);
+                        return func.Call();
+                }
+
+                return null;
         }
-        if (luaEnv != null)
+
+        public override void Dispose()
         {
-            try
-            {
-                luaEnv.Dispose();
-                luaEnv = null;
-            }
-            catch (System.Exception ex)
-            {
-                string msg = string.Format("xLua exception : {0}\n {1}", ex.Message, ex.StackTrace);
-                Logger.LogError(msg, null);
-            }
+                if (luaUpdater != null)
+                {
+                        luaUpdater.OnDispose();
+                }
+                if (luaEnv != null)
+                {
+                        try
+                        {
+                                luaEnv.Dispose();
+                                luaEnv = null;
+                        }
+                        catch (System.Exception ex)
+                        {
+                                string msg = string.Format("xLua exception : {0}\n {1}", ex.Message, ex.StackTrace);
+                                Logger.LogError(msg, null);
+                        }
+                }
+                luaFunctionList.Clear();
         }
-    }
 }

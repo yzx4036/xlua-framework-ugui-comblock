@@ -8,13 +8,13 @@ local base = UIWrapComponent
 
 local function GetServerStateSpriteName(state)
 	-- 服务器状态：0-良好、1-普通、2-爆满、3-未开服
-	local sprite_name = "login2_10.png"
+	local sprite_name = "login2_10"
 	if state == 1 then
-		sprite_name = "login2_05.png"
+		sprite_name = "login2_05"
 	elseif state == 2 then
-		sprite_name = "login2_11.png"
+		sprite_name = "login2_11"
 	elseif state == 3 then
-		sprite_name = "login2_06.png"
+		sprite_name = "login2_06"
 	end
 	return sprite_name
 end

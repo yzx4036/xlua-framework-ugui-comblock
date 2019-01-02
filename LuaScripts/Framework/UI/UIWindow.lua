@@ -4,7 +4,7 @@
 -- 注意：
 -- 1、窗口名字必须和预设名字一致
 --]]
-
+---@class UIWindow
 local UIWindow = {
 	-- 窗口名字
 	Name = "Background",
@@ -15,6 +15,7 @@ local UIWindow = {
 	-- Ctrl实例
 	Ctrl = UIBaseCtrl,
 	-- View实例
+	---@type UIBaseView
 	View = UIBaseView,
 	-- 是否激活
 	Active = false,
