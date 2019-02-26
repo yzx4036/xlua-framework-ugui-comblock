@@ -47,5 +47,31 @@ namespace Util
                                 return returnObj[0] != null;
                         }
                 }
+
+                public static bool PassiveSwitchLuaScene(string pSceneName)
+                {
+                        var returnObj = XLuaManager.Instance.CallLuaFunction("GlobalLuaUtil", "PassiveSwitchLuaSceneByName", pSceneName);
+                        if (returnObj == null)
+                        {
+                                return false;
+                        }
+                        else
+                        {
+                                return returnObj[0] != null;
+                        }
+                }
+
+                public static bool SwitchLuaScene(string pSceneName)
+                {
+                        var returnObj = XLuaManager.Instance.CallLuaFunction("GlobalLuaUtil", "SwitchLuaSceneByName", pSceneName);
+                        if (returnObj == null)
+                        {
+                                return false;
+                        }
+                        else
+                        {
+                                return returnObj[0] != null;
+                        }
+                }
         }
 }

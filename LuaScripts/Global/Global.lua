@@ -18,6 +18,8 @@ require "Framework.Common.ConstClass"
 -- 创建全局模块
 ---@type Config
 Config = require "Global.Config"
+require "Global.GlobalLuaUtil"
+
 ---@type SingleGet
 SingleGet = require "Global.SingleGet"
 ---@type Singleton

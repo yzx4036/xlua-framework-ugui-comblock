@@ -22,3 +22,21 @@ end
 function GlobalLuaUtil.CloseUIWindow(pWindowName)
     return SingleGet.UIManager():CloseWindow(pWindowName)
 end
+
+--切换场景
+function GlobalLuaUtil.SwitchLuaSceneByName(pSceneName)
+    assert(pSceneName, ">>> pSceneName 为nil 检查C#调用SwitchLuaSceneByName 参数")
+    local _sceneConfig = SceneConfig[pSceneName]
+    assert(_sceneConfig, ">>> _sceneConfig 为nil 检查C#调用SwitchLuaSceneByName 参数")
+
+    SingleGet.SceneManager():SwitchScene(_sceneConfig)
+end
+
+--被动切换场景
+function GlobalLuaUtil.PassiveSwitchLuaSceneByName(pSceneName)
+    assert(pSceneName, ">>> pSceneName 为nil 检查C#调用PassiveSwitchLuaSceneByName 参数")
+    local _sceneConfig = SceneConfig[pSceneName]
+    assert(_sceneConfig, ">>> _sceneConfig 为nil 检查C#调用PassiveSwitchLuaSceneByName 参数")
+
+    SingleGet.SceneManager():PassiveSwitchScene(_sceneConfig)
+end

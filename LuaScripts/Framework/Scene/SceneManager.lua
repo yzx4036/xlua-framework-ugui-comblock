@@ -119,6 +119,96 @@ function SceneManager:SwitchScene(scene_config)
 	coroutine.start(CoInnerSwitchScene, self, scene_config)
 end
 
+--被动切换场景， 当在其他地方已实现切换场景时调用此方法告诉Lua端的场景切换
+function SceneManager:PassiveSwitchScene(scene_config)
+	assert(scene_config ~= nil)
+	assert(scene_config.Type ~= nil)
+	if self.busing then
+		return
+	end
+	if self.current_scene and self.current_scene.scene_config.Name == scene_config.Name then
+		return
+	end
+
+	self.busing = true
+
+
+	local uimgr_instance = SingleGet.UIManager()
+	uimgr_instance:OpenWindow(UIWindowNames.UILoading)
+	local window = uimgr_instance:GetWindow(UIWindowNames.UILoading)
+	local model = window.Model
+	model.value = 0
+	coroutine.waitforframes(1)
+	-- 等待资源管理器加载任务结束，否则很多Unity版本在切场景时会有异常，甚至在真机上crash
+	coroutine.waitwhile(function()
+		return SingleGet.ResourcesManager():IsProsessRunning()
+	end)
+	-- 清理旧场景
+	if self.current_scene then
+		self.current_scene:OnLeave()
+	end
+	model.value = model.value + 0.01
+	coroutine.waitforframes(1)
+	-- 清理UI
+	uimgr_instance:DestroyWindowExceptLayer(UILayers.TopLayer)
+	model.value = model.value + 0.01
+	coroutine.waitforframes(1)
+	-- 清理资源缓存
+	SingleGet.GameObjectPool():Cleanup(true)
+	model.value = model.value + 0.01
+	coroutine.waitforframes(1)
+	SingleGet.ResourcesManager():Cleanup()
+	model.value = model.value + 0.01
+	coroutine.waitforframes(1)
+	-- 同步加载loading场景
+	local resources = CS.UnityEngine.Resources
+	model.value = model.value + 0.01
+	coroutine.waitforframes(1)
+	-- GC
+	collectgarbage("collect")
+	local cur_progress = model.value
+	coroutine.waitforasyncop(resources.UnloadUnusedAssets(), function(co, progress)
+		assert(progress <= 1.0, "What's the funck!!!")
+		model.value = cur_progress + 0.1 * progress
+	end)
+	model.value = cur_progress + 0.1
+	coroutine.waitforframes(1)
+	-- 初始化目标场景
+	local logic_scene = self.scenes[scene_config.Name]
+	if logic_scene == nil then
+		logic_scene = scene_config.Type.New(scene_config)
+		self.scenes[scene_config.Name] = logic_scene
+	end
+	assert(logic_scene ~= nil)
+	logic_scene:OnEnter()
+	model.value = model.value + 0.02
+	coroutine.waitforframes(1)
+	-- 异步加载目标场景
+	cur_progress = model.value
+	coroutine.waitforasyncop(scene_mgr.LoadSceneAsync(scene_config.Level), function(co, progress)
+		assert(progress <= 1.0, "What's the funck!!!")
+		model.value = cur_progress + 0.15 * progress
+	end)
+	model.value = cur_progress + 0.15
+	coroutine.waitforframes(1)
+	-- 准备工作：预加载资源等
+	-- 说明：现在的做法是不热更场景（都是空场景），所以主要的加载时间会放在场景资源的prefab上，这里给65%的进度时间
+	cur_progress = model.value
+	coroutine.yieldstart(logic_scene.CoOnPrepare, function(co, progress)
+		assert(progress <= 1.0, "Progress should be normalized value!!!")
+		model.value = cur_progress + 0.65 * progress
+	end, logic_scene)
+	model.value = cur_progress + 0.65
+	coroutine.waitforframes(1)
+	logic_scene:OnComplete()
+	model.value = 1.0
+	coroutine.waitforframes(3)
+	-- 加载完成，关闭loading界面
+	uimgr_instance:DestroyWindow(UIWindowNames.UILoading)
+	self.current_scene = logic_scene
+	self.busing = false
+end
+
 -- 析构函数
 function SceneManager:__delete()
 	for _, scene in pairs(self.scenes) do
