@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelUserStore">
+    <attachedFolders />
+    <explicitIncludes>
+      <Path>$USER_HOME$/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.8</Path>
+      <Path>$USER_HOME$/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16</Path>
+      <Path>$USER_HOME$/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.package-manager-ui@1.9.11</Path>
+      <Path>$USER_HOME$/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13</Path>
+      <Path>$USER_HOME$/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4</Path>
+      <Path>Library/PackageCache/com.unity.purchasing@2.0.3</Path>
+      <Path>Packages</Path>
+      <Path>ProjectSettings</Path>
+    </explicitIncludes>
+    <explicitExcludes>
+      <Path>.git</Path>
+      <Path>.idea</Path>
+      <Path>.vs</Path>
+      <Path>AssetBundleServer</Path>
+      <Path>AssetBundles</Path>
+      <Path>Channel</Path>
+      <Path>ConfigData</Path>
+      <Path>Library</Path>
+      <Path>Logs</Path>
+      <Path>LuaProj</Path>
+      <Path>LuaScripts</Path>
+      <Path>ProtoToCS</Path>
+      <Path>ProtoToLua</Path>
+      <Path>Temp</Path>
+      <Path>Tools</Path>
+      <Path>obj</Path>
+    </explicitExcludes>
+  </component>
+</project>
