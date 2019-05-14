@@ -10,5 +10,6 @@
     </content>
     <orderEntry type="jdk" jdkName="Lua" jdkType="Lua SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Assembly-CSharp" level="project" />
   </component>
 </module>

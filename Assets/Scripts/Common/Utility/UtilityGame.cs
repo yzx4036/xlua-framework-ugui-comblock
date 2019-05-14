@@ -11,7 +11,7 @@ using System.Collections.Generic;
 /// </summary>
 
 [Hotfix]
-public class GameUtility
+public class UtilityGame
 {
     public const string AssetsFolderName = "Assets";
 
@@ -401,7 +401,7 @@ public static class GameUtilityExporter
 {
     [LuaCallCSharp]
     public static List<Type> LuaCallCSharp = new List<Type>(){
-            typeof(GameUtility),
+            typeof(UtilityGame),
         };
 }
 #endif

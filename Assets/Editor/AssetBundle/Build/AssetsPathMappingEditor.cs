@@ -76,7 +76,7 @@ namespace AssetBundles
                 // 将拿掉[Variant]目录名如：
                 // Assets/AssetsPackage/UI/Prefabs/Language/TestVariant.prefab
                 // 用此种方式可以统一路径，使加载Assetbundle时的路径与具体激活的variant无关
-                string nowRoot = GameUtility.FormatToUnityPath(System.IO.Path.GetDirectoryName(assetbundlePath));
+                string nowRoot = UtilityGame.FormatToUnityPath(System.IO.Path.GetDirectoryName(assetbundlePath));
                 foreach (string assetPath in assetPaths)
                 {
                     string nowAsset = assetPath.Replace(assetbundlePath, "");
@@ -88,7 +88,7 @@ namespace AssetBundles
             }
             mappingList.Sort();
 
-            if (!GameUtility.SafeWriteAllLines(outputFilePath, mappingList.ToArray()))
+            if (!UtilityGame.SafeWriteAllLines(outputFilePath, mappingList.ToArray()))
             {
                 Debug.LogError("BuildPathMapping failed!!! try rebuild it again!");
             }

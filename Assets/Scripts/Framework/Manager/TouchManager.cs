@@ -1,4 +1,10 @@
-﻿using HedgehogTeam.EasyTouch;
+﻿//EasyTouch的触摸管理 使用方法 在lua侧场景中通过	
+// self._layer = UtilityLuaCallCS.CreateTouchLayer(ConstTouchLayer.Explorer, 需要注册的模块l自身lua table) 注册 
+// UtilityLuaCallCS.AddTouchLayer(self._layer) 添加监听
+// lua中 直接 写OnTap OnTouchStart OnTouchEnd方法
+
+
+using HedgehogTeam.EasyTouch;
 using XLua;
 using System;
 using System.Collections.Generic;
@@ -7,7 +13,9 @@ using UnityEngine.EventSystems;
 
 namespace Sword
 {
-    public delegate object[] EventCall(Gesture gt);
+    public delegate bool EventCallLua(LuaTable targetLua, Gesture gt);
+    public delegate bool EventCall(Gesture gt);
+
     public class LayerInfo
     {
         private Dictionary<int, EventCall> _calls = new Dictionary<int, EventCall>();
@@ -142,7 +150,6 @@ namespace Sword
         public void OnSwipe(Gesture gt)
         {
             Do(TouchEventType.Swipe, gt);
-
         }
         public void OnSwipeEnd(Gesture gt)
         {
@@ -185,7 +192,6 @@ namespace Sword
 
         private void Do(int type, Gesture gt)
         {
-
             try
             {
 
@@ -202,12 +208,13 @@ namespace Sword
                     call = item.Value[type];
                     if (call != null)
                     {
-                        if ((bool)call(gt)[0])
-                        {
-                            //todo 修改派发 
-//                            Facade.TouchNotify.Dispatch((item.Value.Layer), type);
-                            break;
-                        }
+                        call(gt);
+//                        if ((bool)call(gt)[0])
+//                        {
+//                            //todo 修改派发 
+////                            Facade.TouchNotify.Dispatch((item.Value.Layer), type);
+//                            break;
+//                        }
                     }
 
                 }

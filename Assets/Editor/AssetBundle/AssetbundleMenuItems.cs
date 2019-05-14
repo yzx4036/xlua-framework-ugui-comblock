@@ -201,7 +201,7 @@ namespace AssetBundles
                 return;
             }
             string outputPath = PackageUtils.GetCurBuildSettingAssetBundleOutputPath();
-            GameUtility.SafeDeleteDir(outputPath);
+            UtilityGame.SafeDeleteDir(outputPath);
             Debug.Log(string.Format("Clear done : {0}", outputPath));
         }
 
@@ -216,7 +216,7 @@ namespace AssetBundles
                 return;
             }
             string outputPath = Path.Combine(Application.streamingAssetsPath, AssetBundleConfig.AssetBundlesFolderName);
-            GameUtility.SafeClearDir(outputPath);
+            UtilityGame.SafeClearDir(outputPath);
             AssetDatabase.Refresh();
             Debug.Log(string.Format("Clear {0} assetbundle streaming assets done!", PackageUtils.GetCurPlatformName()));
         }
@@ -233,7 +233,7 @@ namespace AssetBundles
             }
 
             string outputPath = Path.Combine(Application.persistentDataPath, AssetBundleConfig.AssetBundlesFolderName);
-            GameUtility.SafeDeleteDir(outputPath);
+            UtilityGame.SafeDeleteDir(outputPath);
             Debug.Log(string.Format("Clear {0} assetbundle persistent assets done!", PackageUtils.GetCurPlatformName()));
         }
 

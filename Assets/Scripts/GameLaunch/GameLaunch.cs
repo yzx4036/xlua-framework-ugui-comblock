@@ -73,22 +73,22 @@ public class GameLaunch : MonoBehaviour
 
     IEnumerator InitAppVersion()
     {
-        var appVersionRequest = AssetBundleManager.Instance.RequestAssetFileAsync(BuildUtils.AppVersionFileName);
+        var appVersionRequest = AssetBundleManager.Instance.RequestAssetFileAsync(UtilityBuild.AppVersionFileName);
         yield return appVersionRequest;
         var streamingAppVersion = appVersionRequest.text;
         appVersionRequest.Dispose();
 
-        var appVersionPath = AssetBundleUtility.GetPersistentDataPath(BuildUtils.AppVersionFileName);
-        var persistentAppVersion = GameUtility.SafeReadAllText(appVersionPath);
+        var appVersionPath = AssetBundleUtility.GetPersistentDataPath(UtilityBuild.AppVersionFileName);
+        var persistentAppVersion = UtilityGame.SafeReadAllText(appVersionPath);
         Logger.Log(string.Format("streamingAppVersion = {0}, persistentAppVersion = {1}", streamingAppVersion, persistentAppVersion));
 
         // 如果persistent目录版本比streamingAssets目录app版本低，说明是大版本覆盖安装，清理过时的缓存
-        if (!string.IsNullOrEmpty(persistentAppVersion) && BuildUtils.CheckIsNewVersion(persistentAppVersion, streamingAppVersion))
+        if (!string.IsNullOrEmpty(persistentAppVersion) && UtilityBuild.CheckIsNewVersion(persistentAppVersion, streamingAppVersion))
         {
             var path = AssetBundleUtility.GetPersistentDataPath();
-            GameUtility.SafeDeleteDir(path);
+            UtilityGame.SafeDeleteDir(path);
         }
-        GameUtility.SafeWriteAllText(appVersionPath, streamingAppVersion);
+        UtilityGame.SafeWriteAllText(appVersionPath, streamingAppVersion);
         ChannelManager.instance.appVersion = streamingAppVersion;
         yield break;
     }
@@ -101,7 +101,7 @@ public class GameLaunch : MonoBehaviour
             yield break;
         }
 #endif
-        var channelNameRequest = AssetBundleManager.Instance.RequestAssetFileAsync(BuildUtils.ChannelNameFileName);
+        var channelNameRequest = AssetBundleManager.Instance.RequestAssetFileAsync(UtilityBuild.ChannelNameFileName);
         yield return channelNameRequest;
         var channelName = channelNameRequest.text;
         channelNameRequest.Dispose();

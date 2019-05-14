@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Sword
 {
-  public static class GameObjectUtility
+  public static class UtilityGameObject
   {
     public static GameObject Clone(this GameObject prefab, string name)
     {
@@ -292,7 +292,7 @@ namespace Sword
     {
       RectTransform component = child.GetComponent<RectTransform>();
       component.SetParent(parent, worldPositionStays);
-      GameObjectUtility.SyncLayer(parent.gameObject, child, false);
+      UtilityGameObject.SyncLayer(parent.gameObject, child, false);
       return component;
     }
 
@@ -304,7 +304,7 @@ namespace Sword
     {
       RectTransform component = child.GetComponent<RectTransform>();
       component.SetParent(parent, worldPositionStays);
-      GameObjectUtility.SyncLayer(parent.gameObject, child, isRecusive);
+      UtilityGameObject.SyncLayer(parent.gameObject, child, isRecusive);
       return component;
     }
 
@@ -321,13 +321,13 @@ namespace Sword
       if (recuresively)
       {
         for (int index = 0; index < target.transform.childCount; ++index)
-          GameObjectUtility.SetLayer(target.transform.GetChild(index).gameObject, layer, recuresively);
+          UtilityGameObject.SetLayer(target.transform.GetChild(index).gameObject, layer, recuresively);
       }
     }
 
     public static void SyncLayer(GameObject src, GameObject dst, bool recursive)
     {
-      GameObjectUtility.SetLayer(dst, src.layer, recursive);
+      UtilityGameObject.SetLayer(dst, src.layer, recursive);
     }
 
     public static GameObject AddGameObject(string path)

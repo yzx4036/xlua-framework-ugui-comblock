@@ -5,7 +5,7 @@
 /// 功能：构建相关配置和通用函数
 /// </summary>
 
-public class BuildUtils
+public class UtilityBuild
 {
     public const string ManifestBundleName = "AssetBundles";
     public const string ChannelNameFileName = "channel_name.bytes";

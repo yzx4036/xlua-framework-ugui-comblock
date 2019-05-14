@@ -92,7 +92,7 @@ public static class GenConfig
         // 其它
         typeof(PlayerPrefs),
         typeof(System.GC),
-
+		typeof(Util.UtiltyLuaCallCS),
       
         //typeof(TweenUtils),
     };
@@ -109,6 +109,7 @@ public static class GenConfig
         typeof(UnityEngine.Events.UnityAction),
         typeof(System.Collections.IEnumerator),
         typeof(UnityEngine.Events.UnityAction<Vector2>),
+        typeof(Sword.EventCallLua),
     };
 
 	//黑名单

@@ -96,7 +96,7 @@ namespace Sword
             if (touchComp == null)
             {
                 GetRoot(RootTag.Event).AddComponent<EasyTouch>();
-                //        EasyTouch.Set3DPickableLayer(ConstLayer.EasyTouch);
+                EasyTouch.Set3DPickableLayer(ConstLayer.EasyTouch);
    
             }
         }

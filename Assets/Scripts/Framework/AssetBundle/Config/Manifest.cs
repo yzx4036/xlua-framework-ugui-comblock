@@ -72,7 +72,7 @@ namespace AssetBundles
             if (manifestBytes != null && manifestBytes.Length > 0)
             {
                 string path = AssetBundleUtility.GetPersistentDataPath(AssetbundleName);
-                GameUtility.SafeWriteAllBytes(path, manifestBytes);
+                UtilityGame.SafeWriteAllBytes(path, manifestBytes);
             }
         }
 

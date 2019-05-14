@@ -10,10 +10,10 @@ namespace Sword
         {
             get
             {
-                mEvent = GameObject.Find("EventSystem");
                 if (mEvent == null)
                 {
                     mEvent = GameObject.Find("EventSystem");
+                    Object.DontDestroyOnLoad(mEvent);
                 }
                 return mEvent;
             }

@@ -69,7 +69,7 @@ namespace AssetBundles
         {
             get
             {
-                return BuildUtils.ManifestBundleName;
+                return UtilityBuild.ManifestBundleName;
             }
         }
         

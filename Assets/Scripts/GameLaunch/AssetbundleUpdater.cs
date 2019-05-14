@@ -63,8 +63,8 @@ public class AssetbundleUpdater : MonoBehaviour
 
     void Start ()
     {
-        resVersionPath = AssetBundleUtility.GetPersistentDataPath(BuildUtils.ResVersionFileName);
-        noticeVersionPath = AssetBundleUtility.GetPersistentDataPath(BuildUtils.NoticeVersionFileName);
+        resVersionPath = AssetBundleUtility.GetPersistentDataPath(UtilityBuild.ResVersionFileName);
+        noticeVersionPath = AssetBundleUtility.GetPersistentDataPath(UtilityBuild.NoticeVersionFileName);
         DateTime startDate = new DateTime(1970, 1, 1);
         timeStamp = (DateTime.Now - startDate).TotalMilliseconds;
         statusText.text = "正在检测资源更新...";
@@ -158,11 +158,11 @@ public class AssetbundleUpdater : MonoBehaviour
     {
         clientAppVersion = ChannelManager.instance.appVersion;
 
-        var resVersionRequest = AssetBundleManager.Instance.RequestAssetFileAsync(BuildUtils.ResVersionFileName);
+        var resVersionRequest = AssetBundleManager.Instance.RequestAssetFileAsync(UtilityBuild.ResVersionFileName);
         yield return resVersionRequest;
         var streamingResVersion = resVersionRequest.text;
         resVersionRequest.Dispose();
-        var persistentResVersion = GameUtility.SafeReadAllText(resVersionPath);
+        var persistentResVersion = UtilityGame.SafeReadAllText(resVersionPath);
 
         if (string.IsNullOrEmpty(persistentResVersion))
         {
@@ -170,12 +170,12 @@ public class AssetbundleUpdater : MonoBehaviour
         }
         else
         {
-            clientResVersion = BuildUtils.CheckIsNewVersion(streamingResVersion, persistentResVersion) ? persistentResVersion : streamingResVersion;
+            clientResVersion = UtilityBuild.CheckIsNewVersion(streamingResVersion, persistentResVersion) ? persistentResVersion : streamingResVersion;
         }
         
-        GameUtility.SafeWriteAllText(resVersionPath, clientResVersion);
+        UtilityGame.SafeWriteAllText(resVersionPath, clientResVersion);
 
-        var persistentNoticeVersion = GameUtility.SafeReadAllText(noticeVersionPath);
+        var persistentNoticeVersion = UtilityGame.SafeReadAllText(noticeVersionPath);
         if (!string.IsNullOrEmpty(persistentNoticeVersion))
         {
             ChannelManager.instance.noticeVersion = persistentNoticeVersion;
@@ -238,7 +238,7 @@ public class AssetbundleUpdater : MonoBehaviour
             else
             {
                 // 对比版本号更新
-                needDownloadGame = BuildUtils.CheckIsNewVersion(clientAppVersion, serverAppVersion);
+                needDownloadGame = UtilityBuild.CheckIsNewVersion(clientAppVersion, serverAppVersion);
             }
 #elif UNITY_IPHONE
             // TODO：iOS下的本地下载要进一步探索，这里先不管
@@ -249,7 +249,7 @@ public class AssetbundleUpdater : MonoBehaviour
         else
         {
             // 外部版本对比版本号更新
-            needDownloadGame = BuildUtils.CheckIsNewVersion(clientAppVersion, serverAppVersion);
+            needDownloadGame = UtilityBuild.CheckIsNewVersion(clientAppVersion, serverAppVersion);
         }
 #endif
 
@@ -262,7 +262,7 @@ public class AssetbundleUpdater : MonoBehaviour
         else
         {
             // 外部版本对比版本号更新
-            needUpdateGame = BuildUtils.CheckIsNewVersion(clientResVersion, serverResVersion);
+            needUpdateGame = UtilityBuild.CheckIsNewVersion(clientResVersion, serverResVersion);
         }
 
 #if UNITY_CLIENT || LOGGER_ON
@@ -284,7 +284,7 @@ public class AssetbundleUpdater : MonoBehaviour
 
     IEnumerator DownloadLocalServerAppVersion()
     {
-        var request = AssetBundleManager.Instance.DownloadAssetFileAsync(BuildUtils.AppVersionFileName);
+        var request = AssetBundleManager.Instance.DownloadAssetFileAsync(UtilityBuild.AppVersionFileName);
         yield return request;
         if (request.error != null)
         {
@@ -305,7 +305,7 @@ public class AssetbundleUpdater : MonoBehaviour
 
     IEnumerator DownloadLocalServerResVersion()
     {
-        var request = AssetBundleManager.Instance.DownloadAssetFileAsync(BuildUtils.ResVersionFileName);
+        var request = AssetBundleManager.Instance.DownloadAssetFileAsync(UtilityBuild.ResVersionFileName);
         yield return request;
         if (request.error != null)
         {
@@ -339,7 +339,7 @@ public class AssetbundleUpdater : MonoBehaviour
 #elif UNITY_IPHONE
         // TODO：ios下载还有待探索
 #endif
-        URLSetting.SERVER_RESOURCE_URL = localSerUrlRequest.text + BuildUtils.ManifestBundleName + "/";
+        URLSetting.SERVER_RESOURCE_URL = localSerUrlRequest.text + UtilityBuild.ManifestBundleName + "/";
         localSerUrlRequest.Dispose();
 
         // 从本地服务器拉一下App版本号
@@ -357,7 +357,7 @@ public class AssetbundleUpdater : MonoBehaviour
 
         bool GetUrlListComplete = false;
         WWW www = null;
-        SimpleHttp.HttpPost(URLSetting.START_UP_URL, null, DataUtils.StringToBytes(args), (WWW wwwInfo) => {
+        SimpleHttp.HttpPost(URLSetting.START_UP_URL, null, UtilityData.StringToBytes(args), (WWW wwwInfo) => {
             www = wwwInfo;
             GetUrlListComplete = true;
         });
@@ -372,7 +372,7 @@ public class AssetbundleUpdater : MonoBehaviour
             yield return OutnetGetUrlList();
         }
 
-        var urlList = (Dictionary<string, object>)MiniJSON.Json.Deserialize(DataUtils.BytesToString(www.bytes));
+        var urlList = (Dictionary<string, object>)MiniJSON.Json.Deserialize(UtilityData.BytesToString(www.bytes));
         if (urlList == null)
         {
             Logger.LogError("Get url list for args {0} with err : {1}", args, "Deserialize url list null!");
@@ -402,7 +402,7 @@ public class AssetbundleUpdater : MonoBehaviour
         if (urlList.ContainsKey("notice_version") && !string.IsNullOrEmpty(urlList["notice_version"].ToString()))
         {
             ChannelManager.instance.noticeVersion = urlList["notice_version"].ToString();
-            GameUtility.SafeWriteAllText(noticeVersionPath, ChannelManager.instance.noticeVersion);
+            UtilityGame.SafeWriteAllText(noticeVersionPath, ChannelManager.instance.noticeVersion);
         }
         if (urlList.ContainsKey("notice_url") && !string.IsNullOrEmpty(urlList["notice_url"].ToString()))
         {
@@ -542,8 +542,8 @@ public class AssetbundleUpdater : MonoBehaviour
             yield return request;
             if (request.error == null)
             {
-                var path = AssetBundleUtility.GetPersistentDataPath(BuildUtils.UpdateNoticeFileName);
-                GameUtility.SafeWriteAllText(path, request.text);
+                var path = AssetBundleUtility.GetPersistentDataPath(UtilityBuild.UpdateNoticeFileName);
+                UtilityGame.SafeWriteAllText(path, request.text);
             }
             request.Dispose();
         }
@@ -594,7 +594,7 @@ public class AssetbundleUpdater : MonoBehaviour
 
     IEnumerator GetDownloadAssetBundlesSize()
     {
-        var request = AssetBundleManager.Instance.DownloadAssetFileAsync(BuildUtils.AssetBundlesSizeFileName);
+        var request = AssetBundleManager.Instance.DownloadAssetFileAsync(UtilityBuild.AssetBundlesSizeFileName);
         yield return request;
         if (request.error != null)
         {
@@ -669,7 +669,7 @@ public class AssetbundleUpdater : MonoBehaviour
         statusText.text = "正在准备资源...";
 
         // 保存服务器资源版本号与Manifest
-        GameUtility.SafeWriteAllText(resVersionPath, serverResVersion);
+        UtilityGame.SafeWriteAllText(resVersionPath, serverResVersion);
         clientResVersion = serverResVersion;
         hostManifest.SaveToDiskCahce();
         
@@ -712,7 +712,7 @@ public class AssetbundleUpdater : MonoBehaviour
                     downloadingRequest.RemoveAt(i);
                     finishedDownloadCount++;
                     var filePath = AssetBundleUtility.GetPersistentDataPath(request.assetbundleName);
-                    GameUtility.SafeWriteAllBytes(filePath, request.bytes);
+                    UtilityGame.SafeWriteAllBytes(filePath, request.bytes);
                 }
                 request.Dispose();
             }

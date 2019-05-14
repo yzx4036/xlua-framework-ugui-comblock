@@ -31,7 +31,7 @@ namespace AssetBundles
             get
             {
                 string outputPath = Path.Combine(System.Environment.CurrentDirectory, AssetBundlesFolderName);
-                GameUtility.CheckDirAndCreateWhenNeeded(outputPath);
+                UtilityGame.CheckDirAndCreateWhenNeeded(outputPath);
                 return outputPath;
             }
         }

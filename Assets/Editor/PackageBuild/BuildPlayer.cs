@@ -23,13 +23,13 @@ public class BuildPlayer : Editor
     public static void WriteChannelNameFile(BuildTarget buildTarget, string channelName)
     {
         var outputPath = PackageUtils.GetAssetBundleOutputPath(buildTarget, channelName);
-        GameUtility.SafeWriteAllText(Path.Combine(outputPath, BuildUtils.ChannelNameFileName), channelName);
+        UtilityGame.SafeWriteAllText(Path.Combine(outputPath, UtilityBuild.ChannelNameFileName), channelName);
     }
 
     public static void WriteAssetBundleSize(BuildTarget buildTarget, string channelName)
     {
         var outputPath = PackageUtils.GetAssetBundleOutputPath(buildTarget, channelName);
-        var allAssetbundles = GameUtility.GetSpecifyFilesInFolder(outputPath, new string[] { ".assetbundle" });
+        var allAssetbundles = UtilityGame.GetSpecifyFilesInFolder(outputPath, new string[] { ".assetbundle" });
         StringBuilder sb = new StringBuilder();
         if (allAssetbundles != null && allAssetbundles.Length > 0)
         {
@@ -38,11 +38,11 @@ public class BuildPlayer : Editor
                 FileInfo fileInfo = new FileInfo(assetbundle);
                 int size = (int)(fileInfo.Length / 1024) + 1;
                 var path = assetbundle.Substring(outputPath.Length + 1);
-                sb.AppendFormat("{0}{1}{2}\n", GameUtility.FormatToUnityPath(path), AssetBundleConfig.CommonMapPattren, size);
+                sb.AppendFormat("{0}{1}{2}\n", UtilityGame.FormatToUnityPath(path), AssetBundleConfig.CommonMapPattren, size);
             }
         }
         string content = sb.ToString().Trim();
-        GameUtility.SafeWriteAllText(Path.Combine(outputPath, BuildUtils.AssetBundlesSizeFileName), content);
+        UtilityGame.SafeWriteAllText(Path.Combine(outputPath, UtilityBuild.AssetBundlesSizeFileName), content);
     }
     
     private static void InnerBuildAssetBundles(BuildTarget buildTarget, string channelName, bool writeConfig)
@@ -158,7 +158,7 @@ public class BuildPlayer : Editor
         if (channel.IsGooglePlay())
         {
             savePath = Path.Combine(savePath, "GooglePlay");
-            GameUtility.SafeDeleteDir(savePath);
+            UtilityGame.SafeDeleteDir(savePath);
             BuildPipeline.BuildPlayer(GetBuildScenes(), savePath, buildTarget, BuildOptions.AcceptExternalModificationsToPlayer);
         }
         else
@@ -167,7 +167,7 @@ public class BuildPlayer : Editor
             BuildPipeline.BuildPlayer(GetBuildScenes(), savePath, buildTarget, BuildOptions.None);
         }
         string outputPath = Path.Combine(Application.persistentDataPath, AssetBundleConfig.AssetBundlesFolderName);
-        GameUtility.SafeDeleteDir(outputPath);
+        UtilityGame.SafeDeleteDir(outputPath);
         Debug.Log(string.Format("Build android player for : {0} done! output ：{1}", channelName, savePath));
     }
     
@@ -186,7 +186,7 @@ public class BuildPlayer : Editor
 
         string buildFolder = Path.Combine(System.Environment.CurrentDirectory, XCodeOutputPath);
         buildFolder = Path.Combine(buildFolder, channelName);
-        GameUtility.CheckDirAndCreateWhenNeeded(buildFolder);
+        UtilityGame.CheckDirAndCreateWhenNeeded(buildFolder);
 
         string iconPath = "Assets/Editor/icon/ios/{0}/{1}.png";
         string[] iconSizes = new string[] { "180", "167","152", "144", "120", "114", "76", "72", "57" };
@@ -205,7 +205,7 @@ public class BuildPlayer : Editor
         BuildPipeline.BuildPlayer(GetBuildScenes(), buildFolder, buildTarget, BuildOptions.None);
 
         string outputPath = Path.Combine(Application.persistentDataPath, AssetBundleConfig.AssetBundlesFolderName);
-        GameUtility.SafeDeleteDir(outputPath);
+        UtilityGame.SafeDeleteDir(outputPath);
     }
 	
 	static string[] GetBuildScenes()

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.IO;
 
-public class DataUtils
+public class UtilityData
 {
     public static void CopyBytes(byte[] copyTo, int offsetTo, byte[] copyFrom, int offsetFrom, int count)
     {
