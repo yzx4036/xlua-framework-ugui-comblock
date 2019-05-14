@@ -1,10 +1,4 @@
-﻿/*
-    Author: keemooc
-    Date: 2016.05.13 AT 15:36:00
-    E-Mail: 505297071@qq.com
-*/
-
-using HedgehogTeam.EasyTouch;
+﻿using HedgehogTeam.EasyTouch;
 using XLua;
 using System;
 using System.Collections.Generic;
@@ -42,7 +36,7 @@ namespace Sword
             set { _calls[index] = value; }
         }
     }
-    public class TouchMgr : Singleton<TouchMgr>
+    public class TouchManager : Singleton<TouchManager>
     {
         public SortedList<int, LayerInfo> _allLayers = new SortedList<int, LayerInfo>();
         private bool mIsTouch = true;
@@ -50,12 +44,12 @@ namespace Sword
         EasyTouch mET;
         GameObject go;
 
-        public TouchMgr()
+        public TouchManager()
         {
 
         }
 
-        public void Init()
+        public override void Init()
         {
             EasyTouch.On_SimpleTap += OnTap;
             EasyTouch.On_DoubleTap += OnDoubleTap;

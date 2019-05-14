@@ -3,6 +3,7 @@ using System.Collections;
 using AssetBundles;
 using GameChannel;
 using System;
+using HedgehogTeam.EasyTouch;
 using XLua;
 
 [Hotfix]
@@ -49,6 +50,13 @@ public class GameLaunch : MonoBehaviour
         XLuaManager.Instance.OnInit();
         XLuaManager.Instance.StartHotfix();
         Logger.Log(string.Format("XLuaManager StartHotfix use {0}ms", (DateTime.Now - start).Milliseconds));
+
+        // 启动easytouch扩展管理
+        start = DateTime.Now;
+        Sword.SceneRootManager.instance.Init();
+        Sword.EventManager.instance.Init();
+        Sword.TouchManager.instance.Init();
+        Logger.Log(string.Format("TouchMgr Init use {0}ms", (DateTime.Now - start).Milliseconds));
 
         // 初始化UI界面
         yield return InitLaunchPrefab();

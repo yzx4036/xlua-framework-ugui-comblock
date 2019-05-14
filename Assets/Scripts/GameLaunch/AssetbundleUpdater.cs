@@ -6,6 +6,7 @@ using AssetBundles;
 using XLua;
 using GameChannel;
 using System;
+using System.Diagnostics;
 
 /// <summary>
 /// added by wsh @ 2017.12.29
@@ -144,7 +145,6 @@ public class AssetbundleUpdater : MonoBehaviour
 #endif
         Logger.clientVerstion = clientAppVersion;
         ChannelManager.instance.resVersion = serverResVersion;
-
         XLuaManager.Instance.StartGame();
         CustomDataStruct.Helper.Startup();
         UINoticeTip.Instance.DestroySelf();

@@ -27,9 +27,36 @@ public class Logger
     [Conditional("LOGGER_ON")]
     static public void Log(string s, params object[] p)
     {
-        Debug.Log(DateTime.Now + " -- " + (p != null && p.Length > 0 ? string.Format(s, p) : s));
+        sb.Clear();
+        sb.Append(">");
+        sb.Append(DateTime.Now);
+        sb.Append("--");
+        if (p != null && p.Length > 0)
+            sb.AppendFormat(s, p);
+        else
+            sb.Append(s);
+        
+        Debug.Log(sb.ToString());
     }
+    
 
+    [Conditional("UNITY_EDITOR")]
+    [Conditional("LOGGER_ON")]
+    static public void LogColor(Color color,  string s, params object[] p)
+    {
+        sb.Clear();
+        sb = sb.AppendFormat(@"<color=#{0}>", ColorUtility.ToHtmlStringRGB(color));
+        sb.Append(">");
+        sb.Append(DateTime.Now);
+        sb.Append("--");
+        if (p != null && p.Length > 0)
+            sb.AppendFormat(s, p);
+        else
+            sb.Append(s);
+        sb.Append("</color>");
+        Debug.Log(sb.ToString());
+    }
+    
     [Conditional("UNITY_EDITOR")]
     [Conditional("LOGGER_ON")]
     static public void Log(object o)
@@ -128,6 +155,7 @@ public class Logger
 
     private static void DealWithReportError()
     {
+        sb.Clear();
         int errorCount = m_errorList.Count;
         if (errorCount > 0)
         {
