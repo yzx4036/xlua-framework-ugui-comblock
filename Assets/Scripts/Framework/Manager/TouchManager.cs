@@ -48,10 +48,12 @@ namespace Sword
     {
         public SortedList<int, LayerInfo> _allLayers = new SortedList<int, LayerInfo>();
         private bool mIsTouch = true;
+
+        private bool mIsInit = false;
         //private NotifyDispatcher _touchNotify = new NotifyDispatcher(NotifyDispatcher.Type.Touch);
         EasyTouch mET;
         GameObject go;
-
+        
         public TouchManager()
         {
 
@@ -59,28 +61,34 @@ namespace Sword
 
         public override void Init()
         {
-            EasyTouch.On_SimpleTap += OnTap;
-            EasyTouch.On_DoubleTap += OnDoubleTap;
-            EasyTouch.On_TouchStart += OnTouchStart;
-            EasyTouch.On_TouchUp += OnTouchEnd;
+            if (!mIsInit)
+            {
+                EasyTouch.On_SimpleTap += OnTap;
+                EasyTouch.On_DoubleTap += OnDoubleTap;
+                EasyTouch.On_TouchStart += OnTouchStart;
+                EasyTouch.On_TouchUp += OnTouchEnd;
 
-            EasyTouch.On_SwipeStart += OnSwipeBegin;
-            EasyTouch.On_Swipe += OnSwipe;
-            EasyTouch.On_SwipeEnd += OnSwipeEnd;
+                EasyTouch.On_SwipeStart += OnSwipeBegin;
+                EasyTouch.On_Swipe += OnSwipe;
+                EasyTouch.On_SwipeEnd += OnSwipeEnd;
 
-            EasyTouch.On_DragStart += OnDragBegin;
-            EasyTouch.On_Drag += OnDrag;
-            EasyTouch.On_DragEnd += OnDragEnd;
+                EasyTouch.On_DragStart += OnDragBegin;
+                EasyTouch.On_Drag += OnDrag;
+                EasyTouch.On_DragEnd += OnDragEnd;
 
-            EasyTouch.On_TouchStart2Fingers += OnPinchBegin;
-            EasyTouch.On_PinchIn += OnPinchIn;
-            EasyTouch.On_PinchOut += OnPinchOut;
-            EasyTouch.On_TouchUp2Fingers += OnPinchEnd;
+                EasyTouch.On_TouchStart2Fingers += OnPinchBegin;
+                EasyTouch.On_PinchIn += OnPinchIn;
+                EasyTouch.On_PinchOut += OnPinchOut;
+                EasyTouch.On_TouchUp2Fingers += OnPinchEnd;
 
-            EasyTouch.On_UIElementTouchUp += OnUIElimentTouchUp;
+                EasyTouch.On_UIElementTouchUp += OnUIElimentTouchUp;
 
-            go = GameObject.Find("Scene/Event");
-            mET = go.GetComponent<EasyTouch>();
+                go = GameObject.Find("Scene/Event");
+                mET = go.GetComponent<EasyTouch>();
+
+                mIsInit = true;
+            }
+
         }
 
         public override void Dispose()
@@ -114,6 +122,7 @@ namespace Sword
             EasyTouch.On_PinchIn -= OnPinchIn;
             EasyTouch.On_PinchOut -= OnPinchOut;
             EasyTouch.On_TouchUp2Fingers -= OnPinchEnd;
+            mIsInit = false;
         }
 
         #region EasyTouch Events
@@ -137,6 +146,7 @@ namespace Sword
         }
         public void OnTouchStart(Gesture gt)
         {
+            
             Do(TouchEventType.TouchStart, gt);
         }
         public void OnTouchEnd(Gesture gt)
@@ -208,13 +218,12 @@ namespace Sword
                     call = item.Value[type];
                     if (call != null)
                     {
-                        call(gt);
-//                        if ((bool)call(gt)[0])
-//                        {
-//                            //todo 修改派发 
-////                            Facade.TouchNotify.Dispatch((item.Value.Layer), type);
-//                            break;
-//                        }
+                        if (call(gt))
+                        {
+                            //todo 修改派发 
+//                            Facade.TouchNotify.Dispatch((item.Value.Layer), type);
+                            break;
+                        }
                     }
 
                 }

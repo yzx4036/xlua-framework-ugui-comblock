@@ -24,7 +24,7 @@ local function OnCreate(self)
 	-- 临时：角色动画控制脚本
 	self.charaAnim = nil
 
-	self._layer = UtilityLuaCallCS.CreateTouchLayer(ConstTouchLayer.Explorer, self)
+	--self._layer = UtilityLuaCallCS.CreateTouchLayer(ConstTouchLayer.Explorer, self)
 
 end
 
@@ -32,10 +32,9 @@ end
 ---@param self BattleScene
 local function OnComplete(self)
 	base.OnComplete(self)
-	UtilityLuaCallCS.AddTouchLayer(self._layer)
+	--UtilityLuaCallCS.AddTouchLayer(self._layer)
 
     self.cameraGo = GameObject.Find("Main Camera")
-    Logger.Log(">>>>%s", self.cameraGo)
 	UtilityLuaCallCS.AddCameraToEasyTouch(self.cameraGo)
 
 	-- 创建角色
@@ -67,15 +66,15 @@ local function OnLeave(self)
 	self.charaAnim = nil
 	SingleGet.UIManager():CloseWindow(UIWindowNames.UIBattleMain)
 	UtilityLuaCallCS.RemoveCameraFromEasyTouch(self.cameraGo)
-	UtilityLuaCallCS.RemoveTouchLayer(self._layer)
+	--UtilityLuaCallCS.RemoveTouchLayer(self._layer)
 	base.OnLeave(self)
 end
 
-function BattleScene:OnTap(go)
-	Logger.Log("OnTap %s %s", go.pickedObject, go.position)
-	return true
-end
---
+--function BattleScene:OnTap(go)
+--	Logger.Log("OnTap %s %s", go.pickedObject, go.position)
+--	return true
+--end
+----
 --function BattleScene:OnTouchStart(go)
 --	Logger.Log("OnTouchStart %s %s", go.pickedObject, go.position)
 --	return true

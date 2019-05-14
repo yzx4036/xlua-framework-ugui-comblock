@@ -77,8 +77,6 @@ namespace Sword
                 var func = _luaModule.Get<EventCallLua>(methodName);
                 if (func != null)
                 {
-                    Logger.LogColor(Color.magenta, ">>>????methodName", methodName);
-
                     return func(_luaModule, go);
                 }
             }
