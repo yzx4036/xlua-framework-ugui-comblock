@@ -206,21 +206,21 @@ public class PackageUtils
     public static string GetAssetBundleRelativePath(BuildTarget target, string channelName)
     {
         string outputPath = GetChannelRelativePath(target, channelName);
-        outputPath = Path.Combine(outputPath, BuildUtils.ManifestBundleName);
+        outputPath = Path.Combine(outputPath, UtilityBuild.ManifestBundleName);
         return outputPath;
     }
 
     public static string GetChannelOutputPath(BuildTarget target, string channelName)
     {
         string outputPath = Path.Combine(AssetBundleConfig.AssetBundlesBuildOutputPath, GetChannelRelativePath(target, channelName));
-        GameUtility.CheckDirAndCreateWhenNeeded(outputPath);
+        UtilityGame.CheckDirAndCreateWhenNeeded(outputPath);
         return outputPath;
     }
 
     public static string GetAssetBundleOutputPath(BuildTarget target, string channelName)
     {
         string outputPath = Path.Combine(AssetBundleConfig.AssetBundlesBuildOutputPath, GetAssetBundleRelativePath(target, channelName));
-        GameUtility.CheckDirAndCreateWhenNeeded(outputPath);
+        UtilityGame.CheckDirAndCreateWhenNeeded(outputPath);
         return outputPath;
     }
 
@@ -234,7 +234,7 @@ public class PackageUtils
     public static string GetAssetbundleManifestPath(BuildTarget target, string channelName)
     {
         string outputPath = GetAssetBundleOutputPath(target, channelName);
-        return Path.Combine(outputPath, BuildUtils.ManifestBundleName);
+        return Path.Combine(outputPath, UtilityBuild.ManifestBundleName);
     }
 
     public static string GetCurPlatformChannelRelativePath()
@@ -261,7 +261,7 @@ public class PackageUtils
     public static string GetCurBuildSettingStreamingManifestPath()
     {
         string path = AssetBundleUtility.GetStreamingAssetsDataPath();
-        path = Path.Combine(path, BuildUtils.ManifestBundleName);
+        path = Path.Combine(path, UtilityBuild.ManifestBundleName);
         return path;
     }
 
@@ -273,7 +273,7 @@ public class PackageUtils
             Debug.LogError("You need to build assetbundles first to get assetbundle dependencis info!");
             return null;
         }
-        byte[] bytes = GameUtility.SafeReadAllBytes(fileInfo.FullName);
+        byte[] bytes = UtilityGame.SafeReadAllBytes(fileInfo.FullName);
         if (bytes == null)
         {
             return null;
@@ -289,8 +289,8 @@ public class PackageUtils
         string source = GetAssetBundleOutputPath(buildTarget, channelName);
         string destination = AssetBundleUtility.GetStreamingAssetsDataPath();
         // 有毒，竟然在有的windows系统这个函数删除不了目录，不知道是不是Unity的Bug
-        // GameUtility.SafeDeleteDir(destination);
-        AssetDatabase.DeleteAsset(GameUtility.FullPathToAssetPath(destination));
+        // UtilityGame.SafeDeleteDir(destination);
+        AssetDatabase.DeleteAsset(UtilityGame.FullPathToAssetPath(destination));
         AssetDatabase.Refresh();
 
         try
@@ -303,12 +303,12 @@ public class PackageUtils
             return;
         }
 
-        var allManifest = GameUtility.GetSpecifyFilesInFolder(destination, new string[] { ".manifest" });
+        var allManifest = UtilityGame.GetSpecifyFilesInFolder(destination, new string[] { ".manifest" });
         if (allManifest != null && allManifest.Length > 0)
         {
             for (int i = 0; i < allManifest.Length; i++)
             {
-                GameUtility.SafeDeleteFile(allManifest[i]);
+                UtilityGame.SafeDeleteFile(allManifest[i]);
             }
         }
 
@@ -356,7 +356,7 @@ public class PackageUtils
     {
         string targetPath = Path.Combine(Application.dataPath, "Plugins");
         targetPath = Path.Combine(targetPath, "Android");
-        GameUtility.SafeClearDir(targetPath);
+        UtilityGame.SafeClearDir(targetPath);
         
         string channelPath = Path.Combine(Environment.CurrentDirectory, "Channel");
         string resPath = Path.Combine(channelPath, "UnityCallAndroid_" + channelName);

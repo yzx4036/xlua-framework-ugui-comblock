@@ -1,3 +1,4 @@
+assetsmap_bytes.assetbundle,AssetsMap.bytes
 effect/common.assetbundle,Effect/Common/Materials/models_fx_R.mat
 effect/common.assetbundle,Effect/Common/Materials/models_fx_RGB.mat
 effect/common.assetbundle,Effect/Common/Texture/Matcap_Encode2.png
@@ -181,19 +182,21 @@ models/1001.assetbundle,Models/1001/Character.prefab
 shaders.assetbundle,Shaders/Model/Particles-Add-R.shader
 shaders.assetbundle,Shaders/Model/Particles-Add-RGBA.shader
 shaders.assetbundle,Shaders/UI/T_UIParticle.shader
+shaders.assetbundle,Shaders/UI/UIDafault.shader
 ui/ani.assetbundle,UI/Ani/ui_ani_btn_onclick.anim
 ui/ani.assetbundle,UI/Ani/ui_ani_btn_Scale.controller
 ui/ani.assetbundle,UI/Ani/ui_ani_main_btn_shark.anim
 ui/ani.assetbundle,UI/Ani/ui_ani_TaskFinish.anim
 ui/ani.assetbundle,UI/Ani/ui_ani_TaskFinish.controller
-ui/atlas/comm.assetbundle,UI/Atlas/Comm/Comm.spriteatlas
-ui/atlas/etcsprites.assetbundle,UI/Atlas/ETCSprites/ETCSprites.spriteatlas
-ui/atlas/group.assetbundle,UI/Atlas/Group/Group.spriteatlas
-ui/atlas/hyper.assetbundle,UI/Atlas/Hyper/Hyper.spriteatlas
-ui/atlas/login.assetbundle,UI/Atlas/Login/Login.spriteatlas
-ui/atlas/role.assetbundle,UI/Atlas/Role/Role.spriteatlas
+ui/atlas/comm_spriteatlas.assetbundle,UI/Atlas/Comm.spriteatlas
+ui/atlas/etcsprites_spriteatlas.assetbundle,UI/Atlas/ETCSprites.spriteatlas
+ui/atlas/group_spriteatlas.assetbundle,UI/Atlas/Group.spriteatlas
+ui/atlas/hyper_spriteatlas.assetbundle,UI/Atlas/Hyper.spriteatlas
+ui/atlas/login_spriteatlas.assetbundle,UI/Atlas/Login.spriteatlas
+ui/atlas/role_spriteatlas.assetbundle,UI/Atlas/Role.spriteatlas
 ui/fonts/system_art_ttf.assetbundle,UI/Fonts/system_art.TTF
 ui/fonts/system_ttf.assetbundle,UI/Fonts/system.TTF
+ui/materials/ui_default_mat.assetbundle,UI/Materials/ui_default.mat
 ui/prefabs/common/uinoticetip_prefab.assetbundle,UI/Prefabs/Common/UINoticeTip.prefab
 ui/prefabs/view/uibattlemain_prefab.assetbundle,UI/Prefabs/View/UIBattleMain.prefab
 ui/prefabs/view/uilaunch_prefab.assetbundle,UI/Prefabs/View/UILaunch.prefab
@@ -201,3 +204,4 @@ ui/prefabs/view/uiloading_prefab.assetbundle,UI/Prefabs/View/UILoading.prefab
 ui/prefabs/view/uilogin_prefab.assetbundle,UI/Prefabs/View/UILogin.prefab
 ui/prefabs/view/uiloginserver_prefab.assetbundle,UI/Prefabs/View/UILoginServer.prefab
 ui/prefabs/view/uitestmain_prefab.assetbundle,UI/Prefabs/View/UITestMain.prefab
+variantsmap_bytes.assetbundle,VariantsMap.bytes

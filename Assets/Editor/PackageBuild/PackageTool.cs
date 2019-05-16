@@ -416,16 +416,16 @@ public class PackageTool : EditorWindow
     {
         // 从资源版本号文件（当前渠道AB输出目录中）加载资源版本号
         string rootPath = PackageUtils.GetAssetBundleOutputPath(target, channel.ToString());
-        return GameUtility.SafeReadAllText(Path.Combine(rootPath, BuildUtils.ResVersionFileName));
+        return UtilityGame.SafeReadAllText(Path.Combine(rootPath, UtilityBuild.ResVersionFileName));
     }
 
     public static void SaveAllVersionFile(BuildTarget target, ChannelType channel)
     {
         // 保存所有版本号信息到资源版本号文件（当前渠道AB输出目录中）
         string rootPath = PackageUtils.GetAssetBundleOutputPath(target, channel.ToString());
-        GameUtility.SafeWriteAllText(Path.Combine(rootPath, BuildUtils.ResVersionFileName), resVersion);
-        GameUtility.SafeWriteAllText(Path.Combine(rootPath, BuildUtils.NoticeVersionFileName), resVersion);
-        GameUtility.SafeWriteAllText(Path.Combine(rootPath, BuildUtils.AppVersionFileName), bundleVersion);
+        UtilityGame.SafeWriteAllText(Path.Combine(rootPath, UtilityBuild.ResVersionFileName), resVersion);
+        UtilityGame.SafeWriteAllText(Path.Combine(rootPath, UtilityBuild.NoticeVersionFileName), resVersion);
+        UtilityGame.SafeWriteAllText(Path.Combine(rootPath, UtilityBuild.AppVersionFileName), bundleVersion);
     }
 
     public static void LoadCurrentResVersionFromFile(bool silence = false)

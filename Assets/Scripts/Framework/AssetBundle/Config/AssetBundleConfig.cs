@@ -24,6 +24,7 @@ namespace AssetBundles
         public const string AssetBundleServerUrlFileName = "AssetBundleServerUrl.txt";
         public const string VariantMapParttren = "Variant";
         public const string CommonMapPattren = ",";
+        public const string AtlasRoot = "UI/Atlas/";
 
 #if UNITY_EDITOR
         public static string AssetBundlesBuildOutputPath
@@ -31,7 +32,7 @@ namespace AssetBundles
             get
             {
                 string outputPath = Path.Combine(System.Environment.CurrentDirectory, AssetBundlesFolderName);
-                GameUtility.CheckDirAndCreateWhenNeeded(outputPath);
+                UtilityGame.CheckDirAndCreateWhenNeeded(outputPath);
                 return outputPath;
             }
         }

@@ -33,9 +33,9 @@ namespace XLua
         {
             get
             {
-                if (rawL == RealStatePtr.Zero)
+                if (rawL == RealStatePtr.Zero)        
                 {
-                    throw new InvalidOperationException("this lua env had disposed!");
+                    throw new InvalidOperationException( "this lua env had disposed!");
                 }
                 return rawL;
             }
@@ -356,7 +356,7 @@ namespace XLua
 #endif
         }
 
-        //¼æÈÝAPI
+        //ï¿½ï¿½ï¿½ï¿½API
         public void GC()
         {
             Tick();
@@ -597,8 +597,8 @@ namespace XLua
 
         internal List<CustomLoader> customLoaders = new List<CustomLoader>();
 
-        //loader : CustomLoader£¬ filepath²ÎÊý£º£¨refÀàÐÍ£©ÊäÈëÊÇrequireµÄ²ÎÊý£¬Èç¹ûÐèÒªÖ§³Öµ÷ÊÔ£¬ÐèÒªÊä³öÕæÊµÂ·¾¶¡£
-        //                        ·µ»ØÖµ£ºÈç¹û·µ»Ønull£¬´ú±í¼ÓÔØ¸ÃÔ´ÏÂÎÞºÏÊÊµÄÎÄ¼þ£¬·ñÔò·µ»ØUTF8±àÂëµÄbyte[]
+        //loader : CustomLoaderï¿½ï¿½ filepathï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½refï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½requireï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÖ§ï¿½Öµï¿½ï¿½Ô£ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ÊµÂ·ï¿½ï¿½ï¿½ï¿½
+        //                        ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nullï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½Ô´ï¿½ï¿½ï¿½Þºï¿½ï¿½Êµï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»ï¿½UTF8ï¿½ï¿½ï¿½ï¿½ï¿½byte[]
         public void AddLoader(CustomLoader loader)
         {
             customLoaders.Add(loader);

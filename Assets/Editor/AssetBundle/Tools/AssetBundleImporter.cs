@@ -183,8 +183,8 @@ namespace AssetBundles
         
         private string FullPathToAssetPath(string fullPath)
         {
-            string retPath = GameUtility.FullPathToAssetPath(fullPath);
-            if (retPath.Equals(GameUtility.AssetsFolderName))
+            string retPath = UtilityGame.FullPathToAssetPath(fullPath);
+            if (retPath.Equals(UtilityGame.AssetsFolderName))
             {
                 return null;
             }

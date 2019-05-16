@@ -27,12 +27,14 @@ Time		= require "Common.Tools.UnityEngine.Time"
 Object		= require "Common.Tools.UnityEngine.Object"
 
 list		= require "Common.Tools.list"
-UIPackage       = CS.FairyGUI.UIPackage
-LuaWindow       = CS.FairyGUI.LuaWindow
-UIObjectFactory = CS.FairyGUI.UIObjectFactory
+
+--csharp
+---@type UnityEngine.GameObject
+GameObject = CS.UnityEngine.GameObject
+Camera = CS.UnityEngine.Camera
+UtilityLuaCallCS = CS.Util.UtiltyLuaCallCS
 
 require "Common.Tools.event"
-PrintTable = require "Common.Tools.print_r"
 
 --Ease            = CS.DG.Tweening.Ease
 --

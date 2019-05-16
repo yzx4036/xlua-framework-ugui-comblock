@@ -7,7 +7,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.MessageFormat;
 
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;

@@ -29,6 +29,7 @@ Updatable = require "Framework.Common.Updatable"
 ---@type UpdatableSingleton
 UpdatableSingleton = require "Framework.Common.UpdatableSingleton"
 SortingLayerNames = require "Global.SortingLayerNames"
+---@type LoggerLua
 Logger = require "Framework.Logger.Logger"
 require "Framework.Updater.Coroutine"
 
@@ -120,6 +121,19 @@ EffectManager = require "Framework.Resource.Effect.EffectManager"
 ---@type HallConnector
 HallConnector = require "Net.Connector.HallConnector"
 
+
+ConstTouchLayer =
+{
+    None = -1,
+    CityTower = 8000,
+    TowerRange = 9000,
+    Attacker = 10000,
+    HeroSkillCast = 80000,
+    PVPEdit = 88888,
+    School = 88889,
+    Camera = 90000,
+    Explorer = 20000,
+}
 -- 单例类初始化
 SingleGet.UIManager()
 SingleGet.DataManager()

@@ -63,7 +63,7 @@ namespace AssetBundles
             if (GUILayout.Button("Create AssetBundle Dispatcher"))
             {
                 var dir = Path.GetDirectoryName(databaseAssetPath);
-                GameUtility.CheckDirAndCreateWhenNeeded(dir);
+                UtilityGame.CheckDirAndCreateWhenNeeded(dir);
 
                 var instance = CreateInstance<AssetBundleDispatcherConfig>();
                 AssetDatabase.CreateAsset(instance, databaseAssetPath);
@@ -204,7 +204,7 @@ namespace AssetBundles
 
         void Remove()
         {
-            GameUtility.SafeDeleteFile(databaseAssetPath);
+            UtilityGame.SafeDeleteFile(databaseAssetPath);
             AssetDatabase.Refresh();
 
             Initialize();

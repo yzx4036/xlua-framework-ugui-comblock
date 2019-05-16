@@ -59,7 +59,7 @@ namespace AssetBundles
                 mappingList.Add(mappingItem);
             }
             mappingList.Sort();
-            if (!GameUtility.SafeWriteAllLines(outputFilePath, mappingList.ToArray()))
+            if (!UtilityGame.SafeWriteAllLines(outputFilePath, mappingList.ToArray()))
             {
                 Debug.LogError("BuildVariantMapping failed!!! try rebuild it again!");
             }
