@@ -76,6 +76,8 @@ public static class GenConfig
         typeof(UnityEngine.UI.ContentSizeFitter),
         typeof(UnityEngine.UI.Slider),
         typeof(UnityEngine.U2D.SpriteAtlas),
+        typeof(UnityEngine.U2D.SpriteAtlasManager),
+
         // easy touch
         // TODO：后续需要什么脚本再添加进来
         typeof(ETCArea),
@@ -110,6 +112,7 @@ public static class GenConfig
         typeof(System.Collections.IEnumerator),
         typeof(UnityEngine.Events.UnityAction<Vector2>),
         typeof(Sword.EventCallLua),
+//        typeof(UnityEngine.U2D.SpriteAtlasManager.RequestAtlasCallback)
     };
 
 	//黑名单

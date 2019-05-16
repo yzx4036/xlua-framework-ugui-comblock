@@ -23,7 +23,7 @@ public class GameLaunch : MonoBehaviour
         UnityEngine.iOS.NotificationServices.RegisterForNotifications(UnityEngine.iOS.NotificationType.Alert | UnityEngine.iOS.NotificationType.Badge | UnityEngine.iOS.NotificationType.Sound);
         UnityEngine.iOS.Device.SetNoBackupFlag(Application.persistentDataPath);
 #endif
-
+        
         // 初始化App版本
         var start = DateTime.Now;
         yield return InitAppVersion();
@@ -33,7 +33,7 @@ public class GameLaunch : MonoBehaviour
         start = DateTime.Now;
         yield return InitChannel();
         Logger.Log(string.Format("InitChannel use {0}ms", (DateTime.Now - start).Milliseconds));
-
+        
         // 启动资源管理模块
         start = DateTime.Now;
         yield return AssetBundleManager.Instance.Initialize();
@@ -50,14 +50,20 @@ public class GameLaunch : MonoBehaviour
         XLuaManager.Instance.OnInit();
         XLuaManager.Instance.StartHotfix();
         Logger.Log(string.Format("XLuaManager StartHotfix use {0}ms", (DateTime.Now - start).Milliseconds));
-
+        
         // 启动easytouch扩展管理
         start = DateTime.Now;
         Sword.SceneRootManager.instance.Init();
         Sword.EventManager.instance.Init();
         Sword.TouchManager.instance.Init();
         Logger.Log(string.Format("TouchMgr Init use {0}ms", (DateTime.Now - start).Milliseconds));
-
+        
+        // 启动ugui图集管理器
+        start = DateTime.Now;
+        Sword.SpriteAtlasManager.Instance.Startup();
+        Logger.Log(string.Format("SpriteAtlasManager Init use {0}ms", (DateTime.Now - start).Milliseconds));
+        yield return new WaitForSeconds(0.1f);
+        
         // 初始化UI界面
         yield return InitLaunchPrefab();
         yield return null;
@@ -68,8 +74,7 @@ public class GameLaunch : MonoBehaviour
         {
             updater.StartCheckUpdate();
         }
-        yield break;
-	}
+    }
 
     IEnumerator InitAppVersion()
     {
@@ -160,6 +165,9 @@ public class GameLaunch : MonoBehaviour
         }
         var go = InstantiateGameObject(launchPrefab);
         updater = go.AddComponent<AssetbundleUpdater>();
+        go.SetActive(false);
+        yield return new WaitForEndOfFrame();
+        go.SetActive(true);
         yield break;
     }
 }

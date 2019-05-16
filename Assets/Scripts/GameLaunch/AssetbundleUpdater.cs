@@ -233,7 +233,7 @@ public class AssetbundleUpdater : MonoBehaviour
             {
                 // TODO：这里还要探索下怎么下载
                 needDownloadGame = false;
-                Debug.LogError("No support for local server download game for GooglePlay now !!!");
+                Logger.LogError("No support for local server download game for GooglePlay now !!!");
             }
             else
             {
@@ -243,7 +243,7 @@ public class AssetbundleUpdater : MonoBehaviour
 #elif UNITY_IPHONE
             // TODO：iOS下的本地下载要进一步探索，这里先不管
             needDownloadGame = false;
-            Debug.LogError("No support for local server download game for iOS now !!!");
+            Logger.LogError("No support for local server download game for iOS now !!!");
 #endif
         }
         else

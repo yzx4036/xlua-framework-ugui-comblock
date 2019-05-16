@@ -19,10 +19,11 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T
                     if (parent == null)
                     {
                         parent = new GameObject("Boot");
-                        GameObject.DontDestroyOnLoad(parent);
+//                        Logger.LogColor(Color.yellow, ">>?>>dsadadsa");
                     }
                     if (parent != null)
                     {
+                        GameObject.DontDestroyOnLoad(parent);
                         go.transform.parent = parent.transform;
                     }
                 }
@@ -42,13 +43,7 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T
 
     private void Awake()
     {
-        if (mInstance == null)
-        {
-            mInstance = this as T;
-        }
-
-        DontDestroyOnLoad(gameObject);
-        Init();
+        Instance.Init();
     }
  
     protected virtual void Init()
