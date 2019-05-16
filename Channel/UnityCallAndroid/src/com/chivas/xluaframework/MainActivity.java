@@ -23,10 +23,10 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.unity3d.player.UnityPlayer;
-import com.unity3d.player.UnityPlayerNativeActivity;
+import com.unity3d.player.UnityPlayerActivity;
 
 
-public class MainActivity extends UnityPlayerNativeActivity {
+public class MainActivity extends UnityPlayerActivity {
 	
 	SGNotificationService notificationService;
 	private String reyunKey = "623b80b422f9f05d1e8204942eac7a8f";
