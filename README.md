@@ -1,7 +1,7 @@
 声明：本仓库非原项目，原项目请移步 https://github.com/smilehao/xlua-framework 原作者：smilehao
 
 # xlua-framework
-Unity游戏纯lua客户端完整框架---基于xlua，整合tolua的proto-gen-lua以及各个lua库和工具类
+Unity游戏纯lua客户端完整框架---基于xlua，后续整合Kbengine服务端
 ---未完成，持续更新中...
 
 -------------------------------------------------------------------
