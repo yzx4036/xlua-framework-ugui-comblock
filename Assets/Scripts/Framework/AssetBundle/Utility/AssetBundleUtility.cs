@@ -73,7 +73,7 @@ namespace AssetBundles
                 outputPath = Path.Combine(outputPath, assetPath);
             }
 #if UNITY_EDITOR
-            return GameUtility.FormatToSysFilePath(outputPath);
+            return UtilityGame.FormatToSysFilePath(outputPath);
 #else
             return outputPath;
 #endif

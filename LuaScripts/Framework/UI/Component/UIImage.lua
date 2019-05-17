@@ -5,6 +5,7 @@
 -- self.xxx_img = self:AddComponent(UIImage, var_arg)--添加孩子，各种重载方式查看UIBaseContainer
 --]]
 
+---@class UIImage:UIBaseComponent
 local UIImage = BaseClass("UIImage", UIBaseComponent)
 local base = UIBaseComponent
 
@@ -39,7 +40,6 @@ local function SetSpriteName(self, sprite_name)
 		if IsNull(self.unity_uiimage) then
 			return
 		end
-		
 		-- 被加载的Sprite不是当前想要的Sprite：可能预设被复用，之前的加载操作就要作废
 		if sprite_name ~= self.sprite_name then
 			return

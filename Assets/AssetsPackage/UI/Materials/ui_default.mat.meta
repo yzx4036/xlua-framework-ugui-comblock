@@ -1,8 +1,8 @@
 fileFormatVersion: 2
 guid: 7ef2228629627924b894a978e020ecc7
-timeCreated: 1444465426
-licenseType: Free
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
-  assetBundleName: 
+  assetBundleName: ui/materials/ui_default_mat.assetbundle
   assetBundleVariant: 

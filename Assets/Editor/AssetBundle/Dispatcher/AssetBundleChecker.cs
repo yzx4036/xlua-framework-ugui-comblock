@@ -152,7 +152,7 @@ namespace AssetBundles
             channelAssetPath = AssetBundleUtility.PackagePathToAssetsPath(channelAssetPath) + ".bytes";
             if (!File.Exists(channelAssetPath))
             {
-                GameUtility.SafeWriteAllText(channelAssetPath, "None");
+                UtilityGame.SafeWriteAllText(channelAssetPath, "None");
                 AssetDatabase.Refresh();
             }
 

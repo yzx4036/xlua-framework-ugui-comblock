@@ -44,8 +44,6 @@ end
 local function Deactivate(self, target)
     target.Model:Deactivate()
     target.View:SetActive(false)
-    Logger.Log(">>>Deactivate")
-    PrintTable(self.activated_windows)
     self.activated_windows[target.Name] = nil
     self:Broadcast(UIMessageNames.UIFRAME_ON_WINDOW_CLOSE, target)
 end
@@ -430,8 +428,6 @@ end
 ---@param pName string
 function UIManager:IsShowing(pName)
     assert(pName, "窗口名为空，请检查")
-    PrintTable(self.activated_windows)
-    Logger.Log(">>>>window name %s", self.activated_windows[pName])
     return self.activated_windows[pName] ~= nil
 end
 

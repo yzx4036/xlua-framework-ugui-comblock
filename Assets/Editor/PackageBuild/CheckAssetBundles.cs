@@ -17,7 +17,7 @@ public static class CheckAssetBundles
         foreach (var guid in guids)
         {
             var path = AssetDatabase.GUIDToAssetPath(guid);
-            GameUtility.SafeWriteAllText(path, channelName);
+            UtilityGame.SafeWriteAllText(path, channelName);
         }
         AssetDatabase.Refresh();
     }

@@ -96,7 +96,8 @@ namespace AssetBundles
                 item.assetName = splitArr[1];
                 
                 var assetPath = item.assetName;
-                pathLookup.Add(assetPath, item);
+                if(!pathLookup.ContainsKey(assetPath))
+                    pathLookup.Add(assetPath, item);
                 List<string> assetsList = null;
                 assetsLookup.TryGetValue(item.assetbundleName, out assetsList);
                 if (assetsList == null)
@@ -108,7 +109,8 @@ namespace AssetBundles
                     assetsList.Add(item.assetName);
                 }
                 assetsLookup[item.assetbundleName] = assetsList;
-                assetbundleLookup.Add(item.assetName, item.assetbundleName);
+                if(!assetbundleLookup.ContainsKey(item.assetName))
+                    assetbundleLookup.Add(item.assetName, item.assetbundleName);
             }
         }
         

@@ -12,7 +12,9 @@ local setmetatable = setmetatable
 local type = type
 local Mathf = Mathf
 
+---@class Color:ColorBase
 local Color = {}
+---@class ColorBase
 local _getter = {}
 local unity_color = CS.UnityEngine.Color
 

@@ -3,6 +3,7 @@ using System.Collections;
 using AssetBundles;
 using GameChannel;
 using System;
+using HedgehogTeam.EasyTouch;
 using XLua;
 
 [Hotfix]
@@ -22,7 +23,7 @@ public class GameLaunch : MonoBehaviour
         UnityEngine.iOS.NotificationServices.RegisterForNotifications(UnityEngine.iOS.NotificationType.Alert | UnityEngine.iOS.NotificationType.Badge | UnityEngine.iOS.NotificationType.Sound);
         UnityEngine.iOS.Device.SetNoBackupFlag(Application.persistentDataPath);
 #endif
-
+        
         // 初始化App版本
         var start = DateTime.Now;
         yield return InitAppVersion();
@@ -32,7 +33,7 @@ public class GameLaunch : MonoBehaviour
         start = DateTime.Now;
         yield return InitChannel();
         Logger.Log(string.Format("InitChannel use {0}ms", (DateTime.Now - start).Milliseconds));
-
+        
         // 启动资源管理模块
         start = DateTime.Now;
         yield return AssetBundleManager.Instance.Initialize();
@@ -49,7 +50,20 @@ public class GameLaunch : MonoBehaviour
         XLuaManager.Instance.OnInit();
         XLuaManager.Instance.StartHotfix();
         Logger.Log(string.Format("XLuaManager StartHotfix use {0}ms", (DateTime.Now - start).Milliseconds));
-
+        
+        // 启动easytouch扩展管理
+        start = DateTime.Now;
+        Sword.SceneRootManager.instance.Init();
+        Sword.EventManager.instance.Init();
+        Sword.TouchManager.instance.Init();
+        Logger.Log(string.Format("TouchMgr Init use {0}ms", (DateTime.Now - start).Milliseconds));
+        
+        // 启动ugui图集管理器
+        start = DateTime.Now;
+        Sword.SpriteAtlasManager.Instance.Startup();
+        Logger.Log(string.Format("SpriteAtlasManager Init use {0}ms", (DateTime.Now - start).Milliseconds));
+        yield return new WaitForSeconds(0.1f);
+        
         // 初始化UI界面
         yield return InitLaunchPrefab();
         yield return null;
@@ -60,27 +74,26 @@ public class GameLaunch : MonoBehaviour
         {
             updater.StartCheckUpdate();
         }
-        yield break;
-	}
+    }
 
     IEnumerator InitAppVersion()
     {
-        var appVersionRequest = AssetBundleManager.Instance.RequestAssetFileAsync(BuildUtils.AppVersionFileName);
+        var appVersionRequest = AssetBundleManager.Instance.RequestAssetFileAsync(UtilityBuild.AppVersionFileName);
         yield return appVersionRequest;
         var streamingAppVersion = appVersionRequest.text;
         appVersionRequest.Dispose();
 
-        var appVersionPath = AssetBundleUtility.GetPersistentDataPath(BuildUtils.AppVersionFileName);
-        var persistentAppVersion = GameUtility.SafeReadAllText(appVersionPath);
+        var appVersionPath = AssetBundleUtility.GetPersistentDataPath(UtilityBuild.AppVersionFileName);
+        var persistentAppVersion = UtilityGame.SafeReadAllText(appVersionPath);
         Logger.Log(string.Format("streamingAppVersion = {0}, persistentAppVersion = {1}", streamingAppVersion, persistentAppVersion));
 
         // 如果persistent目录版本比streamingAssets目录app版本低，说明是大版本覆盖安装，清理过时的缓存
-        if (!string.IsNullOrEmpty(persistentAppVersion) && BuildUtils.CheckIsNewVersion(persistentAppVersion, streamingAppVersion))
+        if (!string.IsNullOrEmpty(persistentAppVersion) && UtilityBuild.CheckIsNewVersion(persistentAppVersion, streamingAppVersion))
         {
             var path = AssetBundleUtility.GetPersistentDataPath();
-            GameUtility.SafeDeleteDir(path);
+            UtilityGame.SafeDeleteDir(path);
         }
-        GameUtility.SafeWriteAllText(appVersionPath, streamingAppVersion);
+        UtilityGame.SafeWriteAllText(appVersionPath, streamingAppVersion);
         ChannelManager.instance.appVersion = streamingAppVersion;
         yield break;
     }
@@ -93,7 +106,7 @@ public class GameLaunch : MonoBehaviour
             yield break;
         }
 #endif
-        var channelNameRequest = AssetBundleManager.Instance.RequestAssetFileAsync(BuildUtils.ChannelNameFileName);
+        var channelNameRequest = AssetBundleManager.Instance.RequestAssetFileAsync(UtilityBuild.ChannelNameFileName);
         yield return channelNameRequest;
         var channelName = channelNameRequest.text;
         channelNameRequest.Dispose();
@@ -152,6 +165,9 @@ public class GameLaunch : MonoBehaviour
         }
         var go = InstantiateGameObject(launchPrefab);
         updater = go.AddComponent<AssetbundleUpdater>();
+        go.SetActive(false);
+        yield return new WaitForEndOfFrame();
+        go.SetActive(true);
         yield break;
     }
 }

@@ -65,11 +65,13 @@ namespace AssetBundles
         // 为了消除GC
         List<string> tmpStringList = new List<string>(8);
 
+        public bool IsInitialized { get; set; }
+
         public static string ManifestBundleName
         {
             get
             {
-                return BuildUtils.ManifestBundleName;
+                return UtilityBuild.ManifestBundleName;
             }
         }
         
@@ -80,6 +82,12 @@ namespace AssetBundles
             Logger.Log("********** AssetBundleManager : Call TestHotfix in cs...");
 #endif
         }
+
+        protected override void Init()
+        {
+//            StartCoroutine(Initialize());
+        }
+
 
         public IEnumerator Initialize()
         {
@@ -154,6 +162,7 @@ namespace AssetBundles
                 }
             }
             Logger.Log(string.Format("AssetBundleResident Initialize use {0}ms", (DateTime.Now - start).Milliseconds));
+            IsInitialized = true;
             yield break;
         }
 
@@ -587,7 +596,17 @@ namespace AssetBundles
 
         public bool MapAssetPath(string assetPath, out string assetbundleName, out string assetName)
         {
-            return assetsPathMapping.MapAssetPath(assetPath, out assetbundleName, out assetName);
+            try
+            {
+                return assetsPathMapping.MapAssetPath(assetPath, out assetbundleName, out assetName);
+            }
+            catch (Exception e)
+            {
+                assetbundleName = null;
+                assetName = null;
+                Logger.LogError(">>MapAssetPath Exception: {0}", e.Message);
+                return false;
+            }
         }
 
         public BaseAssetAsyncLoader LoadAssetAsync(string assetPath, System.Type assetType)
@@ -595,7 +614,7 @@ namespace AssetBundles
 #if UNITY_EDITOR
             if (AssetBundleConfig.IsEditorMode)
             {
-                string path = AssetBundleUtility.PackagePathToAssetsPath(assetPath); 
+                string path = AssetBundleUtility.PackagePathToAssetsPath(assetPath);
                 UnityEngine.Object target = AssetDatabase.LoadAssetAtPath(path, assetType);
                 return new EditorAssetAsyncLoader(target);
             }
@@ -609,7 +628,6 @@ namespace AssetBundles
                 Logger.LogError("No assetbundle at asset path :" + assetPath);
                 return null;
             }
-
             var loader = AssetAsyncLoader.Get();
             prosessingAssetAsyncLoader.Add(loader);
             if (IsAssetLoaded(assetName))
@@ -617,12 +635,10 @@ namespace AssetBundles
                 loader.Init(assetName, GetAssetCache(assetName));
                 return loader;
             }
-            else
-            {
-                var assetbundleLoader = LoadAssetBundleAsync(assetbundleName);
-                loader.Init(assetName, assetbundleLoader);
-                return loader;
-            }
+
+            var assetbundleLoader = LoadAssetBundleAsync(assetbundleName);
+            loader.Init(assetName, assetbundleLoader);
+            return loader;
         }
         
         void Update()

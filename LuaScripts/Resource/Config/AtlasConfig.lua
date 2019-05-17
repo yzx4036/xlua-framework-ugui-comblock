@@ -7,23 +7,23 @@
 local AtlasConfig = {
 	Comm = {
 		Name = "Comm",
-		AtlasPath = "UI/Atlas/Comm",
+		AtlasPath = "UI/Atlas/Comm.spriteatlas",
 	},
 	Group = {
 		Name = "Group",
-		PackagePath = "UI/Atlas/Comm",
+		PackagePath = "UI/Atlas/Group.spriteatlas",
 	},
 	Hyper = {
 		Name = "Hyper",
-		AtlasPath = "UI/Atlas/Hyper",
+		AtlasPath = "UI/Atlas/Hyper.spriteatlas",
 	},
 	Login = {
 		Name = "Login",
-		AtlasPath = "UI/Atlas/Login",
+		AtlasPath = "UI/Atlas/Login.spriteatlas",
 	},
 	Role = {
 		Name = "Role",
-		AtlasPath = "UI/Atlas/Role",
+		AtlasPath = "UI/Atlas/Role.spriteatlas",
 	},
 }
 

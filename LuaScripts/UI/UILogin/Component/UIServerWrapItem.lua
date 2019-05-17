@@ -3,6 +3,7 @@
 -- UILogin模块UILoginView窗口中服务器列表的可复用Item
 --]]
 
+---@class UIServerWrapItem:UIWrapComponent
 local UIServerWrapItem = BaseClass("UIServerWrapItem", UIWrapComponent)
 local base = UIWrapComponent
 
@@ -20,20 +21,23 @@ local function GetServerStateSpriteName(state)
 end
 
 -- 创建
+---@param self UIServerWrapItem
 local function OnCreate(self)
 	base.OnCreate(self)
 	-- 组件初始化
 	self.server_name_text = self:AddComponent(UIText, "SvrName")
 	self.server_choose_cmp = self:AddComponent(UIBaseComponent, "SvrChoose")
-	self.server_state_img = self:AddComponent(UIImage, "SvrState", AtlasConfig.Login, GetServerStateSpriteName())
+	---@type UIImage
+	self.server_state_img = self:AddComponent(UIImage, "SvrState", AtlasConfig.Login, 2)
 end
 
 -- 组件被复用时回调该函数，执行组件的刷新
+---@param self UIServerWrapItem
 local function OnRefresh(self, real_index, check)
 	local server = self.view.server_list[real_index + 1]
 	self.server_name_text:SetText(LangUtil.GetServerName(server.server_id))
 	self.server_choose_cmp:SetActive(check)
-	self.server_state_img:SetSpriteName(GetServerStateSpriteName(server.state))
+	self.server_state_img:SetSpriteName(GetServerStateSpriteName(math.random(0, 3)))
 end
 
 -- 组件添加了按钮组，则按钮被点击时回调该函数

@@ -18,6 +18,8 @@ require "Framework.Common.ConstClass"
 -- 创建全局模块
 ---@type Config
 Config = require "Global.Config"
+require "Global.GlobalLuaUtil"
+
 ---@type SingleGet
 SingleGet = require "Global.SingleGet"
 ---@type Singleton
@@ -27,6 +29,7 @@ Updatable = require "Framework.Common.Updatable"
 ---@type UpdatableSingleton
 UpdatableSingleton = require "Framework.Common.UpdatableSingleton"
 SortingLayerNames = require "Global.SortingLayerNames"
+---@type LoggerLua
 Logger = require "Framework.Logger.Logger"
 require "Framework.Updater.Coroutine"
 
@@ -49,7 +52,9 @@ LangUtil = require "Config.LangUtil"
 UIUtil = require "Framework.UI.Util.UIUtil"
 UIBaseModel = require "Framework.UI.Base.UIBaseModel"
 UIBaseCtrl = require "Framework.UI.Base.UIBaseCtrl"
+---@type UIBaseComponent
 UIBaseComponent = require "Framework.UI.Base.UIBaseComponent"
+---@type UIBaseContainer
 UIBaseContainer = require "Framework.UI.Base.UIBaseContainer"
 UIBaseView = require "Framework.UI.Base.UIBaseView"
 
@@ -62,6 +67,7 @@ UISlider = require "Framework.UI.Component.UISlider"
 UIInput = require "Framework.UI.Component.UIInput"
 UIButton = require "Framework.UI.Component.UIButton"
 UIToggleButton = require "Framework.UI.Component.UIToggleButton"
+---@type UIWrapComponent
 UIWrapComponent = require "Framework.UI.Component.UIWrapComponent"
 UITabGroup = require "Framework.UI.Component.UITabGroup"
 UIButtonGroup = require "Framework.UI.Component.UIButtonGroup"
@@ -118,6 +124,19 @@ EffectManager = require "Framework.Resource.Effect.EffectManager"
 ---@type HallConnector
 HallConnector = require "Net.Connector.HallConnector"
 
+
+ConstTouchLayer =
+{
+    None = -1,
+    CityTower = 8000,
+    TowerRange = 9000,
+    Attacker = 10000,
+    HeroSkillCast = 80000,
+    PVPEdit = 88888,
+    School = 88889,
+    Camera = 90000,
+    Explorer = 20000,
+}
 -- 单例类初始化
 SingleGet.UIManager()
 SingleGet.DataManager()
