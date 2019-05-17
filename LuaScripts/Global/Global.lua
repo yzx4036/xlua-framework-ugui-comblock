@@ -52,7 +52,9 @@ LangUtil = require "Config.LangUtil"
 UIUtil = require "Framework.UI.Util.UIUtil"
 UIBaseModel = require "Framework.UI.Base.UIBaseModel"
 UIBaseCtrl = require "Framework.UI.Base.UIBaseCtrl"
+---@type UIBaseComponent
 UIBaseComponent = require "Framework.UI.Base.UIBaseComponent"
+---@type UIBaseContainer
 UIBaseContainer = require "Framework.UI.Base.UIBaseContainer"
 UIBaseView = require "Framework.UI.Base.UIBaseView"
 
@@ -65,6 +67,7 @@ UISlider = require "Framework.UI.Component.UISlider"
 UIInput = require "Framework.UI.Component.UIInput"
 UIButton = require "Framework.UI.Component.UIButton"
 UIToggleButton = require "Framework.UI.Component.UIToggleButton"
+---@type UIWrapComponent
 UIWrapComponent = require "Framework.UI.Component.UIWrapComponent"
 UITabGroup = require "Framework.UI.Component.UITabGroup"
 UIButtonGroup = require "Framework.UI.Component.UIButtonGroup"

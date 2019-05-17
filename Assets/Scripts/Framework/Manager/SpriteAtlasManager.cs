@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using AssetBundles;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -9,10 +10,13 @@ namespace Sword
     public class SpriteAtlasManager :MonoSingleton<SpriteAtlasManager>
     {
         private bool mIsInit = false;
+        private Dictionary<int, bool> spriteAtlasFlagDict = null;
 
         protected override void Init()
         {
+            spriteAtlasFlagDict = new Dictionary<int, bool>();
             UnityEngine.U2D.SpriteAtlasManager.atlasRequested += OnAtlasRequested;
+            Logger.LogColor(Color.magenta,  "<<>><SpriteAtlasManager Init");
         }
 
         public void AddAtlasRequested()
@@ -21,7 +25,13 @@ namespace Sword
 
         public void OnAtlasRequested(string tag, Action<SpriteAtlas> action)
         {
-            StartCoroutine(DoLoadAsset(action, tag));
+            int hash = tag.GetHashCode();
+            if (!spriteAtlasFlagDict.ContainsKey(hash))
+            {
+                Logger.LogColor(Color.magenta,  "<<>><SpriteAtlasManager OnAtlasRequested {0}", tag);
+                StartCoroutine(DoLoadAsset(action, tag));
+                spriteAtlasFlagDict[hash] = true;
+            }
         }
 
         public IEnumerator DoLoadAsset(Action<SpriteAtlas> action, string atlasName)
@@ -49,6 +59,7 @@ namespace Sword
         {
             UnityEngine.U2D.SpriteAtlasManager.atlasRequested -= OnAtlasRequested;
             mIsInit = false;
+            spriteAtlasFlagDict.Clear();
         }
     }
 }

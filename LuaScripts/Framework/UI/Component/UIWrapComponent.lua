@@ -5,6 +5,7 @@
 -- 1、这里只是作为一个接口文件来使用，具体功能需要自行继承并实现
 --]]
 
+---@class UIWrapComponent:UIBaseContainer
 local UIWrapComponent = BaseClass("UIWrapComponent", UIBaseContainer)
 local base = UIBaseContainer
 

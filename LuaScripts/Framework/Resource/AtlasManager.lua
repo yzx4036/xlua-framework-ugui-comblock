@@ -9,14 +9,12 @@
 
 ---@class AtlasManager:Singleton
 local AtlasManager = BaseClass("AtlasManager", Singleton)
-local sprite_type = typeof(CS.UnityEngine.Sprite)
 local sprite_type1 = typeof(CS.UnityEngine.U2D.SpriteAtlas)
 
 -- 从图集异步加载图片：回调方式
 function AtlasManager:LoadImageAsync(atlas_config, image_name, callback, ...)
 	local atlas_path = atlas_config.AtlasPath
-	local image_path = atlas_path.."/Login.spriteatlas"--..image_name
-	SingleGet.ResourcesManager():LoadAsync(image_path, sprite_type1, function(spriteAtlas, ...)
+	SingleGet.ResourcesManager():LoadAsync(atlas_path, sprite_type1, function(spriteAtlas, ...)
 		if callback then
 			local _sp = spriteAtlas:GetSprite(image_name)
 			callback(not IsNull(_sp) and _sp or nil, ...)

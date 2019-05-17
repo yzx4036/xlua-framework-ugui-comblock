@@ -93,17 +93,17 @@ local function OnCreate(self)
 	self.timer = SingleGet.TimerManager():GetTimer(1, self.timer_action , self)
 	-- 启动定时器
 	self.timer:Start()
-	-- 启动协程
-	coroutine.start(function()
-		-- 下面的代码仅仅用于测试，别模仿，很容易出现问题：
-		-- 1、时间统计有累积误差，其实协程用在UI倒计时展示时一般问题不大，倒计时会稍微比真实时间长，具体影响酌情考虑
-		-- 2、这个协程一旦启用无法被回收，当然，可以避免这点，使用一个控制变量，在对象销毁的时候退出死循环即可
-		while true do
-			coroutine.waitforseconds(0.5)
-			self.coroutine_value = self.coroutine_value + 0.5
-			self.test_coroutine_text:SetText(tostring(string.format("%.3f", self.coroutine_value)))
-		end
-	end)
+	---- 启动协程
+	--coroutine.start(function()
+	--	-- 下面的代码仅仅用于测试，别模仿，很容易出现问题：
+	--	-- 1、时间统计有累积误差，其实协程用在UI倒计时展示时一般问题不大，倒计时会稍微比真实时间长，具体影响酌情考虑
+	--	-- 2、这个协程一旦启用无法被回收，当然，可以避免这点，使用一个控制变量，在对象销毁的时候退出死循环即可
+	--	while true do
+	--		coroutine.waitforseconds(0.5)
+	--		self.coroutine_value = self.coroutine_value + 0.5
+	--		self.test_coroutine_text:SetText(tostring(string.format("%.3f", self.coroutine_value)))
+	--	end
+	--end)
 end
 
 local function OnEnable(self)

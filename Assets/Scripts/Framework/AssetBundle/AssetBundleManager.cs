@@ -91,12 +91,6 @@ namespace AssetBundles
 
         public IEnumerator Initialize()
         {
-            if (IsInitialized)
-            {
-                yield return Cleanup();
-            }
-
-            
 #if UNITY_EDITOR
             if (AssetBundleConfig.IsEditorMode)
             {
