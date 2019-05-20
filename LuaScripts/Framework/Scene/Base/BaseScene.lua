@@ -7,9 +7,12 @@
 local BaseScene = BaseClass("BaseScene")
 
 -- 构造函数，别重写，初始化放OnInit
-local function __init(self, scene_config)
+---@param self BaseScene
+local function __init(self, scene_config, ...)
 	-- 场景配置
 	self.scene_config = scene_config
+	self.scene_info = scene_config.ParamInfo ~= nil and scene_config.ParamInfo.New(...) or nil
+
 	-- 预加载资源：资源路径、资源类型
 	self.preload_resources = {}
 	-- 预加载GameObject：资源路径、实例化个数
