@@ -69,7 +69,7 @@ local function CoInnerSwitchScene(self, scene_config)
 	coroutine.waitforframes(1)
 	-- 异步加载目标场景
 	cur_progress = model.value
-	coroutine.waitforasyncop(scene_mgr.LoadSceneAsync(scene_config.Level), function(co, progress)
+	coroutine.waitforasyncop(scene_mgr.LoadSceneAsync(scene_config.Name), function(co, progress)
 		assert(progress <= 1.0, "What's the funck!!!")
 		model.value = cur_progress + 0.15 * progress
 	end)
