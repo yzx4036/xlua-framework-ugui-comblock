@@ -27,7 +27,7 @@ SpriteAtlas:
       m_ResizeAlgorithm: 0
       m_TextureFormat: 47
       m_TextureCompression: 1
-      m_CompressionQuality: 50
+      m_CompressionQuality: 100
       m_CrunchedCompression: 0
       m_AllowsAlphaSplitting: 0
       m_Overridden: 1
@@ -42,14 +42,16 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 44b07969047635942a2c03dadbd08e0c, type: 3}
-    totalSpriteSurfaceArea: 626579
+    totalSpriteSurfaceArea: 703552
     bindAsDefault: 0
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: ed28e000b649b934fb811a46e0515991, type: 3}
   - {fileID: 21300000, guid: 4f5af320cb1c8ca4281a5ad201e04e56, type: 3}
   - {fileID: 21300000, guid: 14ee6840b0049d74592599f0516e5636, type: 3}
   - {fileID: 21300000, guid: b4ed9150e945dde4dbeaa5849cfe4ce8, type: 3}
   - {fileID: 21300000, guid: 0fc093803e01200459bebde1a4b78873, type: 3}
+  - {fileID: 21300000, guid: 10a406a0cba66c143a1e3c6cecc4452e, type: 3}
   - {fileID: 21300000, guid: caddbca0f46504d4698e63c4349ebe75, type: 3}
   - {fileID: 21300000, guid: d7bb3131903a8e0408391c515b33381f, type: 3}
   - {fileID: 21300000, guid: 90b8eb318d825f84ba52e93c46dbeb69, type: 3}
@@ -58,6 +60,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 62c16bf165d49374abe7b9599259c78e, type: 3}
   - {fileID: 21300000, guid: f09a9002e614bbb40a40c513f23ac819, type: 3}
   - {fileID: 21300000, guid: 48013e428cab9374aaf41a50807544ce, type: 3}
+  - {fileID: 21300000, guid: f829ae42dd135804fb5a7c851b89c9f4, type: 3}
   - {fileID: 21300000, guid: 34b1cc726c5b22e49a517390a61bc3d7, type: 3}
   - {fileID: 21300000, guid: 5502919247752584fadc1897fdc6e4a4, type: 3}
   - {fileID: 21300000, guid: d6e227f26e13d264d821e2b0d0be4359, type: 3}
@@ -78,9 +81,13 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 261873e55552f444591bbdd10f9058eb, type: 3}
   - {fileID: 21300000, guid: 445ecd469ce2c7b418c46c28b0312a63, type: 3}
   - {fileID: 21300000, guid: ff80eb5613fa3094f901ea37c680f805, type: 3}
+  - {fileID: 21300000, guid: fbc0a9669be5da045a320c5d93a2e0af, type: 3}
   - {fileID: 21300000, guid: eef2b1760dea7a542a9111b0ad0bfdd4, type: 3}
   - {fileID: 21300000, guid: a8a23e76bdca6004996c90d6bb19adf6, type: 3}
+  - {fileID: 21300000, guid: e2b54f86c2ea4dd45be8734b90b6e5bd, type: 3}
+  - {fileID: 21300000, guid: f9e177a6c41ef1c498e7cb61d99fb2b6, type: 3}
   - {fileID: 21300000, guid: 555a64b61030c434b83d158c74056b40, type: 3}
+  - {fileID: 21300000, guid: 0a8c41c68b5301e4c9f21cdbe2ab9413, type: 3}
   - {fileID: 21300000, guid: eec809c65dcbf4222b1c51313d25dd30, type: 3}
   - {fileID: 21300000, guid: b4e3dcc682bcd1547952c15d7d939698, type: 3}
   - {fileID: 21300000, guid: 4eb70dd6a8e9dfa4b9dbe7675ad31889, type: 3}
@@ -88,11 +95,13 @@ SpriteAtlas:
   - {fileID: 21300000, guid: b0bf5f4796b95e24cab75de73a7cb87c, type: 3}
   - {fileID: 21300000, guid: a166f4778b581ac4fa1475fe83fb1d24, type: 3}
   - {fileID: 21300000, guid: b9d9fc779ff4e504d9dc131987d4eadb, type: 3}
+  - {fileID: 21300000, guid: 813c7787a7c8aa7418f5b86176fd0019, type: 3}
   - {fileID: 21300000, guid: dca69e18c909b664c926dec647f9a5cb, type: 3}
   - {fileID: 21300000, guid: 7229c0786fb9f94488e7ce166c844ea8, type: 3}
   - {fileID: 21300000, guid: 16f0b77825afe9240a158f3fddfe8aab, type: 3}
   - {fileID: 21300000, guid: 96016c78a27a3f14783b0ae41ee15eda, type: 3}
   - {fileID: 21300000, guid: 28e16798e44774a46a487e431971f34c, type: 3}
+  - {fileID: 21300000, guid: a2fcf1a818645a54c8c840e2c5c187a5, type: 3}
   - {fileID: 21300000, guid: 5b0fdba8114198344a39b745f800a692, type: 3}
   - {fileID: 21300000, guid: 1a8b6ab854614e242b3ad1ec0899e6d8, type: 3}
   - {fileID: 21300000, guid: e28ad2b932df43341914257d8d3450d3, type: 3}
@@ -100,6 +109,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 7d86b27a8822be045ac11cb65c32b001, type: 3}
   - {fileID: 21300000, guid: 34a2f58aa099ce54c84006a51fb7a2e7, type: 3}
   - {fileID: 21300000, guid: 6d29daeae4d804241bf8a367362ff70e, type: 3}
+  - {fileID: 21300000, guid: aaf6343bdd6447c468285e8d5b2bc83b, type: 3}
   - {fileID: 21300000, guid: 4aa6363bcc388934e8e1070ea9164c74, type: 3}
   - {fileID: 21300000, guid: 3a709b6bb01d82c4e998c641bdedc490, type: 3}
   - {fileID: 21300000, guid: b1c7ab7b3d2d6d749bc42a3a97916671, type: 3}
@@ -111,6 +121,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: a68cd39c403c0834d82b7d4610ce27ee, type: 3}
   - {fileID: 21300000, guid: 0b78d99ca67426c498d61c749782407f, type: 3}
   - {fileID: 21300000, guid: e67ec60d75a92c74b891f7318adc8fae, type: 3}
+  - {fileID: 21300000, guid: 3d6c8c0d0798f6e49af2bdb057891401, type: 3}
   - {fileID: 21300000, guid: c8a0fd0d2cc8e9b4080ef86c639bc8e1, type: 3}
   - {fileID: 21300000, guid: 5e068e1db03f21348b3619a7fc642e74, type: 3}
   - {fileID: 21300000, guid: b3aa9e4d029903c42954a30ff21db39d, type: 3}
@@ -134,10 +145,12 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4650a2efefb9cf14599d4401a0182be4, type: 3}
   - {fileID: 21300000, guid: a38eebff0005b4246b4bdf03910ce20c, type: 3}
   m_PackedSpriteNamesToIndex:
+  - ui_comm_116
   - ui_comm_sign_battle
   - ui_comm_sign_away
   - ui_role_04
   - ui_comm_alpha
+  - ui_comm_112
   - ui_comm_pic_score
   - ui_equip_07
   - ui_comm_frame_rank_green
@@ -146,6 +159,7 @@ SpriteAtlas:
   - ui_main_032
   - ui_comm_tab_b_act
   - ui_comm_sign_arrow_c
+  - ui_comm_113
   - ui_comm_tab_a_01_nor
   - ui_main_12
   - ui_comm_sign_plus_a
@@ -166,9 +180,13 @@ SpriteAtlas:
   - ui_comm_bg_underlay_b
   - ui_comm_tab_a_01_act
   - ui_comm_line_b
+  - ui_comm_117
   - ui_role_44
   - ui_equip_28
+  - ui_comm_217_187_241
+  - ui_comm_3
   - ui_comm_frame_rank_purple
+  - ui_comm_26
   - ui_comm_mask_scroll
   - ui_comm_sign_yinpiao
   - ui_comm_sign_notice
@@ -176,11 +194,13 @@ SpriteAtlas:
   - ui_comm_frame_rank_white
   - ui_comm_sign_plus_c
   - ui_comm_tab_a_03_act
+  - ui_comm_115
   - ui_comm_btn_d
   - ui_main_35
   - ui_frame_choose
   - ui_role_23
   - ui_role_11
+  - ui_comm_10
   - ui_comm_btn_close
   - ui_main_86
   - ui_comm_sign_plus
@@ -188,6 +208,7 @@ SpriteAtlas:
   - ui_comm_frame_rank_blue
   - ui_role_42
   - ui_comm_sign_lock
+  - ui_comm_114
   - ui_main_26
   - ui_main_72
   - ui_main_03
@@ -199,6 +220,7 @@ SpriteAtlas:
   - ui_comm_frame_round
   - ui_comm_btn_c
   - ui_role_41
+  - ui_comm_111
   - ui_comm_bg_underlay_f
   - ui_comm_sign_yuanbao
   - ui_comm_bg_underlay_a

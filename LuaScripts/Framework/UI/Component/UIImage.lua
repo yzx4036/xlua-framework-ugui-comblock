@@ -10,26 +10,33 @@ local UIImage = BaseClass("UIImage", UIBaseComponent)
 local base = UIBaseComponent
 
 -- 创建
-local function OnCreate(self, atlas_config, original_sprite_name)
+function UIImage:OnCreate(atlas_config, original_sprite_name)
 	base.OnCreate(self)
 	-- Unity侧原生组件
 	self.unity_uiimage = UIUtil.FindImage(self.transform)
 	self.atlas_config = atlas_config
-	self.sprite_name = original_sprite_name
-	
-	if IsNull(self.unity_uiimage) and not IsNull(self.gameObject) then
+
+	if not IsNull(self.unity_uiimage) and
+			not IsNull(self.unity_uiimage.sprite) then
+		self.sprite_name = string.split(self.unity_uiimage.sprite.name, ' (')[1]
+	end
+	self.sprite_name = original_sprite_name or self.sprite_name
+	if self.sprite_name ~= nil and type(self.sprite_name) == "string" then
+		self:SetSpriteName(self.sprite_name)
+	end
+	if not IsNull(self.unity_uiimage) and IsNull(self.gameObject) then
 		self.gameObject = self.unity_uiimage.gameObject
 		self.transform = self.unity_uiimage.transform
 	end
 end
 
 -- 获取Sprite名称
-local function GetSpriteName(self)
+function UIImage:GetSpriteName()
 	return self.sprite_name
 end
 
 -- 设置Sprite名称
-local function SetSpriteName(self, sprite_name)
+function UIImage:SetSpriteName(sprite_name)
 	self.sprite_name = sprite_name
 	if IsNull(self.unity_uiimage) then
 		return
@@ -52,14 +59,9 @@ local function SetSpriteName(self, sprite_name)
 end
 
 -- 销毁
-local function OnDestroy(self)
+function UIImage:OnDestroy()
 	self.unity_uiimage = nil
 	base.OnDestroy(self)
 end
-
-UIImage.OnCreate = OnCreate
-UIImage.GetSpriteName = GetSpriteName
-UIImage.SetSpriteName = SetSpriteName
-UIImage.OnDestroy = OnDestroy
 
 return UIImage

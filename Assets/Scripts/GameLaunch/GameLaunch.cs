@@ -16,9 +16,17 @@ public class GameLaunch : MonoBehaviour
     GameObject noticeTipPrefab;
     AssetbundleUpdater updater;
 
-    IEnumerator Start ()
+    private void Awake()
     {
         LoggerHelper.Instance.Startup();
+        // 启动ugui图集管理器
+        var start = DateTime.Now;
+        Sword.SpriteAtlasManager.Instance.Startup();
+        Logger.Log(string.Format("SpriteAtlasManager Init use {0}ms", (DateTime.Now - start).Milliseconds));
+    }
+
+    IEnumerator Start ()
+    {
 #if UNITY_IPHONE
         UnityEngine.iOS.NotificationServices.RegisterForNotifications(UnityEngine.iOS.NotificationType.Alert | UnityEngine.iOS.NotificationType.Badge | UnityEngine.iOS.NotificationType.Sound);
         UnityEngine.iOS.Device.SetNoBackupFlag(Application.persistentDataPath);
@@ -39,6 +47,7 @@ public class GameLaunch : MonoBehaviour
         yield return AssetBundleManager.Instance.Initialize();
         Logger.Log(string.Format("AssetBundleManager Initialize use {0}ms", (DateTime.Now - start).Milliseconds));
 
+        
         // 启动xlua热修复模块
         start = DateTime.Now;
         XLuaManager.Instance.Startup();
@@ -57,13 +66,7 @@ public class GameLaunch : MonoBehaviour
         Sword.EventManager.instance.Init();
         Sword.TouchManager.instance.Init();
         Logger.Log(string.Format("TouchMgr Init use {0}ms", (DateTime.Now - start).Milliseconds));
-        
-        // 启动ugui图集管理器
-        start = DateTime.Now;
-        Sword.SpriteAtlasManager.Instance.Startup();
-        Logger.Log(string.Format("SpriteAtlasManager Init use {0}ms", (DateTime.Now - start).Milliseconds));
-        yield return new WaitForSeconds(0.1f);
-        
+
         // 初始化UI界面
         yield return InitLaunchPrefab();
         yield return null;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using XLua;
 
 /// <summary>
@@ -34,6 +35,7 @@ public class XLuaManager : MonoSingleton<XLuaManager>
                 string path = AssetBundleUtility.PackagePathToAssetsPath(luaAssetbundleAssetName);
                 AssetbundleName = AssetBundleUtility.AssetBundlePathToAssetBundleName(path);
                 InitLuaEnv();
+                SceneManager.sceneLoaded += SceneManagerOnSceneLoaded;
         }
 
         public bool HasGameStart
@@ -201,7 +203,7 @@ public class XLuaManager : MonoSingleton<XLuaManager>
                 }
         }
 
-        private void OnLevelWasLoaded()
+        private void SceneManagerOnSceneLoaded(Scene scene, LoadSceneMode arg1)
         {
                 if (luaEnv != null && HasGameStart)
                 {
@@ -257,6 +259,7 @@ public class XLuaManager : MonoSingleton<XLuaManager>
 
         public override void Dispose()
         {
+                SceneManager.sceneLoaded -= SceneManagerOnSceneLoaded;
                 if (luaUpdater != null)
                 {
                         luaUpdater.OnDispose();

@@ -519,6 +519,7 @@ public class AssetbundleUpdater : MonoBehaviour
         }
 
         statusText.text = "正在更新资源...";
+        Logger.LogColor(Color.blue, "<<<<<<<<<<<<<<<<<<<<<<<>>>.,..{0}",  statusText.text );
         slider.normalizedValue = 0f;
         slider.gameObject.SetActive(true);
         totalDownloadCount = needDownloadList.Count;
@@ -531,6 +532,7 @@ public class AssetbundleUpdater : MonoBehaviour
         
         slider.normalizedValue = 1.0f;
         start = DateTime.Now;
+        
         yield return UpdateFinish();
         Logger.Log(string.Format("UpdateFinish use {0}ms", (DateTime.Now - start).Milliseconds));
 
@@ -676,7 +678,10 @@ public class AssetbundleUpdater : MonoBehaviour
         // 重启资源管理器
         yield return AssetBundleManager.Instance.Cleanup();
         yield return AssetBundleManager.Instance.Initialize();
-
+   
+        //i重启图集管理
+        yield return Sword.SpriteAtlasManager.Instance.Reset();
+        
         // 重启Lua虚拟机
         string luaAssetbundleName = XLuaManager.Instance.AssetbundleName;
         AssetBundleManager.Instance.SetAssetBundleResident(luaAssetbundleName, true);

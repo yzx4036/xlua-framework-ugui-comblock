@@ -27,7 +27,7 @@ SpriteAtlas:
       m_ResizeAlgorithm: 0
       m_TextureFormat: 47
       m_TextureCompression: 1
-      m_CompressionQuality: 50
+      m_CompressionQuality: 100
       m_CrunchedCompression: 0
       m_AllowsAlphaSplitting: 0
       m_Overridden: 1
@@ -42,7 +42,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 7f2003f90ce469f47ad5ccfeb978463a, type: 3}
-    totalSpriteSurfaceArea: 156961
+    totalSpriteSurfaceArea: 153451
     bindAsDefault: 0
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -53,7 +53,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: c0bf7ad1cfe05ae4fbc53befe24b26e1, type: 3}
   - {fileID: 21300000, guid: c09e1ed1784467d4dacbd752d66bdc3f, type: 3}
   - {fileID: 21300000, guid: 9288ca129f4fdac4281b159b4597189e, type: 3}
-  - {fileID: 21300000, guid: 8ebd3523f996b7541a7e1f54a36ceb11, type: 3}
   - {fileID: 21300000, guid: f0b49363e6fd5db4297b6799a9e055ba, type: 3}
   - {fileID: 21300000, guid: 6bb862a3a182903479ec247a790105fb, type: 3}
   - {fileID: 21300000, guid: 88b8bca329891264697601cbfa68541c, type: 3}
@@ -79,8 +78,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 8ea767cd97568bc46bf0232862b3aed8, type: 3}
   - {fileID: 21300000, guid: aab7913ed4d2af74e8a58e0b59da5059, type: 3}
   - {fileID: 21300000, guid: df9bac4e6e6984b419ec020da79db07f, type: 3}
-  - {fileID: 21300000, guid: d18e3bef842b3f0439f373568b4bf02a, type: 3}
-  - {fileID: 21300000, guid: 19f0eeffce81e9a4da52b866fca7df68, type: 3}
   m_PackedSpriteNamesToIndex:
   - ui_role_60
   - ui_role_66
@@ -89,7 +86,6 @@ SpriteAtlas:
   - ui_role_64
   - ui_role_59
   - ui_role_28
-  - ui_role_10
   - ui_role_02
   - ui_role_57
   - ui_role_36
@@ -115,7 +111,5 @@ SpriteAtlas:
   - ui_role_55
   - ui_role_25
   - ui_role_58
-  - ui_role_26
-  - ui_role_03
   m_Tag: Role
   m_IsVariant: 0
