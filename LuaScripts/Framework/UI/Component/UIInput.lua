@@ -5,6 +5,7 @@
 -- self.xxx_input = self:AddComponent(UIInput, var_arg)--添加孩子，各种重载方式查看UIBaseContainer
 --]]
 
+---@class UIInput:UIBaseComponent
 local UIInput = BaseClass("UIInput", UIBaseComponent)
 local base = UIBaseComponent
 

@@ -62,9 +62,13 @@ UIBaseView = require "Framework.UI.Base.UIBaseView"
 UILayer = require "Framework.UI.Component.UILayer"
 UICanvas = require "Framework.UI.Component.UICanvas"
 UIText = require "Framework.UI.Component.UIText"
+---@type UIImage
 UIImage = require "Framework.UI.Component.UIImage"
+---@type UISlider
 UISlider = require "Framework.UI.Component.UISlider"
+---@type UIInput
 UIInput = require "Framework.UI.Component.UIInput"
+---@type UIButton
 UIButton = require "Framework.UI.Component.UIButton"
 UIToggleButton = require "Framework.UI.Component.UIToggleButton"
 ---@type UIWrapComponent

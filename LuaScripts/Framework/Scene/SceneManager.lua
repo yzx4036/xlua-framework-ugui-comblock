@@ -10,7 +10,7 @@
 local SceneManager = BaseClass("SceneManager", Singleton)
 
 -- 切换场景：内部使用协程
-local function CoInnerSwitchScene(self, scene_config)
+local function CoInnerSwitchScene(self, scene_config, ...)
 	-- 打开loading界面
 	local uimgr_instance = SingleGet.UIManager()
 	uimgr_instance:OpenWindow(UIWindowNames.UILoading)
@@ -42,7 +42,7 @@ local function CoInnerSwitchScene(self, scene_config)
 	-- 同步加载loading场景
 	local scene_mgr = CS.UnityEngine.SceneManagement.SceneManager
 	local resources = CS.UnityEngine.Resources
-	scene_mgr.LoadScene(SceneConfig.LoadingScene.Level)
+	--scene_mgr.LoadScene(SceneConfig.LoadingScene.Level)
 	model.value = model.value + 0.01
 	coroutine.waitforframes(1)
 	-- GC：交替重复2次，清干净一点
@@ -60,7 +60,7 @@ local function CoInnerSwitchScene(self, scene_config)
 	-- 初始化目标场景
 	local logic_scene = self.scenes[scene_config.Name]
 	if logic_scene == nil then
-		logic_scene = scene_config.Type.New(scene_config)
+		logic_scene = scene_config.Type.New(scene_config, ...)
 		self.scenes[scene_config.Name] = logic_scene
 	end
 	assert(logic_scene ~= nil)
@@ -69,7 +69,7 @@ local function CoInnerSwitchScene(self, scene_config)
 	coroutine.waitforframes(1)
 	-- 异步加载目标场景
 	cur_progress = model.value
-	coroutine.waitforasyncop(scene_mgr.LoadSceneAsync(scene_config.Level), function(co, progress)
+	coroutine.waitforasyncop(scene_mgr.LoadSceneAsync(scene_config.Name), function(co, progress)
 		assert(progress <= 1.0, "What's the funck!!!")
 		model.value = cur_progress + 0.15 * progress
 	end)
@@ -105,7 +105,7 @@ function SceneManager:__init()
 end
 
 -- 切换场景
-function SceneManager:SwitchScene(scene_config)
+function SceneManager:SwitchScene(scene_config, ...)
 	assert(scene_config ~= nil)
 	assert(scene_config.Type ~= nil)
 	if self.busing then 
@@ -116,7 +116,7 @@ function SceneManager:SwitchScene(scene_config)
 	end
 	
 	self.busing = true
-	coroutine.start(CoInnerSwitchScene, self, scene_config)
+	coroutine.start(CoInnerSwitchScene, self, scene_config, ...)
 end
 
 --被动切换场景， 当在其他地方已实现切换场景时调用此方法告诉Lua端的场景切换

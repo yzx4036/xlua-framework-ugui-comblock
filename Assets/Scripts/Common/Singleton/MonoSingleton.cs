@@ -34,7 +34,7 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T
     }
 
     /*
-     * Ã»ÓÐÈÎºÎÊµÏÖµÄº¯Êý£¬ÓÃÓÚ±£Ö¤MonoSingletonÔÚÊ¹ÓÃÇ°ÒÑ´´½¨
+     * æ²¡æœ‰ä»»ä½•å®žçŽ°çš„å‡½æ•°ï¼Œç”¨äºŽä¿è¯MonoSingletonåœ¨ä½¿ç”¨å‰å·²åˆ›å»º
      */
     public void Startup()
     {

@@ -9,6 +9,8 @@ local base = UIBaseView
 -- 各个组件路径
 local loading_text_path = "ContentRoot/LoadingDesc"
 local loading_slider_path = "ContentRoot/SliderBar"
+local fillSpritePath = "ContentRoot/SliderBar/Fill Area/Fill"
+
 
 local function OnCreate(self)
 	base.OnCreate(self)
@@ -16,7 +18,8 @@ local function OnCreate(self)
 	self.loading_text = self:AddComponent(UIText, loading_text_path)
 	self.loading_slider = self:AddComponent(UISlider, loading_slider_path)
 	self.loading_slider:SetValue(0.0)
-	
+	self.slider_Img = self:AddComponent(UIImage, fillSpritePath, AtlasConfig.Comm)
+
 	-- 定时器
 	-- 这里一定要对回调函数持有引用，否则随时可能被GC，引起定时器失效
 	-- 或者使用成员函数，它的生命周期是和对象绑定在一块的

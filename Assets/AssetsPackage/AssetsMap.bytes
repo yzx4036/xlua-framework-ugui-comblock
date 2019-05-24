@@ -123,17 +123,11 @@ lua.assetbundle,Lua/Net/Config/ReceiveMsgDefine.lua.bytes
 lua.assetbundle,Lua/Net/Config/ReceiveSinglePackage.lua.bytes
 lua.assetbundle,Lua/Net/Config/SendMsgDefine.lua.bytes
 lua.assetbundle,Lua/Net/Connector/HallConnector.lua.bytes
-lua.assetbundle,Lua/Net/Protol/common_pb.lua.bytes
-lua.assetbundle,Lua/Net/Protol/login_pb.lua.bytes
-lua.assetbundle,Lua/Net/Protol/room_pb.lua.bytes
-lua.assetbundle,Lua/Net/Protol/test_battle_pb.lua.bytes
-lua.assetbundle,Lua/Net/Protol/test_common_pb.lua.bytes
-lua.assetbundle,Lua/Net/Protol/test_person_pb.lua.bytes
-lua.assetbundle,Lua/Net/Protol/user_pb.lua.bytes
 lua.assetbundle,Lua/Net/Util/NetUtil.lua.bytes
 lua.assetbundle,Lua/Resource/Config/AtlasConfig.lua.bytes
 lua.assetbundle,Lua/Resource/Config/EffectConfig.lua.bytes
 lua.assetbundle,Lua/Scenes/BattleScene.lua.bytes
+lua.assetbundle,Lua/Scenes/BattleSceneParamInfo.lua.bytes
 lua.assetbundle,Lua/Scenes/Config/SceneConfig.lua.bytes
 lua.assetbundle,Lua/Scenes/HomeScene.lua.bytes
 lua.assetbundle,Lua/Scenes/LoginScene.lua.bytes
@@ -197,6 +191,7 @@ ui/atlas/role_spriteatlas.assetbundle,UI/Atlas/Role.spriteatlas
 ui/fonts/system_art_ttf.assetbundle,UI/Fonts/system_art.TTF
 ui/fonts/system_ttf.assetbundle,UI/Fonts/system.TTF
 ui/materials/ui_default_mat.assetbundle,UI/Materials/ui_default.mat
+ui/prefabs/common/sliderbar_prefab.assetbundle,UI/Prefabs/Common/SliderBar.prefab
 ui/prefabs/common/uinoticetip_prefab.assetbundle,UI/Prefabs/Common/UINoticeTip.prefab
 ui/prefabs/view/uibattlemain_prefab.assetbundle,UI/Prefabs/View/UIBattleMain.prefab
 ui/prefabs/view/uilaunch_prefab.assetbundle,UI/Prefabs/View/UILaunch.prefab

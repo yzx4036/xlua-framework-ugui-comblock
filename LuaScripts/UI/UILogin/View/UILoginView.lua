@@ -6,7 +6,7 @@
 -- 2、OnEnable函数每次在窗口打开时调用，直接刷新
 -- 3、组件命名参考代码规范
 --]]
-
+---@class UILoginView:UIBaseView
 local UILoginView = BaseClass("UILoginView", UIBaseView)
 local base = UIBaseView
 
@@ -18,6 +18,7 @@ local server_select_btn_path = "ContentRoot/SvrRoot/SvrSelectBtn"
 local login_btn_path = "ContentRoot/LoginBtn"
 local app_version_text_path = "ContentRoot/AppVersionText"
 local res_version_text_path = "ContentRoot/ResVersionText"
+local test_img_path = "ContentRoot/Image"
 
 -- 以下为测试用的组件路径
 local test_uieffect1_path = "TestEffect1"
@@ -51,6 +52,10 @@ local function OnCreate(self)
 	self.password_input = self:AddComponent(UIInput, password_input_path)
 	self.server_select_btn = self:AddComponent(UIButton, server_select_btn_path)
 	self.login_btn = self:AddComponent(UIButton, login_btn_path)
+
+	---@type UIImage
+	self.test_Img = self:AddComponent(UIImage, test_img_path, AtlasConfig.Comm, "ui_comm_114")
+
 	-- 设置点击回调
 	-- 使用方式一：闭包绑定
 	self.server_select_btn:SetOnClick(function()

@@ -6,7 +6,7 @@
 local UITestMainCtrl = BaseClass("UITestMainCtrl", UIBaseCtrl)
 
 local function StartFighting(self)
-	SingleGet.SceneManager():SwitchScene(SceneConfig.BattleScene)
+	SingleGet.SceneManager():SwitchScene(SceneConfig.BattleScene, 45)
 end
 
 local function Logout(self)

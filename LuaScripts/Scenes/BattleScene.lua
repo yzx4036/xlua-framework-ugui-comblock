@@ -14,6 +14,7 @@ local CharacterAnimation = require "GameLogic.Battle.CharacterAnimation"
 local chara_res_path = "Models/1001/Character.prefab"
 
 -- 创建：准备预加载资源
+---@param self BattleScene
 local function OnCreate(self)
 	base.OnCreate(self)
 	-- TODO
@@ -23,7 +24,12 @@ local function OnCreate(self)
 	
 	-- 临时：角色动画控制脚本
 	self.charaAnim = nil
-
+	---@type BattleSceneParamInfo
+	self.scene_info = self.scene_info
+	if self.scene_info then
+		self.levelNumber = self.scene_info:GetLevelNumber()
+		Logger.Log(">>>>>>>>test 场景传参", self.levelNumber )
+	end
 	--self._layer = UtilityLuaCallCS.CreateTouchLayer(ConstTouchLayer.Explorer, self)
 
 end

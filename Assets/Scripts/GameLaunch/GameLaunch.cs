@@ -4,26 +4,36 @@ using AssetBundles;
 using GameChannel;
 using System;
 using HedgehogTeam.EasyTouch;
+using UnityEngine.UI;
 using XLua;
 
 [Hotfix]
 [LuaCallCSharp]
 public class GameLaunch : MonoBehaviour
 {
+    public RawImage bootBgRawImg;
     const string launchPrefabPath = "UI/Prefabs/View/UILaunch.prefab";
     const string noticeTipPrefabPath = "UI/Prefabs/Common/UINoticeTip.prefab";
     GameObject launchPrefab;
     GameObject noticeTipPrefab;
     AssetbundleUpdater updater;
 
-    IEnumerator Start ()
+    private void Awake()
     {
         LoggerHelper.Instance.Startup();
+        // 启动ugui图集管理器
+        var start = DateTime.Now;
+        Sword.SpriteAtlasManager.Instance.Startup();
+        Logger.Log(string.Format("SpriteAtlasManager Init use {0}ms", (DateTime.Now - start).Milliseconds));
+    }
+
+    IEnumerator Start ()
+    {
 #if UNITY_IPHONE
         UnityEngine.iOS.NotificationServices.RegisterForNotifications(UnityEngine.iOS.NotificationType.Alert | UnityEngine.iOS.NotificationType.Badge | UnityEngine.iOS.NotificationType.Sound);
         UnityEngine.iOS.Device.SetNoBackupFlag(Application.persistentDataPath);
 #endif
-        
+        InitLaunchBootBg();
         // 初始化App版本
         var start = DateTime.Now;
         yield return InitAppVersion();
@@ -39,6 +49,7 @@ public class GameLaunch : MonoBehaviour
         yield return AssetBundleManager.Instance.Initialize();
         Logger.Log(string.Format("AssetBundleManager Initialize use {0}ms", (DateTime.Now - start).Milliseconds));
 
+        
         // 启动xlua热修复模块
         start = DateTime.Now;
         XLuaManager.Instance.Startup();
@@ -50,23 +61,11 @@ public class GameLaunch : MonoBehaviour
         XLuaManager.Instance.OnInit();
         XLuaManager.Instance.StartHotfix();
         Logger.Log(string.Format("XLuaManager StartHotfix use {0}ms", (DateTime.Now - start).Milliseconds));
-        
-        // 启动easytouch扩展管理
-        start = DateTime.Now;
-        Sword.SceneRootManager.instance.Init();
-        Sword.EventManager.instance.Init();
-        Sword.TouchManager.instance.Init();
-        Logger.Log(string.Format("TouchMgr Init use {0}ms", (DateTime.Now - start).Milliseconds));
-        
-        // 启动ugui图集管理器
-        start = DateTime.Now;
-        Sword.SpriteAtlasManager.Instance.Startup();
-        Logger.Log(string.Format("SpriteAtlasManager Init use {0}ms", (DateTime.Now - start).Milliseconds));
-        yield return new WaitForSeconds(0.1f);
-        
+
         // 初始化UI界面
         yield return InitLaunchPrefab();
         yield return null;
+        DeleteLaunchBootBg();
         yield return InitNoticeTipPrefab();
 
         // 开始更新
@@ -74,6 +73,13 @@ public class GameLaunch : MonoBehaviour
         {
             updater.StartCheckUpdate();
         }
+        
+        // 启动easytouch扩展管理
+        start = DateTime.Now;
+        Sword.SceneRootManager.instance.Init();
+        Sword.EventManager.instance.Init();
+        Sword.TouchManager.instance.Init();
+        Logger.Log(string.Format("TouchMgr Init use {0}ms", (DateTime.Now - start).Milliseconds));
     }
 
     IEnumerator InitAppVersion()
@@ -170,4 +176,23 @@ public class GameLaunch : MonoBehaviour
         go.SetActive(true);
         yield break;
     }
+
+    void InitLaunchBootBg()
+    {
+        if (bootBgRawImg != null)
+        {
+            var index = UnityEngine.Random.Range(0, 2);
+            bootBgRawImg.gameObject.SetActive(true);
+            bootBgRawImg.texture = Resources.Load<Texture>("Boot/boot" + index);
+        }
+    }
+    
+    void DeleteLaunchBootBg()
+    {
+        if (bootBgRawImg != null)
+        {
+            Destroy(bootBgRawImg.gameObject);
+        }
+    }
+    
 }
