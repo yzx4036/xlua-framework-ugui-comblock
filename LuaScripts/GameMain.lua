@@ -37,7 +37,7 @@ local function Start()
 	SingleGet.LogicUpdater():Startup()
 	SingleGet.UIManager():Startup()
 	
-	if Config.Debug then
+	if Config.Debug and Config.DebugUnitTest  then
 		-- 单元测试
 		local UnitTest = require "UnitTest.UnitTestMain"
 		UnitTest.Run()

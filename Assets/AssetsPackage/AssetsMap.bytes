@@ -123,13 +123,6 @@ lua.assetbundle,Lua/Net/Config/ReceiveMsgDefine.lua.bytes
 lua.assetbundle,Lua/Net/Config/ReceiveSinglePackage.lua.bytes
 lua.assetbundle,Lua/Net/Config/SendMsgDefine.lua.bytes
 lua.assetbundle,Lua/Net/Connector/HallConnector.lua.bytes
-lua.assetbundle,Lua/Net/Protol/common_pb.lua.bytes
-lua.assetbundle,Lua/Net/Protol/login_pb.lua.bytes
-lua.assetbundle,Lua/Net/Protol/room_pb.lua.bytes
-lua.assetbundle,Lua/Net/Protol/test_battle_pb.lua.bytes
-lua.assetbundle,Lua/Net/Protol/test_common_pb.lua.bytes
-lua.assetbundle,Lua/Net/Protol/test_person_pb.lua.bytes
-lua.assetbundle,Lua/Net/Protol/user_pb.lua.bytes
 lua.assetbundle,Lua/Net/Util/NetUtil.lua.bytes
 lua.assetbundle,Lua/Resource/Config/AtlasConfig.lua.bytes
 lua.assetbundle,Lua/Resource/Config/EffectConfig.lua.bytes
