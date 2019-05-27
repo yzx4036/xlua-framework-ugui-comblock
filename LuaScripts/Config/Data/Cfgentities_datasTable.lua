@@ -1,4 +1,5 @@
-local Cfgentitiesdatas ={
+---@class Cfgentities_datasTable
+local Cfgentities_datasTable ={
 	[10001001] = {entityType = 'NPC',id = 10001001,etype = 1,name = '新手接待员',modelID = 10001001,moveSpeed = 50,runSpeed = 65,dialogID = 10001001},
 	[10002001] = {entityType = 'NPC',id = 10002001,etype = 1,name = '传送员',modelID = 10001001,moveSpeed = 50,runSpeed = 65,dialogID = 10001001},
 	[10003001] = {entityType = 'Monster',id = 10003001,etype = 1,name = '怪物1',modelID = 10001001,moveSpeed = 50,runSpeed = 65,dialogID = 0},
@@ -32,11 +33,49 @@ local Cfgentitiesdatas ={
 	[2003] = {entityType = 'Monster',id = 2003,etype = 1,name = '怪物3',modelID = 2003,moveSpeed = 50,runSpeed = 65,dialogID = 0}
 }
 
-function Cfgentitiesdatas.GetByKey(key)
-	if Cfgentitiesdatas[key] == nil then
-		LogError('Cfgentitiesdatas 配置没有key对应:',key)
+---@class Cfgentities_datas
+local Cfgentities_datas = BaseClass('Cfgentities_datas')
+function Cfgentities_datas:__init(data)
+	self.entityType = data[1] 
+	self.id = data[2] 
+	self.etype = data[3] 
+	self.name = data[4] 
+	self.modelID = data[5] 
+	self.moveSpeed = data[6] 
+	self.runSpeed = data[7] 
+	self.dialogID = data[8] 
+	data = nil
+end
+
+
+---@type table<number, Cfgentities_datas>
+local _instList={}
+
+function Cfgentities_datasTable.InitAll()
+	if table.length(Cfgentities_datasTable) > 0 then
+		for k, v in pairs(Cfgentities_datasTable) do
+			_instList[k] = Cfgentities_datas.New(v)
+			Cfgentities_datasTable[k] = nil
+		end
 	end
-	return Cfgentitiesdatas[key]
+end
+
+---@return table<number, Cfgentities_datas>
+function Cfgentities_datasTable.GetTable()
+	Cfgentities_datasTable.InitAll()
+	return _instList;
+end
+
+---@return Cfgentities_datas
+function Cfgentities_datasTable.GetByKey(key)
+	if Cfgentities_datasTable[key] == nil  and _instList[key] == nil  then
+		Logger.LogError('Cfgentities_datasTable 配置没有key=%s对应的行!',key) return
+	end
+	if _instList[key] == nil  then
+		_instList[key] = Cfgentities_datas.New(Cfgentities_datasTable[key])
+		Cfgentities_datasTable[key] = nil
+	end
+	return _instList[key]
 end
 
 ----not overwrite----
@@ -44,5 +83,4 @@ end
 --可在这里写一些自定义函数
 
 --not overwrite
-
-return Cfgentitiesdatas
+return Cfgentities_datasTable

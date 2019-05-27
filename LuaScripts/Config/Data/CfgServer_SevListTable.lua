@@ -1,4 +1,5 @@
-local CfgServerSevList ={
+---@class CfgServer_SevListTable
+local CfgServer_SevListTable ={
 	[10001] = {id = 10001,ip = '192.168.1.182',hall_port = 6601,pvp_port = 6701},
 	[10002] = {id = 10002,ip = '120.24.167.144',hall_port = 6601,pvp_port = 6701},
 	[10003] = {id = 10003,ip = '192.168.1.182',hall_port = 6601,pvp_port = 6701},
@@ -36,11 +37,45 @@ local CfgServerSevList ={
 	[10035] = {id = 10035,ip = '192.168.1.182',hall_port = 6601,pvp_port = 6701}
 }
 
-function CfgServerSevList.GetByKey(key)
-	if CfgServerSevList[key] == nil then
-		LogError('CfgServerSevList 配置没有key对应:',key)
+---@class CfgServer_SevList
+local CfgServer_SevList = BaseClass('CfgServer_SevList')
+function CfgServer_SevList:__init(data)
+	self.id = data[1] 
+	self.ip = data[2] 
+	self.hall_port = data[3] 
+	self.pvp_port = data[4] 
+	data = nil
+end
+
+
+---@type table<number, CfgServer_SevList>
+local _instList={}
+
+function CfgServer_SevListTable.InitAll()
+	if table.length(CfgServer_SevListTable) > 0 then
+		for k, v in pairs(CfgServer_SevListTable) do
+			_instList[k] = CfgServer_SevList.New(v)
+			CfgServer_SevListTable[k] = nil
+		end
 	end
-	return CfgServerSevList[key]
+end
+
+---@return table<number, CfgServer_SevList>
+function CfgServer_SevListTable.GetTable()
+	CfgServer_SevListTable.InitAll()
+	return _instList;
+end
+
+---@return CfgServer_SevList
+function CfgServer_SevListTable.GetByKey(key)
+	if CfgServer_SevListTable[key] == nil  and _instList[key] == nil  then
+		Logger.LogError('CfgServer_SevListTable 配置没有key=%s对应的行!',key) return
+	end
+	if _instList[key] == nil  then
+		_instList[key] = CfgServer_SevList.New(CfgServer_SevListTable[key])
+		CfgServer_SevListTable[key] = nil
+	end
+	return _instList[key]
 end
 
 ----not overwrite----
@@ -48,5 +83,4 @@ end
 --可在这里写一些自定义函数
 
 --not overwrite
-
-return CfgServerSevList
+return CfgServer_SevListTable
