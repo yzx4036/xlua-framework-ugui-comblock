@@ -1,0 +1,3 @@
+[submodule "ConfigData/xlsx2py-lua"]
+	path = ConfigData/xlsx2py-lua
+	url = https://github.com/yzx4036/xlsx2py-lua
