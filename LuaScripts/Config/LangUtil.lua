@@ -3,15 +3,17 @@
 -- 本地化工具类
 --]]
 
+---@class LangUtil
 local LangUtil = {}
 
 local function GetData(path, lang)
 	-- TODO：根据语言设置自动切换各语言源表
-	return require(path)
+	return SingleGet.ConfigCfgManager():GetServerAreaLangSevArea().GetTable()
 end
 
 local function GetServerName(server_id)
-	local data = GetData("Config.Data.ServerLang")
+	--local data = GetData("Config.Data.ServerAreaLang")
+	local data = SingleGet.ConfigCfgManager():GetServerSevList():GetTable()
 	if data[server_id] == nil then
 		return "["..server_id.."]"
 	end
@@ -19,7 +21,9 @@ local function GetServerName(server_id)
 end
 
 local function GetServerAreaName(area_id)
-	local data = GetData("Config.Data.ServerAreaLang")
+	--local data = GetData("Config.Data.ServerAreaLang")
+	local data = SingleGet.ConfigCfgManager():GetServerAreaLangSevArea():GetTable()
+
 	if data[area_id].name == nil then
 		return "["..area_id.."]"
 	end
