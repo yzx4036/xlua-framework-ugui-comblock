@@ -123,7 +123,8 @@ EffectConfig = require "Resource.Config.EffectConfig"
 BaseEffect = require "Framework.Resource.Effect.Base.BaseEffect"
 ---@type EffectManager
 EffectManager = require "Framework.Resource.Effect.EffectManager"
-
+---@type ConfigCfgManager
+ConfigCfgManager = require "Config.ConfigCfgManager"
 -- net
 ---@type HallConnector
 HallConnector = require "Net.Connector.HallConnector"
@@ -149,4 +150,5 @@ SingleGet.UpdateManager()
 SingleGet.SceneManager()
 SingleGet.AtlasManager()
 SingleGet.LogicUpdater()
+SingleGet.ConfigCfgManager()
 SingleGet.HallConnector()

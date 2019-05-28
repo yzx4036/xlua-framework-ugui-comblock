@@ -39,10 +39,13 @@ end
 
 local function SetServerInfo(self, select_svr_id)
 	local server_data = SingleGet.ServerData()
+	Logger.Log(">>>SetServerInfo ")
+	Logger.PrintTable( server_data.servers)
 	local select_svr = server_data.servers[select_svr_id]
 	if select_svr ~= nil then
 		self.area_name = LangUtil.GetServerAreaName(select_svr.area_id)
 		self.server_name = LangUtil.GetServerName(select_svr_id)
+		Logger.Log(">>>SetServerInfo server %s %s %s %s", select_svr_id, self.server_name, select_svr.area_id, self.area_name)
 	end
 end
 

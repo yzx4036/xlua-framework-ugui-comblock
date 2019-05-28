@@ -152,3 +152,11 @@ function Serialize(tb, flag)
 	result = string.format("%s}", result)
 	return result
 end
+
+--避免充分require
+function reload(script)
+	if(package.loaded[script]) then
+		return package.loaded[script], false
+	end
+	return require(script), true;
+end

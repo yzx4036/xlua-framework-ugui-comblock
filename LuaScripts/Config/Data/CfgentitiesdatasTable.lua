@@ -1,5 +1,5 @@
----@class Cfgentities_datasTable
-local Cfgentities_datasTable ={
+---@class CfgentitiesdatasTable
+local CfgentitiesdatasTable ={
 	[10001001] = {entityType = 'NPC',id = 10001001,etype = 1,name = '新手接待员',modelID = 10001001,moveSpeed = 50,runSpeed = 65,dialogID = 10001001},
 	[10002001] = {entityType = 'NPC',id = 10002001,etype = 1,name = '传送员',modelID = 10001001,moveSpeed = 50,runSpeed = 65,dialogID = 10001001},
 	[10003001] = {entityType = 'Monster',id = 10003001,etype = 1,name = '怪物1',modelID = 10001001,moveSpeed = 50,runSpeed = 65,dialogID = 0},
@@ -33,54 +33,68 @@ local Cfgentities_datasTable ={
 	[2003] = {entityType = 'Monster',id = 2003,etype = 1,name = '怪物3',modelID = 2003,moveSpeed = 50,runSpeed = 65,dialogID = 0}
 }
 
----@class Cfgentities_datas
-local Cfgentities_datas = BaseClass('Cfgentities_datas')
-function Cfgentities_datas:__init(data)
-	self.entityType = data[1] 
-	self.id = data[2] 
-	self.etype = data[3] 
-	self.name = data[4] 
-	self.modelID = data[5] 
-	self.moveSpeed = data[6] 
-	self.runSpeed = data[7] 
-	self.dialogID = data[8] 
+---@class Cfgentitiesdatas
+local Cfgentitiesdatas = BaseClass('Cfgentitiesdatas')
+function Cfgentitiesdatas:__init(data)
+	self.entityType = data.entityType 
+	self.id = data.id 
+	self.etype = data.etype 
+	self.name = data.name 
+	self.modelID = data.modelID 
+	self.moveSpeed = data.moveSpeed 
+	self.runSpeed = data.runSpeed 
+	self.dialogID = data.dialogID 
 	data = nil
 end
 
+----not overwrite>> the class custom ----
 
----@type table<number, Cfgentities_datas>
-local _instList={}
+--可在这里写一些自定义函数
 
-function Cfgentities_datasTable.InitAll()
-	if table.length(Cfgentities_datasTable) > 0 then
-		for k, v in pairs(Cfgentities_datasTable) do
-			_instList[k] = Cfgentities_datas.New(v)
-			Cfgentities_datasTable[k] = nil
+----<<not overwrite----
+
+
+--->>>>--->>>>--->>>>--------我是分割线--------<<<<---<<<<---<<<<---
+
+
+
+---@type table<number, Cfgentitiesdatas>
+local _cfgInstDict = {}
+
+
+---@class CfgentitiesdatasHelper
+local CfgentitiesdatasHelper = BaseClass('CfgentitiesdatasHelper')
+
+function CfgentitiesdatasHelper:InitAll()
+	if table.count(CfgentitiesdatasTable) > 0 then
+		for k, v in pairs(CfgentitiesdatasTable) do
+			_cfgInstDict[k] = Cfgentitiesdatas.New(v)
+			CfgentitiesdatasTable[k] = nil
 		end
 	end
 end
 
----@return table<number, Cfgentities_datas>
-function Cfgentities_datasTable.GetTable()
-	Cfgentities_datasTable.InitAll()
-	return _instList;
+---@return table<number, Cfgentitiesdatas>
+function CfgentitiesdatasHelper:GetTable()
+	self:InitAll()
+	return _cfgInstDict
 end
 
----@return Cfgentities_datas
-function Cfgentities_datasTable.GetByKey(key)
-	if Cfgentities_datasTable[key] == nil  and _instList[key] == nil  then
-		Logger.LogError('Cfgentities_datasTable 配置没有key=%s对应的行!',key) return
+---@return Cfgentitiesdatas
+function CfgentitiesdatasHelper:GetByKey(key)
+	if CfgentitiesdatasTable[key] == nil  and _cfgInstDict[key] == nil  then
+		Logger.LogError('CfgentitiesdatasTable 配置没有key=%s对应的行!',key) return
 	end
-	if _instList[key] == nil  then
-		_instList[key] = Cfgentities_datas.New(Cfgentities_datasTable[key])
-		Cfgentities_datasTable[key] = nil
+	if _cfgInstDict[key] == nil  then
+		_cfgInstDict[key] = Cfgentitiesdatas.New(CfgentitiesdatasTable[key])
+		CfgentitiesdatasTable[key] = nil
 	end
-	return _instList[key]
+	return _cfgInstDict[key]
 end
 
-----not overwrite----
+----not overwrite>> the helper custom ----
 
 --可在这里写一些自定义函数
 
---not overwrite
-return Cfgentities_datasTable
+----<<not overwrite----
+return CfgentitiesdatasHelper
