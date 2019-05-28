@@ -41,6 +41,15 @@ lua.assetbundle,Lua/Common/Tools/UnityEngine/Vector2.lua.bytes
 lua.assetbundle,Lua/Common/Tools/UnityEngine/Vector3.lua.bytes
 lua.assetbundle,Lua/Common/Tools/UnityEngine/Vector4.lua.bytes
 lua.assetbundle,Lua/Common/Tools/utf8.lua.bytes
+lua.assetbundle,Lua/Config/ConfigCfgManager.lua.bytes
+lua.assetbundle,Lua/Config/Data/Cfgavatar_initdatasTable.lua.bytes
+lua.assetbundle,Lua/Config/Data/CfgdialogsdatasTable.lua.bytes
+lua.assetbundle,Lua/Config/Data/CfgentitiesdatasTable.lua.bytes
+lua.assetbundle,Lua/Config/Data/CfgServerAreaLangSevAreaTable.lua.bytes
+lua.assetbundle,Lua/Config/Data/CfgServerSevListTable.lua.bytes
+lua.assetbundle,Lua/Config/Data/CfgskillsdatasTable.lua.bytes
+lua.assetbundle,Lua/Config/Data/CfgskillseffsdatasTable.lua.bytes
+lua.assetbundle,Lua/Config/Data/CfgSpacesdatasTable.lua.bytes
 lua.assetbundle,Lua/Config/Data/Server.lua.bytes
 lua.assetbundle,Lua/Config/Data/ServerAreaLang.lua.bytes
 lua.assetbundle,Lua/Config/Data/ServerLang.lua.bytes
