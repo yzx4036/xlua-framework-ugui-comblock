@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f4b4f1aaa41cc4095e13ce3dc9aae3, type: 3}
   m_Name: AssetBundleResVersionConfig
   m_EditorClassIdentifier: 
-  resVersion: 1.0.071
+  resVersion: 1.0.072
