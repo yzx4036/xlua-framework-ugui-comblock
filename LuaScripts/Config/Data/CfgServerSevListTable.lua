@@ -52,6 +52,10 @@ end
 
 --可在这里写一些自定义函数
 
+function CfgServerSevList:GetId()
+	return self.id
+end
+
 ----<<not overwrite----
 
 
