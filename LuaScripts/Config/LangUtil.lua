@@ -14,7 +14,6 @@ end
 local function GetServerName(server_id)
 	--local data = GetData("Config.Data.ServerAreaLang")
 	local data = SingleGet.ConfigCfgManager():GetServerSevList():GetTable()
-	Logger.PrintTable(data)
 	if data[server_id] == nil then
 		return "["..server_id.."]"
 	end
