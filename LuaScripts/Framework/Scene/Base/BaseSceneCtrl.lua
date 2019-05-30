@@ -13,15 +13,23 @@ function BaseSceneCtrl:__init(scene)
 
 end
 
-function BaseSceneCtrl:OnEnter()
+function BaseSceneCtrl:OnCreate()
 
 end
 
-function BaseSceneCtrl:OnExit()
+function BaseSceneCtrl:OnCompleteEnter()
+
+end
+
+function BaseSceneCtrl:OnLeave()
 
 end
 
 function BaseSceneCtrl:Clear()
+
+end
+
+function BaseSceneCtrl:OnDestroy()
 
 end
 

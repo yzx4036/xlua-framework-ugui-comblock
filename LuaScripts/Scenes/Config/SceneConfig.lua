@@ -38,7 +38,8 @@ local SceneConfig = {
 		Level = 4,
 		Name = "BattleScene",
 		Type = require "Scenes.BattleScene",
-		ParamInfo = require "Scenes.BattleSceneParamInfo"
+		ParamInfo = require "Scenes.BattleSceneParamInfo",
+		Ctrl = require "Scenes.BattleSceneParamInfo"
 	},
 }
 
