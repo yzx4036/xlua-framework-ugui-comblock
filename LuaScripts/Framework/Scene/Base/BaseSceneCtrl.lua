@@ -10,7 +10,7 @@
 local BaseSceneCtrl = BaseClass('BaseSceneCtrl')
 
 function BaseSceneCtrl:__init(scene)
-
+    self.scene = scene
 end
 
 function BaseSceneCtrl:OnCreate()

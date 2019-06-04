@@ -110,7 +110,7 @@ BaseSceneCtrl = require "Framework.Scene.Base.BaseSceneCtrl"
 ---@type SceneManager
 SceneManager = require "Framework.Scene.SceneManager"
 ---@type SceneConfig
-SceneConfig = require "Scenes.Config.SceneConfig"
+SceneConfig = require "Scenes.SceneConfig"
 
 -- atlas
 ---@type AtlasConfig
