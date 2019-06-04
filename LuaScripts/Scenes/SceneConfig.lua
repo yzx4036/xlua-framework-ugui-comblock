@@ -25,20 +25,21 @@ local SceneConfig = {
 	LoginScene = {
 		Level = 2,
 		Name = "LoginScene",
-		Type = require "Scenes.LoginScene",
+		Type = require "Scenes.LoginScene.LoginScene",
 	},
 	-- 主页场景
 	HomeScene = {
 		Level = 3,
 		Name = "HomeScene",
-		Type = require "Scenes.HomeScene",
+		Type = require "Scenes.HomeScene.HomeScene",
 	},
 	-- 战斗场景
 	BattleScene = {
 		Level = 4,
 		Name = "BattleScene",
-		Type = require "Scenes.BattleScene",
-		ParamInfo = require "Scenes.BattleSceneParamInfo"
+		Type = require "Scenes.BattleScene.BattleScene",
+		ParamInfo = require "Scenes.BattleScene.BattleSceneParamInfo",
+		Ctrl = require "Scenes.BattleScene.BattleSceneCtrl"
 	},
 }
 

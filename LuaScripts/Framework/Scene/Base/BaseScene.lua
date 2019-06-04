@@ -12,6 +12,8 @@ local function __init(self, scene_config, ...)
 	-- 场景配置
 	self.scene_config = scene_config
 	self.scene_info = scene_config.ParamInfo ~= nil and scene_config.ParamInfo.New(...) or nil
+	---@type BaseSceneCtrl
+	self.sceneCtrl = scene_config.Ctrl ~= nil and scene_config.Ctrl.New(self) or nil
 
 	-- 预加载资源：资源路径、资源类型
 	self.preload_resources = {}
@@ -27,6 +29,7 @@ end
 
 -- 创建：初始化一些需要全局保存的状态
 local function OnCreate(self)
+	if self.sceneCtrl then self.sceneCtrl:OnCreate() end
 end
 
 -- 添加预加载资源
@@ -81,16 +84,19 @@ end
 
 -- 场景加载完毕
 local function OnComplete(self)
+	if self.sceneCtrl then self.sceneCtrl:OnCompleteEnter() end
 end
 
 -- 离开场景：清理场景资源
 local function OnLeave(self)
+	if self.sceneCtrl then self.sceneCtrl:OnLeave() end
 end
 
 -- 销毁：释放全局保存的状态
 local function OnDestroy(self)
 	self.scene_config = nil
 	self.preload_resources = nil
+	if self.sceneCtrl then self.sceneCtrl:OnDestroy() self.sceneCtrl = nil end
 end
 
 BaseScene.__init = __init
