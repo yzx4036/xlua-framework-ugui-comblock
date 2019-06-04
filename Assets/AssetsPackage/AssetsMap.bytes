@@ -82,6 +82,7 @@ lua.assetbundle,Lua/Framework/Resource/Effect/EffectManager.lua.bytes
 lua.assetbundle,Lua/Framework/Resource/GameObjectPool.lua.bytes
 lua.assetbundle,Lua/Framework/Resource/ResourcesManager.lua.bytes
 lua.assetbundle,Lua/Framework/Scene/Base/BaseScene.lua.bytes
+lua.assetbundle,Lua/Framework/Scene/Base/BaseSceneCtrl.lua.bytes
 lua.assetbundle,Lua/Framework/Scene/SceneManager.lua.bytes
 lua.assetbundle,Lua/Framework/TouchProxy.lua.bytes
 lua.assetbundle,Lua/Framework/UI/Base/UIBaseComponent.lua.bytes
@@ -135,11 +136,12 @@ lua.assetbundle,Lua/Net/Connector/HallConnector.lua.bytes
 lua.assetbundle,Lua/Net/Util/NetUtil.lua.bytes
 lua.assetbundle,Lua/Resource/Config/AtlasConfig.lua.bytes
 lua.assetbundle,Lua/Resource/Config/EffectConfig.lua.bytes
-lua.assetbundle,Lua/Scenes/BattleScene.lua.bytes
-lua.assetbundle,Lua/Scenes/BattleSceneParamInfo.lua.bytes
-lua.assetbundle,Lua/Scenes/Config/SceneConfig.lua.bytes
-lua.assetbundle,Lua/Scenes/HomeScene.lua.bytes
-lua.assetbundle,Lua/Scenes/LoginScene.lua.bytes
+lua.assetbundle,Lua/Scenes/BattleScene/BattleScene.lua.bytes
+lua.assetbundle,Lua/Scenes/BattleScene/BattleSceneCtrl.lua.bytes
+lua.assetbundle,Lua/Scenes/BattleScene/BattleSceneParamInfo.lua.bytes
+lua.assetbundle,Lua/Scenes/HomeScene/HomeScene.lua.bytes
+lua.assetbundle,Lua/Scenes/LoginScene/LoginScene.lua.bytes
+lua.assetbundle,Lua/Scenes/SceneConfig.lua.bytes
 lua.assetbundle,Lua/UI/Config/UIConfig.lua.bytes
 lua.assetbundle,Lua/UI/Config/UIWindowNames.lua.bytes
 lua.assetbundle,Lua/UI/UIBattle/Controller/UIBattleMainCtrl.lua.bytes
