@@ -205,7 +205,7 @@ public class LuaUiGeneratorTool : EditorWindow
         }
         sb.AppendFormat("\tCtrl =  require 'UI.{0}.Controller.{1}Ctrl',\n", fileName, fileName);
         sb.AppendFormat("\tView =  require 'UI.{0}.View.{1}View',\n", fileName, fileName);
-        sb.AppendFormat("\tPrefabPath =  require 'UI/Prefabs/View/{0}.prefab',\n", fileName);
+        sb.AppendFormat("\tPrefabPath =  'UI/Prefabs/View/{0}.prefab',\n", fileName);
 
         
         sb.AppendFormat("{0}\n\n return {1} {2} = {3} {4}", "}", "{", fileName, fileName, "}");

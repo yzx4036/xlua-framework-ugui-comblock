@@ -228,7 +228,7 @@ namespace Sword
         fileStream.Seek(0L, SeekOrigin.Begin);
         fileStream.SetLength(0L);
         fileStream.Flush();
-        using (StreamWriter streamWriter = new StreamWriter((Stream) fileStream, Encoding.UTF8))
+        using (StreamWriter streamWriter = new StreamWriter((Stream) fileStream, Encoding.Default))
         {
           streamWriter.Write(text);
           streamWriter.Flush();
