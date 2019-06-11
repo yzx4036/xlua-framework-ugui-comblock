@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 
 /// <summary>
-/// modify by E_Ye @ 2019.5.28
-/// 说明：此处xlsx生成lua 以及proto 生成lua配置工具
+/// modify by E_Ye @ 2019.6.12
+/// 说明：生成 UI lua MVC代码工具
 /// </summary>
 public class LuaUiGeneratorTool : EditorWindow
 {
@@ -124,11 +124,17 @@ public class LuaUiGeneratorTool : EditorWindow
 
     private void GenUi2Lua()
     {
+        if (string.IsNullOrEmpty(uiModuleName))
+        {
+            Logger.LogError(">>>>uiModuleName 为空，请指定对应UI prefab 生成名字");
+            return;
+        }
         Logger.LogColor(Color.green,  ">>>Generated ui to lua ! start ");
         StringBuilder sb = new StringBuilder();
         string genRootPath = $@"{_luaOutPutFolder}\Temp";
         Sword.UtilFile.CheckDirExists(genRootPath);
         Logger.LogColor(Color.green,  ">>>genRootPath {0} ", genRootPath);
+        
         GenUiView(sb, genRootPath, uiModuleName);
         GenUiCtrl(sb, genRootPath, uiModuleName);
         GenUiModel(sb, genRootPath, uiModuleName);
