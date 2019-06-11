@@ -10,7 +10,7 @@
 local Timer = BaseClass("Timer")
 
 -- 构造函数
-local function __init(self, delay, func, obj, one_shot, use_frame, unscaled)
+function Timer:__init(delay, func, obj, one_shot, use_frame, unscaled)
 	-- 成员变量
 	-- weak表，保证定时器不影响目标对象的回收
 	self.target = setmetatable({}, {__mode = "v"})
@@ -20,7 +20,7 @@ local function __init(self, delay, func, obj, one_shot, use_frame, unscaled)
 end
 
 -- Init
-local function Init(self, delay, func, obj, one_shot, use_frame, unscaled)
+function Timer:Init(delay, func, obj, one_shot, use_frame, unscaled)
 	assert(type(delay) == "number" and delay >= 0)
 	assert(func ~= nil)
 	-- 时长，秒或者帧
@@ -101,7 +101,7 @@ local function Update(self, is_fixed)
 end
 
 -- 启动计时
-local function Start(self)
+function Timer:Start()
 	if self.over then
 		Logger.LogError("You can't start a overed timer, try add a new one!")
 	end
@@ -113,17 +113,17 @@ local function Start(self)
 end
 
 -- 暂停计时
-local function Pause(self)
+function Timer:Pause()
 	self.started = false
 end
 
 -- 恢复计时
-local function Resume(self)
+function Timer:Resume()
 	self.started = true
 end
 
 -- 停止计时
-local function Stop(self)
+function Timer:Stop()
 	self.left = 0
 	self.one_shot = false
 	self.target.func = nil
@@ -135,13 +135,13 @@ local function Stop(self)
 end
 
 -- 复位：如果计时器是启动的，并不会停止，只是刷新倒计时
-local function Reset(self)
+function Timer:Reset()
 	self.left = self.delay
 	self.start_frame_count = Time.frameCount
 end
 
 -- 是否已经完成计时
-local function IsOver(self)
+function Timer:IsOver()
 	if self.target.func == nil then
 		return true
 	end
@@ -151,13 +151,6 @@ local function IsOver(self)
 	return self.over
 end
 
-Timer.__init = __init
-Timer.Init = Init
 Timer.Update = Update
-Timer.Start = Start
-Timer.Pause = Pause
-Timer.Resume = Resume
-Timer.Stop = Stop
-Timer.Reset = Reset
-Timer.IsOver = IsOver
+
 return Timer;

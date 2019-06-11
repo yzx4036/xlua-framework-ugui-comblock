@@ -199,6 +199,7 @@ function TimerManager:Cleanup()
 end
 
 -- 获取Update定时器
+---@return Timer
 function TimerManager:GetTimer(delay, func, obj, one_shot, use_frame, unscaled)
 	assert(not self.__update_timer[timer] and not self.__update_toadd[timer])
 	local timer = InnerGetTimer(self, delay, func, obj, one_shot, use_frame, unscaled)
