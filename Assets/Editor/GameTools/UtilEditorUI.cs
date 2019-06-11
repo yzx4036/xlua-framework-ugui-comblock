@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine.UI;
@@ -279,4 +280,14 @@ public static class UtilEditorUI
     public static void GetShortFileNameFromPathString(string pathString)
     {
     }
+
+    #region EditorWindows Menu
+
+    [MenuItem("Tools/LuaUIGeneratorTool")]
+    public static void OpenLuaUIGeneratorTool()
+    {
+        EditorWindow.GetWindow(typeof(LuaUiGeneratorTool));
+    }
+
+    #endregion
 }
