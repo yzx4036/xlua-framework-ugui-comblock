@@ -14,6 +14,7 @@ function UISlider:OnCreate()
 	base.OnCreate(self)
 	-- Unity侧原生组件
 	self.unity_uislider = UIUtil.FindSlider(self.transform)
+	self.__onValueChanged = nil
 	if not IsNull(self.unity_uislider) and IsNull(self.gameObject) then
 		self.gameObject = self.unity_uislider.gameObject
 		self.transform = self.unity_uislider.transform
@@ -34,8 +35,19 @@ function UISlider:SetValue(value)
 	end
 end
 
+function UISlider:OnValueChanged(...)
+	self.__onValueChanged = BindCallback(...)
+	if not IsNull(self.unity_uislider) then
+		self.unity_uislider.onValueChanged:AddListener(self.__onValueChanged)
+	end
+end
+
 -- 销毁
 function UISlider:OnDestroy()
+	if self.__onValueChanged then
+		self.unity_uislider.onValueChanged:AddListener(self.__onValueChanged)
+		self.__onValueChanged = nil
+	end
 	self.unity_uislider = nil
 	base.OnDestroy(self)
 end
