@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Util
+namespace EyeSoft.Utility
 {
-        public class UtiltyCSCallLua
+        public class UtilityCSCallLua
         {
                 /// <summary>
                 /// 返回对应窗口是否显示
@@ -15,7 +15,7 @@ namespace Util
                 /// <returns></returns>
                 public static bool IsUIWindowShow(string pWindowName)
                 {
-                        var returnObj = XLuaManager.Instance.CallLuaFunction("UtiltyCSCallLua", "IsUIWindowShow", pWindowName);
+                        var returnObj = XLuaManager.Instance.CallLuaFunction("UtilityCSCallLua", "IsUIWindowShow", pWindowName);
                         if (returnObj == null)
                                 return false;
                         else
@@ -24,7 +24,7 @@ namespace Util
                 
                 public static bool ShowUIWindow(string pWindowName, params object[] args)
                 {
-                        var returnObj = XLuaManager.Instance.CallLuaFunction("UtiltyCSCallLua", "ShowUIWindow", pWindowName, args);
+                        var returnObj = XLuaManager.Instance.CallLuaFunction("UtilityCSCallLua", "ShowUIWindow", pWindowName, args);
                         if (returnObj == null)
                         {
                                 return false;
@@ -37,7 +37,7 @@ namespace Util
 
                 public static bool CloseUIWindow(string pWindowName)
                 {
-                        var returnObj = XLuaManager.Instance.CallLuaFunction("UtiltyCSCallLua", "CloseUIWindow", pWindowName);
+                        var returnObj = XLuaManager.Instance.CallLuaFunction("UtilityCSCallLua", "CloseUIWindow", pWindowName);
                         if (returnObj == null)
                         {
                                 return false;
@@ -50,7 +50,7 @@ namespace Util
 
                 public static bool PassiveSwitchLuaScene(string pSceneName)
                 {
-                        var returnObj = XLuaManager.Instance.CallLuaFunction("UtiltyCSCallLua", "PassiveSwitchLuaSceneByName", pSceneName);
+                        var returnObj = XLuaManager.Instance.CallLuaFunction("UtilityCSCallLua", "PassiveSwitchLuaSceneByName", pSceneName);
                         if (returnObj == null)
                         {
                                 return false;
@@ -63,7 +63,7 @@ namespace Util
 
                 public static bool SwitchLuaScene(string pSceneName)
                 {
-                        var returnObj = XLuaManager.Instance.CallLuaFunction("UtiltyCSCallLua", "SwitchLuaSceneByName", pSceneName);
+                        var returnObj = XLuaManager.Instance.CallLuaFunction("UtilityCSCallLua", "SwitchLuaSceneByName", pSceneName);
                         if (returnObj == null)
                         {
                                 return false;

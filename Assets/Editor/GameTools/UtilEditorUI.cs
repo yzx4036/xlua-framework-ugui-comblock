@@ -288,6 +288,12 @@ public static class UtilEditorUI
     {
         EditorWindow.GetWindow(typeof(LuaUiGeneratorTool));
     }
+    
+    [MenuItem("Tools/换Prefab")]
+    public static void Open()
+    {
+        EditorWindow.GetWindow(typeof(ReplacePrefabsTool));
+    }
 
     #endregion
 }

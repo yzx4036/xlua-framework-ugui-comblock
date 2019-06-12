@@ -9,7 +9,7 @@ using XLua;
 
 namespace Util
 {
-        public class UtiltyLuaCallCS
+        public class UtilityLuaCallCS
         {
             #region gameObject
 
