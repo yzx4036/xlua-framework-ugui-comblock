@@ -18,7 +18,7 @@ require "Framework.Common.ConstClass"
 -- 创建全局模块
 ---@type Config
 Config = require "Global.Config"
-require "Global.GlobalLuaUtil"
+require "Global.UtilityCSCallLua"
 
 ---@type SingleGet
 SingleGet = require "Global.SingleGet"
