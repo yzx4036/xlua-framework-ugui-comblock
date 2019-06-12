@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using UnityEngine;
+using Util;
 using XLua;
 
 public static class GenConfig
@@ -94,7 +95,7 @@ public static class GenConfig
         // 其它
         typeof(PlayerPrefs),
         typeof(System.GC),
-		typeof(Util.UtiltyLuaCallCS),
+		typeof(UtilityLuaCallCS),
       
         //typeof(TweenUtils),
     };
