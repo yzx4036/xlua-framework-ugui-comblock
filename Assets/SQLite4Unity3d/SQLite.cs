@@ -162,6 +162,7 @@ namespace SQLite4Unity3d
 
 		public delegate void TraceHandler (string message);
 		public event TraceHandler TraceEvent;
+		private SQLiteOpenFlags _openFlag;
 
 		internal void InvokeTrace (string message)
 		{
@@ -220,34 +221,45 @@ namespace SQLite4Unity3d
 
 			DatabasePath = databasePath;
 			mayCreateSyncObject(databasePath);
-
+			_openFlag = openFlags;
 #if NETFX_CORE
 			SQLite3.SetDirectory(/*temp directory type*/2, Windows.Storage.ApplicationData.Current.TemporaryFolder.Path);
 #endif
 
-			Sqlite3DatabaseHandle handle;
-
-#if SILVERLIGHT || USE_CSHARP_SQLITE
-			var r = SQLite3.Open (databasePath, out handle, (int)openFlags, IntPtr.Zero);
-#else
-			// open using the byte[]
-			// in the case where the path may include Unicode
-			// force open to using UTF-8 using sqlite3_open_v2
-			var databasePathAsBytes = GetNullTerminatedUtf8 (DatabasePath);
-			var r = SQLite3.Open (databasePathAsBytes, out handle, (int) openFlags, IntPtr.Zero);
-#endif
-
-			Handle = handle;
-			if (r != SQLite3.Result.OK) {
-				throw SQLiteException.New (r, String.Format ("Could not open database file: {0} ({1})", DatabasePath, r));
-			}
-			_open = true;
+			Open();
 
 			StoreDateTimeAsTicks = storeDateTimeAsTicks;
 			
 			BusyTimeout = TimeSpan.FromSeconds (0.1);
 		}
-		
+
+		public void Open()
+		{
+			if (!_open)
+			{
+				Sqlite3DatabaseHandle handle;
+
+#if SILVERLIGHT || USE_CSHARP_SQLITE
+			var r = SQLite3.Open (databasePath, out handle, (int)openFlags, IntPtr.Zero);
+#else
+				// open using the byte[]
+				// in the case where the path may include Unicode
+				// force open to using UTF-8 using sqlite3_open_v2
+				var databasePathAsBytes = GetNullTerminatedUtf8(DatabasePath);
+				var r = SQLite3.Open(databasePathAsBytes, out handle, (int) _openFlag, IntPtr.Zero);
+#endif
+
+				Handle = handle;
+				if (r != SQLite3.Result.OK)
+				{
+					throw SQLiteException.New(r,
+						String.Format("Could not open database file: {0} ({1})", DatabasePath, r));
+				}
+
+				_open = true;
+			}
+		}
+
 		static SQLiteConnection ()
 		{
 			if (_preserveDuringLinkMagic) {
@@ -830,7 +842,7 @@ namespace SQLite4Unity3d
 		public T Get<T> (object pk) where T : new()
 		{
 			var map = GetMapping (typeof(T));
-			return Query<T> (map.GetByPrimaryKeySql, pk).First ();
+			return Query<T> (map.GetByPrimaryKeySql, pk).FirstOrDefault ();
 		}
 
 		/// <summary>
@@ -1540,7 +1552,7 @@ namespace SQLite4Unity3d
 		public void Dispose ()
 		{
 			Dispose (true);
-			GC.SuppressFinalize (this);
+			GC.Collect();
 		}
 
 		protected virtual void Dispose (bool disposing)
@@ -2004,7 +2016,7 @@ namespace SQLite4Unity3d
 				return ((CollationAttribute)attrs [0]).Value;
 #else
 			if (attrs.Count() > 0) {
-				return ((CollationAttribute)attrs.First()).Value;
+				return ((CollationAttribute)attrs.FirstOrDefault().Value;
 #endif
 			} else {
 				return string.Empty;
@@ -2035,7 +2047,7 @@ namespace SQLite4Unity3d
 				return ((MaxLengthAttribute)attrs [0]).Value;
 #else
 			if (attrs.Count() > 0)
-				return ((MaxLengthAttribute)attrs.First()).Value;
+				return ((MaxLengthAttribute)attrs.FirstOrDefault().Value;
 #endif
 
 			return null;

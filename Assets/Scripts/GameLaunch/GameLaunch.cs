@@ -189,6 +189,12 @@ public class GameLaunch : MonoBehaviour
     
     void DeleteLaunchBootBg()
     {
+        EyeSoft.Data.SqlDataHelper<Person>.InsertOneData(new Person()
+        {
+            Name = "Tom1233232",
+            Surname = "Perez222222222222222",
+            Age = 56
+        }, false);
         if (bootBgRawImg != null)
         {
             Destroy(bootBgRawImg.gameObject);

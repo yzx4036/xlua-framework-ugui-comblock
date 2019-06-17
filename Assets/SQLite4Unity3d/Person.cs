@@ -1,6 +1,8 @@
-﻿using SQLite4Unity3d;
+﻿using EyeSoft.Data;
+using SQLite4Unity3d;
 
-public class Person  {
+public class Person:SqlDataModelBase
+{
 
 	[PrimaryKey, AutoIncrement]
 	public int Id { get; set; }

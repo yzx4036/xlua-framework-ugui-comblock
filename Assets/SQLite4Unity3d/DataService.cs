@@ -5,6 +5,7 @@ using System.Collections;
 using System.IO;
 #endif
 using System.Collections.Generic;
+using EyeSoft.Data;
 
 public class DataService  {
 
@@ -59,62 +60,147 @@ public class DataService  {
 
         var dbPath = filepath;
 #endif
-            _connection = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+		_connection = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
         Debug.Log("Final PATH: " + dbPath);     
 
 	}
 
-	public void CreateDB(){
-		_connection.DropTable<Person> ();
-		_connection.CreateTable<Person> ();
+	public int CreateTable<T>() where  T:SqlDataModelBase, new()
+	{
+		var a =_connection.CreateTable<T> ();
+		return a;
+	}
+	
+	public int DropTable<T>() where  T:SqlDataModelBase, new()
+	{
+		var result = _connection.DropTable<T> ();
+		return result;
+	}
+	
+	/// <summary>
+	/// 插入一条数据 最
+	/// </summary>
+	/// <param name="target"></param>
+	/// <param name="isReplace"></param>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	public int InsertOneData<T>(T target, bool isReplace = false) where  T:SqlDataModelBase, new()
+	{
+		var s = isReplace ? _connection.InsertOrReplace(target) : _connection.Insert(target);
+		return s;
+	}
+	
+	public int DeleteOneData<T>(object key) where  T:SqlDataModelBase, new()
+	{
+		var row = _connection.Delete<T>(key);
+		return row;
+	}
+	
+	public int UpdateOneRowData<T>(T target) where  T:SqlDataModelBase, new()
+	{
+		var row = _connection.Update(target);
+		return row;
 
-		_connection.InsertAll (new[]{
-			new Person{
-				Id = 1,
-				Name = "Tom",
-				Surname = "Perez",
-				Age = 56
-			},
-			new Person{
-				Id = 2,
-				Name = "Fred",
-				Surname = "Arthurson",
-				Age = 16
-			},
-			new Person{
-				Id = 3,
-				Name = "John",
-				Surname = "Doe",
-				Age = 25
-			},
-			new Person{
-				Id = 4,
-				Name = "Roberto",
-				Surname = "Huertas",
-				Age = 37
-			}
-		});
 	}
 
-	public IEnumerable<Person> GetPersons(){
-		return _connection.Table<Person>();
+	public IEnumerable<T> GetAllDataByT<T>() where  T:SqlDataModelBase, new()
+	{
+		var list =_connection.Table<T>();
+		return list;
+	}
+	
+	public T GetOneDataByTWithPrimaryKey<T>(object key) where  T:SqlDataModelBase, new()
+	{
+		var  obj = _connection.Get<T>(key);
+
+		return obj;
 	}
 
-	public IEnumerable<Person> GetPersonsNamedRoberto(){
-		return _connection.Table<Person>().Where(x => x.Name == "Roberto");
+	public object GetSyncObject()
+	{
+		return _connection.SyncObject;
 	}
 
-	public Person GetJohnny(){
-		return _connection.Table<Person>().Where(x => x.Name == "Johnny").FirstOrDefault();
+	
+//
+//	public void CreateDB(){
+//		_connection.DropTable<Person> ();
+//		_connection.CreateTable<Person> ();
+//		_connection.InsertAll (new[]{
+//			new Person{
+//				Id = 1,
+//				Name = "Tom",
+//				Surname = "Perez",
+//				Age = 56
+//			},
+//			new Person{
+//				Id = 2,
+//				Name = "Fred",
+//				Surname = "Arthurson",
+//				Age = 16
+//			},
+//			new Person{
+//				Id = 3,
+//				Name = "John",
+//				Surname = "Doe",
+//				Age = 25
+//			},
+//			new Person{
+//				Id = 4,
+//				Name = "Roberto",
+//				Surname = "Huertas",
+//				Age = 37
+//			}
+//		});
+//	}
+//
+//	public IEnumerable<Person> GetPersons(){
+//		_connection.Close();
+//		return _connection.Table<Person>();
+//	}
+//	
+//
+//	public IEnumerable<Person> GetPersonsNamedRoberto(){
+//		return _connection.Table<Person>().Where(x => x.Name == "Roberto");
+//	}
+//
+//	public Person GetJohnny(){
+//		return _connection.Table<Person>().Where(x => x.Name == "Johnny").FirstOrDefault();
+//	}
+//
+//	public Person CreatePerson(){
+//		var p = new Person{
+//				Name = "Johnny",
+//				Surname = "Mnemonic",
+//				Age = 21
+//		};
+//		_connection.Insert (p);
+//		return p;
+//	}
+
+	private int refCount;
+
+	public void OpenConnection()
+	{
+		refCount++;
+		_connection.Open();
 	}
 
-	public Person CreatePerson(){
-		var p = new Person{
-				Name = "Johnny",
-				Surname = "Mnemonic",
-				Age = 21
-		};
-		_connection.Insert (p);
-		return p;
+	public void CloseConnection()
+	{
+		refCount--;
+		if (refCount == 0)
+		{
+//			Logger.LogColor(Color.red, ">>>> refCount {0}", refCount);
+			_connection.Close();
+		}
+	}
+
+
+	public void Dispose()
+	{
+		Logger.Log(">>>>Dispose");
+		_connection.Close();
+		_connection.Dispose();
 	}
 }

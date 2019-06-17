@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using EyeSoft.Data;
 using UnityEngine.UI;
 
 public class CreateDBScript : MonoBehaviour {
@@ -8,22 +11,52 @@ public class CreateDBScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		StartSync();
+//		StartSync();
+		TestMyDataHelper();
 	}
 
     private void StartSync()
     {
-        var ds = new DataService("tempDatabase.db");
-        ds.CreateDB();
-        
-        var people = ds.GetPersons ();
-        ToConsole (people);
-        people = ds.GetPersonsNamedRoberto ();
-        ToConsole("Searching for Roberto ...");
-        ToConsole (people); 
+//        var ds = new DataService("game.db");
+//        ds.CreateDB();
+//        
+//        var people = ds.GetPersons ();
+//        ToConsole (people);
+//        people = ds.GetPersonsNamedRoberto ();
+//        ToConsole("Searching for Roberto ...");
+//        ToConsole (people); 
     }
-	
-	private void ToConsole(IEnumerable<Person> people){
+
+    private void TestMyDataHelper()
+    {
+	    EyeSoft.Data.SqlDataHelper<Person>.DropTable();
+//
+	    EyeSoft.Data.SqlDataHelper<Person>.CreateTable();
+	    EyeSoft.Data.SqlDataHelper<Person>.InsertOneData(new Person()
+	    {
+		    Name = "Tom1233232",
+		    Surname = "Perez222222222222222",
+		    Age = 56
+	    }, false);
+	    EyeSoft.Data.SqlDataHelper<Person>.InsertOneData(new Person()
+	    {
+		    Name = "2232",
+		    Surname = "sxds",
+		    Age = 2
+	    }, false);
+	    
+	    var item1 = SqlDataHelper<Person>.GetAllData().FirstOrDefault(x => x.Age ==2);
+	    item1.Age = 22;
+	    EyeSoft.Data.SqlDataHelper<Person>.UpdateOneRowData(item1);
+	    
+	    
+//	    var  p = EyeSoft.Data.SqlDataHelper<Person>.GetOneDataByKey(45);
+//	    Logger.LogColor(Color.green,  p.ToString());
+	    var list = EyeSoft.Data.SqlDataHelper<Person>.GetAllData();
+	    ToConsole(list);
+    }
+
+    private void ToConsole<T>(List<T> people){
 		foreach (var person in people) {
 			ToConsole(person.ToString());
 		}
