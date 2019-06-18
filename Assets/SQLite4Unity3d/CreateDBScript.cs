@@ -36,20 +36,23 @@ public class CreateDBScript : MonoBehaviour {
 	    {
 		    Name = "Tom1233232",
 		    Surname = "Perez222222222222222",
-		    Age = 56
+		    Age = 56,
+		    numberList = new List<string>(){"1222","2ssssscxcx"},
 	    }, false);
-	    EyeSoft.Data.SqlDataHelper<Person>.InsertOneData(new Person()
-	    {
-		    Name = "2232",
-		    Surname = "sxds",
-		    Age = 2
-	    }, false);
+//	    EyeSoft.Data.SqlDataHelper<Person>.InsertOneData(new Person()
+//	    {
+//		    Name = "2232",
+//		    Surname = "sxds",
+//		    Age = 2
+//	    }, false);
 	    
-	    var item1 = SqlDataHelper<Person>.GetAllData().FirstOrDefault(x => x.Age ==2);
-	    item1.Age = 22;
-	    EyeSoft.Data.SqlDataHelper<Person>.UpdateOneRowData(item1);
-	    
-	    
+//	    var item1 = SqlDataHelper<Person>.GetAllData().FirstOrDefault(x => x.Age ==2);
+//	    if (item1 != null)
+//	    {
+//	    item1.Age = 22;
+//	    EyeSoft.Data.SqlDataHelper<Person>.UpdateOneRowData(item1);
+//	    }
+
 //	    var  p = EyeSoft.Data.SqlDataHelper<Person>.GetOneDataByKey(45);
 //	    Logger.LogColor(Color.green,  p.ToString());
 	    var list = EyeSoft.Data.SqlDataHelper<Person>.GetAllData();

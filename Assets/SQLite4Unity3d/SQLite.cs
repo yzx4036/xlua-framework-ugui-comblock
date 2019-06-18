@@ -24,6 +24,7 @@
 #endif
 
 using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
@@ -31,7 +32,8 @@ using System.Reflection;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
-
+using UnityEngine;
+using Random = System.Random;
 #if USE_CSHARP_SQLITE
 using Sqlite3 = Community.CsharpSqlite.Sqlite3;
 using Sqlite3DatabaseHandle = Community.CsharpSqlite.Sqlite3.sqlite3;
@@ -615,6 +617,7 @@ namespace SQLite4Unity3d
 			
 			foreach (var p in toBeAdded) {
 				var addCol = "alter table \"" + map.TableName + "\" add column " + Orm.SqlDecl (p, StoreDateTimeAsTicks);
+				Logger.LogColor(Color.red, ">>>>{0}" ,addCol);
 				Execute (addCol);
 			}
 		}
@@ -1993,6 +1996,8 @@ namespace SQLite4Unity3d
 				return "blob";
 			} else if (clrType == typeof(Guid)) {
 				return "varchar(36)";
+			} else if (clrType == typeof(IList)) {
+				return "blob";
 			} else {
 				throw new NotSupportedException ("Don't know about " + clrType);
 			}
@@ -2161,6 +2166,9 @@ namespace SQLite4Unity3d
 								continue;
 							var colType = SQLite3.ColumnType (stmt, i);
 							var val = ReadCol (stmt, i, colType, cols [i].ColumnType);
+							//判断cols[i].ColumnType是否是IList类型，从数据库拿出的 byte[] 的object 需要EyeSoft.Utility.UtilityByteConveter.Bytes2Object转为IList Object
+							if (cols[i].ColumnType == typeof(IList)) 
+								val = EyeSoft.Utility.UtilityByteConveter.Bytes2Object(val as byte[]);
 							cols [i].SetValue (obj, val);
 						}
 						OnInstanceCreated (obj);
@@ -2292,6 +2300,11 @@ namespace SQLite4Unity3d
 					SQLite3.BindInt (stmt, index, Convert.ToInt32 (value));
 				} else if (value is byte[]){
 					SQLite3.BindBlob(stmt, index, (byte[]) value, ((byte[]) value).Length, NegativePointer);
+				} else if (value is IList)
+				{
+					//写入时把对应的IList对象转为byte[]对象储存
+					var o2b = EyeSoft.Utility.UtilityByteConveter.Object2Bytes(value);
+					SQLite3.BindBlob(stmt, index, o2b, o2b.Length, NegativePointer);
 				} else if (value is Guid) {
 					SQLite3.BindText(stmt, index, ((Guid)value).ToString(), 72, NegativePointer);
 				} else {
@@ -2357,7 +2370,10 @@ namespace SQLite4Unity3d
 				} else if (clrType == typeof(sbyte)) {
 					return (sbyte)SQLite3.ColumnInt (stmt, index);
 				} else if (clrType == typeof(byte[])) {
-					return SQLite3.ColumnByteArray (stmt, index);
+					return SQLite3.ColumnByteArray(stmt, index);
+				}
+				else if (clrType == typeof(IList)) {
+						return SQLite3.ColumnByteArray (stmt, index);
 				} else if (clrType == typeof(Guid)) {
 				  var text = SQLite3.ColumnString(stmt, index);
 				  return new Guid(text);
