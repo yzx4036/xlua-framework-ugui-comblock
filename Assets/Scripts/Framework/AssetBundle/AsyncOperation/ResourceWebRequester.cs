@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿﻿﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using XLua;
 
 /// <summary>
@@ -24,9 +26,10 @@ namespace AssetBundles
     {
         static Queue<ResourceWebRequester> pool = new Queue<ResourceWebRequester>();
         static int sequence = 0;
-        protected WWW www = null;
+        protected UnityWebRequest www = null;
         protected bool isOver = false;
-
+        protected bool isLoadBundle = false;
+        protected AssetBundle bundle;
         public static ResourceWebRequester Get()
         {
             if (pool.Count > 0)
@@ -49,13 +52,15 @@ namespace AssetBundles
             Sequence = sequence;
         }
 
-        public void Init(string name, string url, bool noCache = false)
+        public void Init(string name, string url, bool noCache = false, bool isLoadBundle = false)
         {
             assetbundleName = name;
             this.url = url;
             this.noCache = noCache;
             www = null;
             isOver = false;
+            this.isLoadBundle = isLoadBundle;
+            bundle = null;
         }
 
         public int Sequence
@@ -86,35 +91,19 @@ namespace AssetBundles
         {
             get
             {
-                return www.assetBundle;
-            }
+                if (www.isDone && bundle == null)
+                {
+                    bundle = AssetBundle.LoadFromMemory(www.downloadHandler.data);
+                }
+                return isLoadBundle ? bundle: null;
+            } //}
         }
 
-        public byte[] bytes
-        {
-            get
-            {
-                return www.bytes;
-            }
-        }
+        public byte[] bytes => www.downloadHandler.data;
 
-        public string text
-        {
-            get
-            {
-                return www.text;
-            }
-        }
+        public string text => www.downloadHandler.text;
 
-        public string error
-        {
-            get
-            {
-                // 注意：不能直接判空
-                // 详见：https://docs.unity3d.com/530/Documentation/ScriptReference/WWW-error.html
-                return string.IsNullOrEmpty(www.error) ? null : www.error;
-            }
-        }
+        public string error => string.IsNullOrEmpty(www.error) ? null : www.error;
 
         public override bool IsDone()
         {
@@ -123,7 +112,8 @@ namespace AssetBundles
 
         public void Start()
         {
-            www = new WWW(url);
+            www = UnityWebRequest.Get(url);
+
             if (www == null)
             {
                 Logger.LogError("New www failed!!!");
@@ -131,7 +121,7 @@ namespace AssetBundles
             }
             else
             {
-                //Logger.Log("Downloading : " + url);
+                www.SendWebRequest();
             }
         }
         
@@ -142,7 +132,7 @@ namespace AssetBundles
                 return 1.0f;
             }
 
-            return www != null ? www.progress : 0f;
+            return www != null ? www.downloadProgress : 0f;
         }
 
         public override void Update()
@@ -157,6 +147,7 @@ namespace AssetBundles
             {
                 return;
             }
+           
 
             if (www != null && !string.IsNullOrEmpty(www.error))
             {

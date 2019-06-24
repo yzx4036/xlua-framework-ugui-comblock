@@ -72,11 +72,7 @@ namespace AssetBundles
             {
                 outputPath = Path.Combine(outputPath, assetPath);
             }
-#if UNITY_EDITOR
-            return UtilityGame.FormatToSysFilePath(outputPath);
-#else
             return outputPath;
-#endif
         }
 
         public static bool CheckPersistentFileExsits(string filePath)

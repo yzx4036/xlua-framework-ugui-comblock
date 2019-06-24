@@ -5,6 +5,7 @@ using UnityEngine;
 //using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 [System.Serializable]
@@ -2045,16 +2046,18 @@ public class Reporter : MonoBehaviour {
 
         url = url.Replace("\\","/");
        // float startTime = Time.realtimeSinceStartup;
-		WWW www = new WWW( url );
-		yield return www ;
-		if( !string.IsNullOrEmpty( www.error ) )
-		{
-			Debug.LogError( www.error );
-		}
-		else 
-		{
-			buildDate = www.text ;
-		}
+       UnityWebRequest request = UnityWebRequest.Get(url);
+       yield return request.SendWebRequest();
+
+       if (request.isHttpError || request.isNetworkError)
+       {
+			Debug.LogError( request.error );
+       }
+       else
+       {
+	       buildDate = request.downloadHandler.text ;
+       }
+
 		
 		yield break;
 	}
