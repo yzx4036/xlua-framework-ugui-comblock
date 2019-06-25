@@ -124,9 +124,9 @@ lua.assetbundle,Lua/GameTest/ModuleTest/TestLogWinStack.lua.bytes
 lua.assetbundle,Lua/GameTest/ModuleTest/TestNoticeTip.lua.bytes
 lua.assetbundle,Lua/Global/Config.lua.bytes
 lua.assetbundle,Lua/Global/Global.lua.bytes
-lua.assetbundle,Lua/Global/GlobalLuaUtil.lua.bytes
 lua.assetbundle,Lua/Global/SingleGet.lua.bytes
 lua.assetbundle,Lua/Global/SortingLayerNames.lua.bytes
+lua.assetbundle,Lua/Global/UtilityCSCallLua.lua.bytes
 lua.assetbundle,Lua/Net/Config/MsgIDDefine.lua.bytes
 lua.assetbundle,Lua/Net/Config/MsgIDMap.lua.bytes
 lua.assetbundle,Lua/Net/Config/ReceiveMsgDefine.lua.bytes
