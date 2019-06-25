@@ -634,7 +634,7 @@ namespace AssetBundles
             prosessingAssetAsyncLoader.Add(loader);
             if (IsAssetLoaded(assetName))
             {
-                Logger.LogError(">>>> IsAssetLoaded {0}", assetName);
+                Logger.LogColor(Color.green, ">>>> IsAssetLoaded {0}", assetName);
                 loader.Init(assetName, GetAssetCache(assetName));
                 return loader;
             }
