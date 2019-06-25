@@ -32,7 +32,7 @@ list		= require "Common.Tools.list"
 ---@type UnityEngine.GameObject
 GameObject = CS.UnityEngine.GameObject
 Camera = CS.UnityEngine.Camera
-UtilityLuaCallCS = CS.Util.UtiltyLuaCallCS
+UtilityLuaCallCS = CS.Util.UtilityLuaCallCs
 
 
 require "Common.Tools.event"

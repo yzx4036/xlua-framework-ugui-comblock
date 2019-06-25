@@ -95,7 +95,7 @@ public static class GenConfig
         // 其它
         typeof(PlayerPrefs),
         typeof(System.GC),
-		typeof(UtilityLuaCallCS),
+		typeof(UtilityLuaCallCs),
       
         //typeof(TweenUtils),
     };

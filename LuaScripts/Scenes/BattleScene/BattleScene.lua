@@ -38,7 +38,7 @@ end
 ---@param self BattleScene
 local function OnComplete(self)
 	base.OnComplete(self)
-	--UtilityLuaCallCS.AddTouchLayer(self._layer)
+	UtilityLuaCallCS.AddTouchLayer(self._layer)
 
     self.cameraGo = GameObject.Find("Main Camera")
 	UtilityLuaCallCS.AddCameraToEasyTouch(self.cameraGo)

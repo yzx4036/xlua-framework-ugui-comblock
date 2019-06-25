@@ -9,7 +9,7 @@ using XLua;
 
 namespace Util
 {
-        public class UtilityLuaCallCS
+        public class UtilityLuaCallCs
         {
             #region gameObject
 
@@ -22,14 +22,20 @@ namespace Util
             #region Touch
             public static TouchLayerLua CreateTouchLayer(int key, LuaTable module)
             {
+                if (module == null)
+                    return null;
                 return new TouchLayerLua(key, module);
             }
             public static void AddTouchLayer(TouchLayerLua layer)
             {
+                if (layer == null)
+                    return;
                 TouchManager.instance.AddLayer(layer.Layer);
             }
             public static void RemoveTouchLayer(TouchLayerLua layer)
             {
+                if (layer == null)
+                    return;
                 TouchManager.instance.RemoveLayer(layer.Layer);
             }
             #endregion
