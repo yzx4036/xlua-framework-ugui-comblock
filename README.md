@@ -1,11 +1,12 @@
 声明：本仓库非原项目，原项目请移步 https://github.com/smilehao/xlua-framework 原作者：smilehao
+-
 
 # xlua-framework
 Unity游戏纯lua客户端完整框架---基于xlua，后续整合Kbengine服务端
 
 2019.6.25 
 -
-1、添加sqlite数据库支持，不需要的可自行删除SQLite4Unity3d 
+1、添加sqlite数据库支持，不需要的可自行删除SQLite4Unity3d文件夹
 
 2、assetbundle加载的www改为UnityWebRequest 
 
@@ -154,6 +155,19 @@ todo 使用kbengine作为服务端
 11.2 Git地址	90
 
 11.3 其它	91
+
+
+Acknowledgements
+-
+
+This project is based on the work of:
+
+    xlua-framework - https://github.com/smilehao/xlua-framework 
+    
+    Sqlite-net - License: custom - see https://github.com/praeclarum/sqlite-net/blob/master/LICENSE
+    
+    SQLite4Unity3d - https://github.com/robertohuertasm/SQLite4Unity3d/blob/master/LICENSE
+    
 
 
  
