@@ -3,7 +3,11 @@ using System.Collections.Generic;
 
 namespace EyeSoft.Data
 {
-    public class SqlDataHelper<T> where T:SqlDataModelBase, new()
+    /// <summary>
+    /// sqlite数据库操作Helper
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class SqlDataHelper<T> where T:DataModelBase, new()
     {
         public static int CreateTable()
         {

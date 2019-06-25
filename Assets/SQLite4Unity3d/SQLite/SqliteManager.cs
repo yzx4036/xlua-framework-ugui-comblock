@@ -9,6 +9,9 @@ using SQLite4Unity3d;
 
 namespace EyeSoft.Data
 {
+    /// <summary>
+    /// 数据库管理器 对DataService操作
+    /// </summary>
     public class SQLiteManager : MonoSingleton<SQLiteManager>
     {
         private string _dbName = "gameDb";
@@ -20,7 +23,7 @@ namespace EyeSoft.Data
             dataService = new DataService(_dbName);
         }
 
-        public int CreateTable<T>() where T:SqlDataModelBase, new()
+        public int CreateTable<T>() where T:DataModelBase, new()
         {
             lock (syncObject)
             {
@@ -32,7 +35,7 @@ namespace EyeSoft.Data
             }
         }
         
-        public int DropTable<T>() where T:SqlDataModelBase, new()
+        public int DropTable<T>() where T:DataModelBase, new()
         {
             lock (syncObject)
             {
@@ -44,7 +47,7 @@ namespace EyeSoft.Data
             }
         }
         
-        public int InsertOneData<T>(T target, bool isReplace) where  T:SqlDataModelBase, new()
+        public int InsertOneData<T>(T target, bool isReplace) where  T:DataModelBase, new()
         {
             lock (syncObject)
             {
@@ -56,7 +59,7 @@ namespace EyeSoft.Data
             }
         }
 	
-        public int DeleteOneData<T>(object key) where T:SqlDataModelBase, new()
+        public int DeleteOneData<T>(object key) where T:DataModelBase, new()
         {
             lock (syncObject)
             {
@@ -68,7 +71,7 @@ namespace EyeSoft.Data
             }
         }
 	
-        public int UpdateOneRowData<T>(T target) where T:SqlDataModelBase, new()
+        public int UpdateOneRowData<T>(T target) where T:DataModelBase, new()
         {
             lock (syncObject)
             {
@@ -80,7 +83,7 @@ namespace EyeSoft.Data
             }
         }
 
-        public List<T> GetAllDataByT<T>() where T:SqlDataModelBase, new()
+        public List<T> GetAllDataByT<T>() where T:DataModelBase, new()
         {
             lock (syncObject)
             {
@@ -92,7 +95,7 @@ namespace EyeSoft.Data
             }
         }
 	
-        public T GetOneDataByTWithPrimaryKey<T>(object key) where T:SqlDataModelBase, new()
+        public T GetOneDataByTWithPrimaryKey<T>(object key) where T:DataModelBase, new()
         {
             lock (syncObject)
             {

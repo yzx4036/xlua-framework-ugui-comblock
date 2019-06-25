@@ -3,7 +3,7 @@ using System.Linq;
 using EyeSoft.Data;
 using SQLite4Unity3d;
 
-public class Person:SqlDataModelBase
+public class Person:DataModelBase
 {
 
 	[PrimaryKey, AutoIncrement]

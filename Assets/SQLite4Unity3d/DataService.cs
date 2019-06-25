@@ -65,13 +65,13 @@ public class DataService  {
 
 	}
 
-	public int CreateTable<T>() where  T:SqlDataModelBase, new()
+	public int CreateTable<T>() where  T:DataModelBase, new()
 	{
 		var a =_connection.CreateTable<T> ();
 		return a;
 	}
 	
-	public int DropTable<T>() where  T:SqlDataModelBase, new()
+	public int DropTable<T>() where  T:DataModelBase, new()
 	{
 		var result = _connection.DropTable<T> ();
 		return result;
@@ -84,32 +84,32 @@ public class DataService  {
 	/// <param name="isReplace"></param>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	public int InsertOneData<T>(T target, bool isReplace = false) where  T:SqlDataModelBase, new()
+	public int InsertOneData<T>(T target, bool isReplace = false) where  T:DataModelBase, new()
 	{
 		var s = isReplace ? _connection.InsertOrReplace(target) : _connection.Insert(target);
 		return s;
 	}
 	
-	public int DeleteOneData<T>(object key) where  T:SqlDataModelBase, new()
+	public int DeleteOneData<T>(object key) where  T:DataModelBase, new()
 	{
 		var row = _connection.Delete<T>(key);
 		return row;
 	}
 	
-	public int UpdateOneRowData<T>(T target) where  T:SqlDataModelBase, new()
+	public int UpdateOneRowData<T>(T target) where  T:DataModelBase, new()
 	{
 		var row = _connection.Update(target);
 		return row;
 
 	}
 
-	public IEnumerable<T> GetAllDataByT<T>() where  T:SqlDataModelBase, new()
+	public IEnumerable<T> GetAllDataByT<T>() where  T:DataModelBase, new()
 	{
 		var list =_connection.Table<T>();
 		return list;
 	}
 	
-	public T GetOneDataByTWithPrimaryKey<T>(object key) where  T:SqlDataModelBase, new()
+	public T GetOneDataByTWithPrimaryKey<T>(object key) where  T:DataModelBase, new()
 	{
 		var  obj = _connection.Get<T>(key);
 
