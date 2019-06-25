@@ -3,6 +3,12 @@
 # xlua-framework
 Unity游戏纯lua客户端完整框架---基于xlua，后续整合Kbengine服务端
 
+2019.6.25 
+1、添加sqlite数据库支持，不需要的可自行删除SQLite4Unity3d 
+2、assetbundle加载的www改为UnityWebRequest 
+3、添加LuaUIGeneratorTool 功能，支持选中UIPrefab生成适配框架的UI模块MVC代码， 支持生成UIXXView.lua、UIXXCtrl.lua、UIXXModel，生成对应配置 注意：生成文件位置为选中目录的Temp目录下，根据自身需求，移动到真正目录，并需要手动在UIConfig.lua的UIModule添加新生成的模块，UIWindowNames.lua同理，后续添加生成组件到lua文件d功能
+4、修复ios assetbundle加载为空的问题
+
 2019.5.28 
 重写配置表模块（生成工具，编辑器扩展，生成逻辑）
 1、支持自动忽略覆盖自定义方法
