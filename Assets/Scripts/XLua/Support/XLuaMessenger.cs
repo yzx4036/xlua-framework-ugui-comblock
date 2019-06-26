@@ -22,7 +22,7 @@ public static class XLuaMessenger
     // 3）如果不做映射，则使用反射机制，灵活，但是效率低，还要注意IOS代码裁剪
 	// 4）在Lua侧以某种方式添加监听的消息也一定要以对应的方式在Lua侧移除
 
-    public static Dictionary<string, Type> MessageNameTypeMap = new Dictionary<string, Type>() {
+    public static Dictionary<int, Type> MessageNameTypeMap = new Dictionary<int, Type>() {
         // UIArena测试模块
         //{ MessageName.MN_ARENA_PERSONAL_PANEL, typeof(Callback<ArenaPanelData>) },//导出测试
         //{ MessageName.MN_RESET_RIVAL, typeof(Callback<List<ArenaRivalData>>) },
@@ -31,7 +31,7 @@ public static class XLuaMessenger
         //{ MessageName.MN_ARENA_CLEARDATA, typeof(Callback) },
     };
 
-    public static Delegate CreateDelegate(string eventType, LuaFunction func)
+    public static Delegate CreateDelegate(int eventType, LuaFunction func)
     {
         if (!MessageNameTypeMap.ContainsKey(eventType))
         {
@@ -41,13 +41,13 @@ public static class XLuaMessenger
         return func.Cast(MessageNameTypeMap[eventType]);
     }
 
-    public static void AddListener(string eventType, Delegate handler)
+    public static void AddListener(int eventType, Delegate handler)
     {
         Messenger.OnListenerAdding(eventType, handler);
         Messenger.eventTable[eventType] = Delegate.Combine(Messenger.eventTable[eventType], handler);
     }
 
-    public static void RemoveListener(string eventType, Delegate handler)
+    public static void RemoveListener(int eventType, Delegate handler)
     {
         //OnListenerRemoving(eventType, handler);
         if (Messenger.eventTable.ContainsKey(eventType))
@@ -57,7 +57,7 @@ public static class XLuaMessenger
         Messenger.OnListenerRemoved(eventType);
     }
 
-    public static void Broadcast(string eventType, object arg1)
+    public static void Broadcast(int eventType, object arg1)
     {
         Messenger.OnBroadcasting(eventType);
 
@@ -82,7 +82,7 @@ public static class XLuaMessenger
         }
     }
 
-    public static void Broadcast(string eventType, object arg1, object arg2)
+    public static void Broadcast(int eventType, object arg1, object arg2)
     {
         Messenger.OnBroadcasting(eventType);
 
@@ -109,7 +109,7 @@ public static class XLuaMessenger
         }
     }
 
-    public static void Broadcast(string eventType, object arg1, object arg2, object arg3)
+    public static void Broadcast(int eventType, object arg1, object arg2, object arg3)
     {
         Messenger.OnBroadcasting(eventType);
 

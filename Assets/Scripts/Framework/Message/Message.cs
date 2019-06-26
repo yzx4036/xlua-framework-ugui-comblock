@@ -38,14 +38,14 @@ static internal class Messenger {
     static private MessengerHelper messengerHelper = ( new GameObject("MessengerHelper") ).AddComponent< MessengerHelper >();
 #pragma warning restore 0414
  
-    static public Dictionary<string, Delegate> eventTable = new Dictionary<string, Delegate>();
+    static public Dictionary<int, Delegate> eventTable = new Dictionary<int, Delegate>();
  
     //Message handlers that should never be removed, regardless of calling Cleanup
-    static public List< string > permanentMessages = new List< string > ();
+    static public List< int > permanentMessages = new List< int > ();
     #endregion
     #region Helper methods
     //Marks a certain message as permanent.
-    static public void MarkAsPermanent(string eventType) {
+    static public void MarkAsPermanent(int eventType) {
 #if LOG_ALL_MESSAGES
         Debug.Log("Messenger MarkAsPermanent \t\"" + eventType + "\"");
 #endif
@@ -61,12 +61,12 @@ static internal class Messenger {
         Debug.Log("MESSENGER Cleanup. Make sure that none of necessary listeners are removed.");
 #endif
  
-        List< string > messagesToRemove = new List<string>();
+        List< int > messagesToRemove = new List<int>();
  
-        foreach (KeyValuePair<string, Delegate> pair in eventTable) {
+        foreach (KeyValuePair<int, Delegate> pair in eventTable) {
             bool wasFound = false;
  
-            foreach (string message in permanentMessages) {
+            foreach (int message in permanentMessages) {
                 if (pair.Key == message) {
                     wasFound = true;
                     break;
@@ -77,7 +77,7 @@ static internal class Messenger {
                 messagesToRemove.Add( pair.Key );
         }
  
-        foreach (string message in messagesToRemove) {
+        foreach (int message in messagesToRemove) {
             eventTable.Remove( message );
         }
     }
@@ -86,7 +86,7 @@ static internal class Messenger {
     {
         Debug.Log("\t\t\t=== MESSENGER PrintEventTable ===");
  
-        foreach (KeyValuePair<string, Delegate> pair in eventTable) {
+        foreach (KeyValuePair<int, Delegate> pair in eventTable) {
             Debug.Log("\t\t\t" + pair.Key + "\t\t" + pair.Value);
         }
  
@@ -95,7 +95,7 @@ static internal class Messenger {
     #endregion
  
     #region Message logging and exception throwing
-    static public void OnListenerAdding(string eventType, Delegate listenerBeingAdded) {
+    static public void OnListenerAdding(int eventType, Delegate listenerBeingAdded) {
 #if LOG_ALL_MESSAGES || LOG_ADD_LISTENER
         Debug.Log("MESSENGER OnListenerAdding \t\"" + eventType + "\"\t{" + listenerBeingAdded.Target + " -> " + listenerBeingAdded.Method + "}");
 #endif
@@ -110,7 +110,7 @@ static internal class Messenger {
         }
     }
  
-    static public void OnListenerRemoving(string eventType, Delegate listenerBeingRemoved) {
+    static public void OnListenerRemoving(int eventType, Delegate listenerBeingRemoved) {
 #if LOG_ALL_MESSAGES
         Debug.Log("MESSENGER OnListenerRemoving \t\"" + eventType + "\"\t{" + listenerBeingRemoved.Target + " -> " + listenerBeingRemoved.Method + "}");
 #endif
@@ -127,14 +127,14 @@ static internal class Messenger {
         //}
     }
  
-    static public void OnListenerRemoved(string eventType) {
+    static public void OnListenerRemoved(int eventType) {
         if (eventTable.ContainsKey(eventType) && eventTable[eventType] == null)
         {
             eventTable.Remove(eventType);
         }
     }
 
-    static public void RemovedUIMgrOnBroad(string eventType)
+    static public void RemovedUIMgrOnBroad(int eventType)
     {
         if (eventTable.ContainsKey(eventType))
         {
@@ -146,7 +146,7 @@ static internal class Messenger {
         }
     }
  
-    static public void OnBroadcasting(string eventType) {
+    static public void OnBroadcasting(int eventType) {
 #if REQUIRE_LISTENER
         if (!eventTable.ContainsKey(eventType)) {
             throw new BroadcastException(string.Format("Broadcasting message \"{0}\" but no listener found. Try marking the message with Messenger.MarkAsPermanent.", eventType));
@@ -154,7 +154,7 @@ static internal class Messenger {
 #endif
     }
  
-    static public BroadcastException CreateBroadcastSignatureException(string eventType) {
+    static public BroadcastException CreateBroadcastSignatureException(int eventType) {
         return new BroadcastException(string.Format("Broadcasting message \"{0}\" but listeners have a different signature than the broadcaster.", eventType));
     }
  
@@ -173,25 +173,25 @@ static internal class Messenger {
  
     #region AddListener
     //No parameters
-    static public void AddListener(string eventType, Callback handler) {
+    static public void AddListener(int eventType, Callback handler) {
         OnListenerAdding(eventType, handler);
         eventTable[eventType] = (Callback)eventTable[eventType] + handler;
     }
  
     //Single parameter
-    static public void AddListener<T>(string eventType, Callback<T> handler) {
+    static public void AddListener<T>(int eventType, Callback<T> handler) {
         OnListenerAdding(eventType, handler);
         eventTable[eventType] = (Callback<T>)eventTable[eventType] + handler;
     }
  
     //Two parameters
-    static public void AddListener<T, U>(string eventType, Callback<T, U> handler) {
+    static public void AddListener<T, U>(int eventType, Callback<T, U> handler) {
         OnListenerAdding(eventType, handler);
         eventTable[eventType] = (Callback<T, U>)eventTable[eventType] + handler;
     }
  
     //Three parameters
-    static public void AddListener<T, U, V>(string eventType, Callback<T, U, V> handler) {
+    static public void AddListener<T, U, V>(int eventType, Callback<T, U, V> handler) {
         OnListenerAdding(eventType, handler);
         eventTable[eventType] = (Callback<T, U, V>)eventTable[eventType] + handler;
     }
@@ -199,7 +199,7 @@ static internal class Messenger {
  
     #region RemoveListener
     //No parameters
-    static public void RemoveListener(string eventType, Callback handler) {
+    static public void RemoveListener(int eventType, Callback handler) {
         //OnListenerRemoving(eventType, handler);
         if (eventTable.ContainsKey(eventType))
         {
@@ -209,7 +209,7 @@ static internal class Messenger {
     }
  
     //Single parameter
-    static public void RemoveListener<T>(string eventType, Callback<T> handler) {
+    static public void RemoveListener<T>(int eventType, Callback<T> handler) {
         //OnListenerRemoving(eventType, handler);
         if (eventTable.ContainsKey(eventType))
         {
@@ -219,7 +219,7 @@ static internal class Messenger {
     }
  
     //Two parameters
-    static public void RemoveListener<T, U>(string eventType, Callback<T, U> handler) {
+    static public void RemoveListener<T, U>(int eventType, Callback<T, U> handler) {
         //OnListenerRemoving(eventType, handler);
         if (eventTable.ContainsKey(eventType))
         {
@@ -229,7 +229,7 @@ static internal class Messenger {
     }
  
     //Three parameters
-    static public void RemoveListener<T, U, V>(string eventType, Callback<T, U, V> handler) {
+    static public void RemoveListener<T, U, V>(int eventType, Callback<T, U, V> handler) {
         //OnListenerRemoving(eventType, handler);
         if (eventTable.ContainsKey(eventType))
         {
@@ -241,7 +241,7 @@ static internal class Messenger {
  
     #region Broadcast
     //No parameters
-    static public void Broadcast(string eventType) {
+    static public void Broadcast(int eventType) {
 #if LOG_ALL_MESSAGES || LOG_BROADCAST_MESSAGE
         Debug.Log("MESSENGER\t" + System.DateTime.Now.ToString("hh:mm:ss.fff") + "\t\t\tInvoking \t\"" + eventType + "\"");
 #endif
@@ -260,7 +260,7 @@ static internal class Messenger {
     }
  
     //Single parameter
-    static public void Broadcast<T>(string eventType, T arg1) {
+    static public void Broadcast<T>(int eventType, T arg1) {
 #if LOG_ALL_MESSAGES || LOG_BROADCAST_MESSAGE
         Debug.Log("MESSENGER\t" + System.DateTime.Now.ToString("hh:mm:ss.fff") + "\t\t\tInvoking \t\"" + eventType + "\"");
 #endif
@@ -279,7 +279,7 @@ static internal class Messenger {
     }
  
     //Two parameters
-    static public void Broadcast<T, U>(string eventType, T arg1, U arg2) {
+    static public void Broadcast<T, U>(int eventType, T arg1, U arg2) {
 #if LOG_ALL_MESSAGES || LOG_BROADCAST_MESSAGE
         Debug.Log("MESSENGER\t" + System.DateTime.Now.ToString("hh:mm:ss.fff") + "\t\t\tInvoking \t\"" + eventType + "\"");
 #endif
@@ -298,7 +298,7 @@ static internal class Messenger {
     }
  
     //Three parameters
-    static public void Broadcast<T, U, V>(string eventType, T arg1, U arg2, V arg3) {
+    static public void Broadcast<T, U, V>(int eventType, T arg1, U arg2, V arg3) {
 #if LOG_ALL_MESSAGES || LOG_BROADCAST_MESSAGE
         Debug.Log("MESSENGER\t" + System.DateTime.Now.ToString("hh:mm:ss.fff") + "\t\t\tInvoking \t\"" + eventType + "\"");
 #endif
