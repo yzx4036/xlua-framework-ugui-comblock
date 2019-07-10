@@ -45,6 +45,10 @@ local function FindText(trans, path)
 	return FindComponent(trans, typeof(CS.UnityEngine.UI.Text), path)
 end
 
+local function FindTextTMP(trans, path)
+	return FindComponent(trans, typeof(CS.TMPro.TextMeshProUGUI), path)
+end
+
 local function FindImage(trans, path)
 	return FindComponent(trans, typeof(CS.UnityEngine.UI.Image), path)
 end
@@ -92,6 +96,7 @@ UIUtil.FindComponent = FindComponent
 UIUtil.FindGameObject = FindGameObject
 UIUtil.FindTrans = FindTrans
 UIUtil.FindText = FindText
+UIUtil.FindTextTMP= FindTextTMP
 UIUtil.FindImage = FindImage
 UIUtil.FindButton = FindButton
 UIUtil.FindInput = FindInput
