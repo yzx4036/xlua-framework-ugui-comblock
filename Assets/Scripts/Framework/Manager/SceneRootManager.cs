@@ -5,7 +5,7 @@ using System;
 using HedgehogTeam.EasyTouch;
 using Object = UnityEngine.Object;
 
-namespace Sword
+namespace EyeSoft
 {
     public class SceneRootManager : Singleton<SceneRootManager>
     {

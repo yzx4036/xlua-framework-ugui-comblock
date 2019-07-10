@@ -23,7 +23,7 @@ public class GameLaunch : MonoBehaviour
         LoggerHelper.Instance.Startup();
         // 启动ugui图集管理器
         var start = DateTime.Now;
-        Sword.SpriteAtlasManager.Instance.Startup();
+        EyeSoft.SpriteAtlasManager.Instance.Startup();
         Logger.Log(string.Format("SpriteAtlasManager Init use {0}ms", (DateTime.Now - start).Milliseconds));
     }
 
@@ -76,9 +76,9 @@ public class GameLaunch : MonoBehaviour
         
         // 启动easytouch扩展管理
         start = DateTime.Now;
-        Sword.SceneRootManager.instance.Init();
-        Sword.EventManager.instance.Init();
-        Sword.TouchManager.instance.Init();
+        EyeSoft.SceneRootManager.instance.Init();
+        EyeSoft.EventManager.instance.Init();
+        EyeSoft.TouchManager.instance.Init();
         Logger.Log(string.Format("TouchMgr Init use {0}ms", (DateTime.Now - start).Milliseconds));
     }
 

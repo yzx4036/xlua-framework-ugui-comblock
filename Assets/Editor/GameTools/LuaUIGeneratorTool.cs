@@ -132,7 +132,7 @@ public class LuaUiGeneratorTool : EditorWindow
         Logger.LogColor(Color.green,  ">>>Generated ui to lua ! start ");
         StringBuilder sb = new StringBuilder();
         string genRootPath = $@"{_luaOutPutFolder}\Temp";
-        Sword.UtilFile.CheckDirExists(genRootPath);
+        EyeSoft.UtilFile.CheckDirExists(genRootPath);
         Logger.LogColor(Color.green,  ">>>genRootPath {0} ", genRootPath);
         
         GenUiView(sb, genRootPath, uiModuleName);
@@ -151,7 +151,7 @@ public class LuaUiGeneratorTool : EditorWindow
         //todo Gen ui View
         GenFile(ref sb, fileName, realName, SecondViewFolder, BaseViewString);
 //        Logger.LogColor(Color.red, sb.ToString());
-        Sword.UtilFile.WriteFile(sb.ToString(), uiViewFilePath);
+        EyeSoft.UtilFile.WriteFile(sb.ToString(), uiViewFilePath);
     }
     
     private void GenUiCtrl(StringBuilder sb, string rootPath, string fileName)
@@ -163,7 +163,7 @@ public class LuaUiGeneratorTool : EditorWindow
         GenFileHeader(ref sb, fileName, realName, SecondCtrlFolder, BaseCtrlString);
         GenFileOver(ref sb, realName);
 //        Logger.LogColor(Color.red, sb.ToString());
-        Sword.UtilFile.WriteFile(sb.ToString(), uiCtrlFilePath);
+        EyeSoft.UtilFile.WriteFile(sb.ToString(), uiCtrlFilePath);
     }
     
     private void GenUiModel(StringBuilder sb, string rootPath, string fileName)
@@ -176,7 +176,7 @@ public class LuaUiGeneratorTool : EditorWindow
         //todo
         GenFile(ref sb, fileName, realName, SecondModelFolder, BaseModelString);
 //        Logger.LogColor(Color.red, sb.ToString());
-        Sword.UtilFile.WriteFile(sb.ToString(), uiModelFilePath);
+        EyeSoft.UtilFile.WriteFile(sb.ToString(), uiModelFilePath);
     }
     
     private void GenUiConfig(StringBuilder sb,  string rootPath, string fileName, string layer)
@@ -210,7 +210,7 @@ public class LuaUiGeneratorTool : EditorWindow
         
         sb.AppendFormat("{0}\n\n return {1} {2} = {3} {4}", "}", "{", fileName, fileName, "}");
         
-        Sword.UtilFile.WriteFile(sb.ToString(), uiConfigFilePath);
+        EyeSoft.UtilFile.WriteFile(sb.ToString(), uiConfigFilePath);
 
     }
     

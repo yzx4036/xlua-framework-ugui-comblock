@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace Sword
+namespace EyeSoft
 {
     public class UtilClick
     {

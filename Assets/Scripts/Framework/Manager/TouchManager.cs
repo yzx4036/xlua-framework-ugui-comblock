@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Sword
+namespace EyeSoft
 {
     public delegate bool EventCallLua(LuaTable targetLua, Gesture gt);
     public delegate bool EventCall(Gesture gt);

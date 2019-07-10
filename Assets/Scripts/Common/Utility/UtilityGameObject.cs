@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Sword
+namespace EyeSoft
 {
   public static class UtilityGameObject
   {

@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.IO;
 using System.Text.RegularExpressions;
-using Sword;
+using EyeSoft;
 
 public static class UtilEditorUI
 {

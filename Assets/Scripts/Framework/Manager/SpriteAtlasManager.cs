@@ -5,7 +5,7 @@ using AssetBundles;
 using UnityEngine;
 using UnityEngine.U2D;
 
-namespace Sword
+namespace EyeSoft
 {
     public class SpriteAtlasManager :MonoSingleton<SpriteAtlasManager>
     {

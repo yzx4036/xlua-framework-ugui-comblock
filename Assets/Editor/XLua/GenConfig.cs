@@ -112,7 +112,7 @@ public static class GenConfig
         typeof(UnityEngine.Events.UnityAction),
         typeof(System.Collections.IEnumerator),
         typeof(UnityEngine.Events.UnityAction<Vector2>),
-        typeof(Sword.EventCallLua),
+        typeof(EyeSoft.EventCallLua),
 //        typeof(UnityEngine.U2D.SpriteAtlasManager.RequestAtlasCallback)
     };
 

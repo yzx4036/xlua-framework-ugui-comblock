@@ -10,7 +10,7 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 
-namespace Sword
+namespace EyeSoft
 {
   public static class UtilFile
   {

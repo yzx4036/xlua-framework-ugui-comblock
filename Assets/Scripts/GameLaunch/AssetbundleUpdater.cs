@@ -680,7 +680,7 @@ public class AssetbundleUpdater : MonoBehaviour
         yield return AssetBundleManager.Instance.Initialize();
    
         //i重启图集管理
-        yield return Sword.SpriteAtlasManager.Instance.Reset();
+        yield return EyeSoft.SpriteAtlasManager.Instance.Reset();
         
         // 重启Lua虚拟机
         string luaAssetbundleName = XLuaManager.Instance.AssetbundleName;

@@ -6,7 +6,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Sword
+namespace EyeSoft
 {
 	public interface ITouchEntity
 	{

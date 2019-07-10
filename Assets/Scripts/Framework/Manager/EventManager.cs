@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Sword
+namespace EyeSoft
 {
     public class EventManager : Singleton<EventManager>
     {

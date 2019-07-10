@@ -2,7 +2,7 @@
 using XLua;
 using HedgehogTeam.EasyTouch;
 
-namespace Sword
+namespace EyeSoft
 {
     public class TouchLayerLua
     {
