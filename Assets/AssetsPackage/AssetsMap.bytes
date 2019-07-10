@@ -144,6 +144,9 @@ lua.assetbundle,Lua/Scenes/LoginScene/LoginScene.lua.bytes
 lua.assetbundle,Lua/Scenes/SceneConfig.lua.bytes
 lua.assetbundle,Lua/UI/Config/UIConfig.lua.bytes
 lua.assetbundle,Lua/UI/Config/UIWindowNames.lua.bytes
+lua.assetbundle,Lua/UI/Temp/UILevelMap/Controller/UILevelMapCtrl.lua.bytes
+lua.assetbundle,Lua/UI/Temp/UILevelMap/UILevelMapConfig.lua.bytes
+lua.assetbundle,Lua/UI/Temp/UILevelMap/View/UILevelMapView.lua.bytes
 lua.assetbundle,Lua/UI/UIBattle/Controller/UIBattleMainCtrl.lua.bytes
 lua.assetbundle,Lua/UI/UIBattle/UIBattleConfig.lua.bytes
 lua.assetbundle,Lua/UI/UIBattle/View/UIBattleMainView.lua.bytes
