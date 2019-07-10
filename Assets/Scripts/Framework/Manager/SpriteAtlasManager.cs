@@ -107,6 +107,11 @@ namespace EyeSoft
             yield break;
         }
 
+        public SpriteAtlas GetSpriteAtlas(string name)
+        {
+            return spriteAtlasDict[name];
+        }
+
         public override void Dispose()
         {
             resttingCount = 0;

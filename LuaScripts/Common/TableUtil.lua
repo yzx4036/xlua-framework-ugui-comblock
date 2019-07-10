@@ -214,6 +214,13 @@ local function dump(tb, dump_metatable, max_level)
 	return _dump(tb, level)
 end
 
+local function clear(t)
+	if t == nil then return end
+	for k, v in pairs(t) do
+		t[k] = nil
+	end
+end
+
 table.count = count
 table.length = length
 table.setlen = setlen
@@ -230,3 +237,5 @@ table.filter = filter
 table.choose = choose
 table.circulator = circulator
 table.dump = dump
+table.clear = clear
+
