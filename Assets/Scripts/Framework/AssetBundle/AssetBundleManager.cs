@@ -317,6 +317,8 @@ namespace AssetBundles
                 if (go != null)
                 {
                     var renderers = go.GetComponentsInChildren<Renderer>();
+                    //TextMeshProUGUI 编辑器模拟模式下也需要重新设置
+                    var crenderers = go.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
                     for (int j = 0; j < renderers.Length; j++)
                     {
                         var mat = renderers[j].sharedMaterial;
@@ -331,6 +333,24 @@ namespace AssetBundles
                             var shaderName = shader.name;
                             mat.shader = Shader.Find(shaderName);
                         }
+                    }
+                    
+                    for (int j = 0; j < crenderers.Length; j++)
+                    {
+
+                        var mat = crenderers[j].materialForRendering;
+                        if (mat == null)
+                        {
+                            continue;
+                        }
+
+                        var shader = mat.shader;
+                        if (shader != null)
+                        {
+                            var shaderName = shader.name;
+                            mat.shader = Shader.Find(shaderName);
+                        }
+
                     }
                 }
 #endif
