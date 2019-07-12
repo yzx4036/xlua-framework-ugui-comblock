@@ -28,7 +28,7 @@ function UIBaseCtrl:__init(model)
 	end
 end
 
-function UIBaseCtrl__delete()
+function UIBaseCtrl:__delete()
 	self.model = nil
 end
 
