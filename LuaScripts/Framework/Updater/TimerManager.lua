@@ -118,15 +118,16 @@ end
 
 -- 获取定时器
 ---@return Timer
-local function InnerGetTimer(self, delay, func, obj, one_shot, use_frame, unscaled)
+local function InnerGetTimer(self, delay, func, obj, one_shot, use_frame, unscaled, exeCount)
+	---@type Timer
 	local timer = nil
 	if table.length(self.__pool) > 0 then
 		timer = table.remove(self.__pool)
 		if delay and func then
-			timer:Init(delay, func, obj, one_shot, use_frame, unscaled)
+			timer:Init(delay, func, obj, one_shot, use_frame, unscaled, exeCount)
 		end
 	else
-		timer = Timer.New(delay, func, obj, one_shot, use_frame, unscaled)
+		timer = Timer.New(delay, func, obj, one_shot, use_frame, unscaled, exeCount)
 	end
 	return timer
 end
@@ -200,49 +201,63 @@ end
 
 -- 获取Update定时器
 ---@return Timer
-function TimerManager:GetTimer(delay, func, obj, one_shot, use_frame, unscaled)
+function TimerManager:GetTimer(delay, func, obj, one_shot, use_frame, unscaled, exeTimes)
+	local timer = InnerGetTimer(self, delay, func, obj, one_shot, use_frame, unscaled, exeTimes)
 	assert(not self.__update_timer[timer] and not self.__update_toadd[timer])
-	local timer = InnerGetTimer(self, delay, func, obj, one_shot, use_frame, unscaled)
 	self.__update_toadd[timer] = true
 	return timer
 end
 
+---获取帧计时器，支持执行次数参数
+---@param delay number 延迟多少帧
+---@param func function 回调
+---@param obj table 目标对象
+---@param exeTimes number 执行次数 nil时为-1无限循环
+function TimerManager:GetFrameTimer(delay, func, obj, exeTimes, unscaled)
+	return self:GetTimer(delay, func, obj, false, true, unscaled, exeTimes)
+end
+
+---获取计时器，支持执行次数参数
+function TimerManager:GetTimeTimer(delay, func, obj, exeTimes, unscaled)
+	return self:GetTimer(delay, func, obj, false, false, unscaled, exeTimes)
+end
+
 -- 获取LateUpdate定时器
 function TimerManager:GetLateTimer(delay, func, obj, one_shot, use_frame, unscaled)
-	assert(not self.__lateupdate_timer[timer] and not self.__lateupdate_toadd[timer])
 	local timer = InnerGetTimer(self, delay, func, obj, one_shot, use_frame, unscaled)
+	assert(not self.__lateupdate_timer[timer] and not self.__lateupdate_toadd[timer])
 	self.__lateupdate_toadd[timer] = true
 	return timer
 end
 
 -- 获取FixedUpdate定时器
 function TimerManager:GetFixedTimer(delay, func, obj, one_shot, use_frame)
-	assert(not self.__fixedupdate_timer[timer] and not self.__fixedupdate_toadd[timer])
 	local timer = InnerGetTimer(self, delay, func, obj, one_shot, use_frame, false)
+	assert(not self.__fixedupdate_timer[timer] and not self.__fixedupdate_toadd[timer])
 	self.__fixedupdate_toadd[timer] = true
 	return timer
 end
 
 -- 获取CoUpdate定时器
 function TimerManager:GetCoTimer(delay, func, obj, one_shot, use_frame, unscaled)
-	assert(not self.__coupdate_timer[timer] and not self.__coupdate_toadd[timer])
 	local timer = InnerGetTimer(self, delay, func, obj, one_shot, use_frame, unscaled)
+	assert(not self.__coupdate_timer[timer] and not self.__coupdate_toadd[timer])
 	self.__coupdate_toadd[timer] = true
 	return timer
 end
 
 -- 获取CoFixedUpdate定时器
 function TimerManager:GetCoFixedTimer(delay, func, obj, one_shot, use_frame)
+	local timer = InnerGetTimer(self, delay, func, obj, one_shot, use_frame, nil)
 	assert(not self.__cofixedupdate_timer[timer] and not self.__cofixedupdate_toadd[timer])
-	local timer = InnerGetTimer(self, delay, func, obj, one_shot, use_frame, unscaled)
 	self.__cofixedupdate_toadd[timer] = true
 	return timer
 end
 
 -- 获取CoLateUpdate定时器
 function TimerManager:GetCoLateTimer(delay, func, obj, one_shot, use_frame, unscaled)
-	assert(not self.__colateupdate_timer[timer] and not self.__colateupdate_toadd[timer])
 	local timer = InnerGetTimer(self, delay, func, obj, one_shot, use_frame, unscaled)
+	assert(not self.__colateupdate_timer[timer] and not self.__colateupdate_toadd[timer])
 	self.__colateupdate_toadd[timer] = true
 	return timer
 end

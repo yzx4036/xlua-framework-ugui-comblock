@@ -10,17 +10,17 @@
 local Timer = BaseClass("Timer")
 
 -- 构造函数
-function Timer:__init(delay, func, obj, one_shot, use_frame, unscaled)
+function Timer:__init(delay, func, obj, one_shot, use_frame, unscaled, executionsTime)
 	-- 成员变量
 	-- weak表，保证定时器不影响目标对象的回收
 	self.target = setmetatable({}, {__mode = "v"})
 	if delay and func then
-		self:Init(delay, func, obj, one_shot, use_frame, unscaled)
+		self:Init(delay, func, obj, one_shot, use_frame, unscaled, executionsTime)
 	end
 end
 
 -- Init
-function Timer:Init(delay, func, obj, one_shot, use_frame, unscaled)
+function Timer:Init(delay, func, obj, one_shot, use_frame, unscaled, executionsTime)
 	assert(type(delay) == "number" and delay >= 0)
 	assert(func ~= nil)
 	-- 时长，秒或者帧
@@ -37,6 +37,8 @@ function Timer:Init(delay, func, obj, one_shot, use_frame, unscaled)
 	self.unscaled = unscaled
 	-- 是否已经启用
 	self.started = false
+	--执行次数 只在不是一次性计时（one_shot为false）有效 ， -1为无限次
+	self.executionsTime = executionsTime or -1
 	-- 倒计时
 	self.left = delay
 	-- 是否已经结束
@@ -75,11 +77,19 @@ local function Update(self, is_fixed)
 			-- 如果回调手动删除定时器又马上再次获取，则可能得到的是同一个定时器，再修改状态就不对了
 			-- added by wsh @ 2018-01-09：TimerManager已经被重构，不存在以上问题，但是这里的代码不再做调整
 			if not self.one_shot then
+				if self.executionsTime == 0 then
+					self.over = true
+					return
+				end
 				if not self.use_frame then
 					-- 说明：必须把上次计时“欠下”的时间考虑进来，否则会有误差
 					self.left = self.delay + self.left
 				end
 				self.start_frame_count = Time.frameCount
+				if self.executionsTime > 0 then
+					Logger.Log(">>>>self.executionsTime %s", self.executionsTime)
+					self.executionsTime = self.executionsTime - 1
+				end
 			else
 				self.over = true
 			end
