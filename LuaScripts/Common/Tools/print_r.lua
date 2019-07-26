@@ -39,7 +39,7 @@ local function pr (t, name, indent)
 	return table_r(t,name or 'Value',indent or '')
 end
 local function print_r (t, name)
-	print(pr(t,name))
+	print(debug.traceback(pr(t,name), 2))
 end
 
 return print_r
