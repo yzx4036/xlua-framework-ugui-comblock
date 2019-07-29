@@ -22,29 +22,36 @@
 -- self.xxx_wrapgroup = self:AddComponent(UIWrapGroup, scroll_content_path, UIWrapComponentTypeClass)--初始化
 -- self.xxx_wrapgroup:SetLength(100)--数据长度
 -- self.xxx_wrapgroup:ResetToBeginning()--复位
+
+--2019.7.29  1、添加居中功能，仅限于ConstraintCount为1时，主要在GetTopLeftOffset方法中计算，受影响的函数GetRealIndex
+--2、ResetToBeginning函数支持延帧数执行，默认为0不延帧
 -- TODO：
 -- 1、由官方最佳实践得知，带重复项的Item最好只加载一个再执行instantiate：https://unity3d.com/cn/learn/tutorials/temas/best-practices/assets-objects-and-serialization
 --]]
 
+---@class UIWrapGroup:UIBaseContainer
 local UIWrapGroup = BaseClass("UIWrapGroup", UIBaseContainer)
 local base = UIBaseContainer
 
 -- 创建
+---@param self UIWrapGroup
 local function OnCreate(self, wrap_class, ...)
 	assert(type(wrap_class) == "table" and wrap_class.__ctype == ClassType.class, "wrap_class err : "..tostring(wrap_class))
 	base.OnCreate(self)
-	
 	-- Unity侧原生组件
 	self.unity_scrollrect = self.transform:GetComponentInParent(typeof(CS.UnityEngine.UI.ScrollRect))
 	self.unity_grid = self.transform:GetComponent(typeof(CS.UnityEngine.UI.GridLayoutGroup))
 	self.unity_sizefitter = self.transform:GetComponent(typeof(CS.UnityEngine.UI.ContentSizeFitter))
 	assert(not IsNull(self.unity_scrollrect), "No found UnityEngine.UI.ScrollRect!")
 	assert(not IsNull(self.unity_grid), "No found UnityEngine.UI.GridLayoutGroup!")
+	---@type UnityEngine.RectTransform
+	self.rootParentRectTf = self.unity_scrollrect.transform.parent:GetComponent(typeof(CS.UnityEngine.RectTransform))
+	assert(not IsNull(self.rootParentRectTf), "No found rootParentRectTf !")
 	self.unity_grid.enabled = false
 	if not IsNull(self.unity_sizefitter) then
-		self.unity_sizefitter.enabled = fasle
+		self.unity_sizefitter.enabled = false
 	end
-	
+
 	-- 由原生组件配置初始化数据
 	-- 尺寸、间隔、边框--->左上角顶点偏移，粘合边框的Item尺寸
 	local cell_size = self.unity_grid.cellSize
@@ -54,23 +61,31 @@ local function OnCreate(self, wrap_class, ...)
 	self.item_spacing = spacing
 	self.cell_size = Vector2.New(cell_size.x + spacing.x, cell_size.y + spacing.y)
 	self.topleft_offset = Vector3.New(padding.left - spacing.x / 2, padding.top - spacing.y / 2, 0)
+
+
 	-- 行/列数限制
 	self.constraint_count = self.unity_grid.constraintCount
 	-- 是否为水平拖动
 	self.horizontal = self.unity_scrollrect.horizontal
 	-- 通过四角坐标（左下、左上、右上、右下）计算scroll_rect中心点在局部坐标系中的坐标
 	self.rectTransform.anchoredPosition = Vector2.zero
+	---@type UnityEngine.RectTransform
 	local scroll_rect_trans = self.unity_scrollrect.transform:GetComponent(typeof(CS.UnityEngine.RectTransform))
 	local scroll_world_corners = { Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero}
 	scroll_rect_trans:GetWorldCorners(scroll_world_corners)
 	local bottom_left = self.transform:InverseTransformPoint(scroll_world_corners[1])
 	local top_right = self.transform:InverseTransformPoint(scroll_world_corners[3])
-	
+
+	self.realItemSize = self.cell_size + self.topleft_offset
+	self.scvSize = self.rootParentRectTf.sizeDelta
+	self.maxCanShowRowCount = math.floor(self.scvSize.x / self.realItemSize.x)
+	self.maxCanShowColumn = math.floor(self.scvSize.y / self.realItemSize.y)
+
 	self.center = Vector2.zero
 	self.center_original = Vector2.zero
 	self.center_original.x = (bottom_left.x + top_right.x) / 2
 	self.center_original.y = (bottom_left.y + top_right.y) / 2
-	
+
 	-- 其它成员数据
 	-- 最小索引
 	self.min_index = 0
@@ -82,7 +97,7 @@ local function OnCreate(self, wrap_class, ...)
 	self.__btngroup = nil
 	-- 当前选中虚拟索引
 	self.__cur_check_index = nil
-	
+
 	-- 自动添加当前挂载节点下的所有孩子
 	local child_count = self.transform.childCount
 	for i = 0, child_count - 1 do
@@ -96,17 +111,20 @@ local function OnCreate(self, wrap_class, ...)
 		self.extents = self.cell_size.y * count
 	end
 	self.half_extents = self.extents / 2
-	
+
 	-- 回调
 	-- 注册scroll拖动回调
 	self.__onmove = function(vec2)
 		self:WrapContent(false)
+
 	end
 	self.unity_scrollrect.onValueChanged:AddListener(self.__onmove)
 	-- 刷新回调：void __onrefresh(wrap_component, real_index, check)
 	self.__onrefresh = nil
 	-- 点击回调：void __onclick(wrap_component, toggle_btn, virtual_index, check)
 	self.__onclick = nil
+
+	self.isLuaSourceList = true
 end
 
 -- 设置刷新回调
@@ -120,6 +138,7 @@ local function SetOnClick(self, ...)
 end
 
 -- 获取索引对应位置
+---@param self UIWrapGroup
 local function GetLocalPosition(self, real_index, local_position)
 	if self.horizontal then
 		local_position.x = math.floor(real_index / self.constraint_count) * self.cell_size.x
@@ -127,22 +146,56 @@ local function GetLocalPosition(self, real_index, local_position)
 		local_position.y = -math.floor(real_index % self.constraint_count) * self.cell_size.y
 		local_position.y = local_position.y - self.cell_size.y / 2
 		local_position.z = 0
-		local_position = local_position + self.topleft_offset
+		local_position = local_position + self:GetTopLeftOffset()--self.topleft_offset
 	else
 		local_position.x = math.floor(real_index % self.constraint_count) * self.cell_size.x
 		local_position.x = local_position.x + self.cell_size.x / 2
 		local_position.y = -math.floor(real_index / self.constraint_count) * self.cell_size.y
 		local_position.y = local_position.y - self.cell_size.y / 2
 		local_position.z = 0
-		local_position = local_position + self.topleft_offset
+		local_position = local_position + self:GetTopLeftOffset()
+	end
+	return local_position
+end
+
+---获取左上角顶点偏移 有是否居中判断（包括垂直居中水平居中）
+---只有单行或单列
+function UIWrapGroup:GetTopLeftOffset()
+	self.isAlignCenter = self.isAlignCenter == nil and true or  self.isAlignCenter
+	self.isAlignCenter = self.constraint_count == 1
+	local topleft_offset = self.topleft_offset
+	if self.isAlignCenter then
+		local count = self.max_index + 1
+		local maxCanShowCount = self.maxCanShowRowCount
+		local scvSizeXorY = self.scvSize.x
+		local itemSizeXorY = self.item_size.x
+
+		if not self.horizontal then
+			maxCanShowCount = self.maxCanShowColumn
+			scvSizeXorY = self.scvSize.y
+			itemSizeXorY = self.item_size.y
+		end
+
+		if count < maxCanShowCount then
+			local offset = (scvSizeXorY - itemSizeXorY * count)/ 2
+			if self.horizontal then
+				return Vector3.New(offset, 0, 0) + topleft_offset
+			else
+				return Vector3.New(0, -offset, 0) + topleft_offset
+			end
+		end
+
+		return topleft_offset
+	else
+		return topleft_offset
 	end
 end
-	
--- 获取真实索引                                                                                                                                                                                                                                                                             
+
+-- 获取真实索引
 local function GetRealIndex(self, local_position)
-	local offset = local_position - self.topleft_offset
+	local offset = local_position - self:GetTopLeftOffset()
 	local raw_index = math.floor(-offset.y / self.cell_size.y)
-	local column_index = math.floor(offset.x / self.cell_size.x)
+	local column_index =math.floor(offset.x / self.cell_size.x)
 	if self.horizontal then
 		return column_index * self.constraint_count + raw_index
 	else
@@ -163,7 +216,7 @@ local function SetLength(self, length)
 	-- 设置滑动范围
 	local scroll_size = Vector2.New(0, 0)
 	local alignment_index = math.floor((length + self.constraint_count - 1)/ self.constraint_count) * self.constraint_count - 1
-	GetLocalPosition(self, alignment_index, self.tmp_vec3)
+	self.tmp_vec3 = GetLocalPosition(self, alignment_index, self.tmp_vec3)
 	scroll_size.x = math.abs(self.tmp_vec3.x) + self.cell_size.x / 2
 	scroll_size.y = math.abs(self.tmp_vec3.y) + self.cell_size.y / 2
 	self.rectTransform.sizeDelta = scroll_size
@@ -196,12 +249,12 @@ local function ButtonGroupOnClick(self, toggle_btn, check)
 	if virtual_index == nil then
 		return
 	end
-	
+
 	-- 选中时记录选中索引
 	if check then
 		self.__cur_check_index = virtual_index
 	end
-	
+
 	-- 上层回调
 	local wrap_component = nil
 	if  virtual_index >= 0 then
@@ -253,7 +306,7 @@ local function AddButton(self, togglebtn_class, var_arg, virtual_index, ...)
 	if Config.Debug and found_cmp then
 		error("Aready exists virtual index : "..tostring(virtual_index))
 	end
-	
+
 	togglebtn:SetBindData(virtual_index)
 	return togglebtn
 end
@@ -263,14 +316,14 @@ local function SetOriginal(self, original_index)
 	assert(self.__btngroup ~= nil, "You should add button group first!")
 	assert(original_index == nil or type(original_index) == "number", "Original index must be nil or number!")
 	-- 只有在初始选中外部按钮时，才需要在这里设置初始按钮，列表中的按钮在复用检测中会自定虚拟点击
-	if original_index ~= nil and original_index < 0 then	
+	if original_index ~= nil and original_index < 0 then
 		local found_cmp = nil
 		found_cmp = CheckVirtualIndexExists(self, original_index)
 		self.__btngroup:SetOriginal(found_cmp and found_cmp:GetName())
 	else
 		self.__btngroup:SetOriginal(nil)
 	end
-	
+
 	self.__cur_check_index = original_index
 end
 
@@ -278,8 +331,8 @@ end
 local function ResetChildPositions(self)
 	local index = 0
 	self:Walk(function(component)
-		GetLocalPosition(self, index, self.tmp_vec3)
-		component.rectTransform.localPosition = self.tmp_vec3
+		self.tmp_vec3 = GetLocalPosition(self, index, self.tmp_vec3)
+		component.transform.localPosition = self.tmp_vec3
 		index = index + 1
 	end)
 end
@@ -289,7 +342,7 @@ local function ResetChildBindData(self)
 	if self.__btngroup == nil then
 		return
 	end
-	
+
 	self:Walk(function(component)
 		component:SetBindData(nil)
 	end)
@@ -302,8 +355,8 @@ local function ResetButtonGroup(self)
 	end
 end
 
--- 复位
-local function ResetToBeginning(self)
+-- 复位回调
+local resetCallBack = function(self)
 	self.rectTransform.anchoredPosition = Vector2.zero
 	ResetChildPositions(self)
 	ResetChildBindData(self)
@@ -311,6 +364,21 @@ local function ResetToBeginning(self)
 	ResetButtonGroup(self)
 	-- 这里强制刷新时，如果初始按钮为列表按钮，会执行一次虚拟点击
 	self:WrapContent(true)
+end
+
+-- 复位
+---@param self UIWrapGroup
+local function ResetToBeginning(self, delayFrame)
+	delayFrame = delayFrame or 0
+
+	if delayFrame == 0 then
+		resetCallBack(self)
+	else
+		self.resetToBeginTimer = SingleGet.TimerManager():GetFrameTimer(delayFrame, function ()
+			resetCallBack(self)
+		end, self, 1)
+		self.resetToBeginTimer:Start()
+	end
 end
 
 -- 检测，必要时刷新Item
@@ -321,10 +389,10 @@ local function CheckAndUpdateItemIfNeeded(self, component, local_position)
 		if Config.Debug then
 			component.gameObject.name = tostring(real_index)
 		end
-		
+
 		-- 重置位置
 		component.transform.localPosition = local_position
-		
+
 		local check = real_index == self.__cur_check_index
 		-- 如果有按钮组则更新
 		if self.__btngroup ~= nil then
@@ -345,32 +413,39 @@ local function CheckAndUpdateItemIfNeeded(self, component, local_position)
 				end
 			end
 		end
-		
+
 		-- 刷新回调
+		self.isLuaSourceList = self.isLuaSourceList == nil and true or self.isLuaSourceList
+		if self.isLuaSourceList then
+			real_index = real_index + 1
+		end
 		component:OnRefresh(real_index, check)
 		if self.__onrefresh ~= nil then
 			self.__onrefresh(component, real_index, check)
 		end
-	
+
 	end
 end
 
 -- 检测复用
+---@param self UIWrapGroup
 local function WrapContent(self, force_reset)
 	if self:GetComponentsCount() > self.max_index and not force_reset then
 		return
 	end
-	
+
 	-- 更新scroll_rect中心点在局部坐标系中的坐标
 	local anchored_position = self.rectTransform.anchoredPosition
 	self.center.x = self.center_original.x - anchored_position.x
 	self.center.y = self.center_original.y - anchored_position.y
-	
+
+	---@param component UIBaseContainer
 	self:Walk(function(component)
 		local unity_position = component.transform.localPosition
+
 		self.tmp_vec3:Set(unity_position.x, unity_position.y, 0)
 		local distance = self.horizontal and (self.tmp_vec3.x - self.center.x) or (self.tmp_vec3.y - self.center.y)
-		
+
 		if force_reset then
 			-- update all
 			CheckAndUpdateItemIfNeeded(self, component, self.tmp_vec3)
@@ -386,8 +461,20 @@ local function WrapContent(self, force_reset)
 	end)
 end
 
+-- 设置源数据列表是c#列表还是lua table
+---@param isLua boolean true 为lua table源 false为c#源
+---@param self UIWrapGroup
+local function SetSourceListTypeCSOrLua(self, isLua)
+	self.isLuaSourceList = isLua
+end
+
 -- 销毁
+---@param self UIWrapGroup
 local function OnDestroy(self)
+	if self.resetToBeginTimer then
+		self.resetToBeginTimer:Stop()
+		self.resetToBeginTimer = nil
+	end
 	if self.__onmove ~= nil then
 		self.unity_scrollrect.onValueChanged:RemoveListener(self.__onmove)
 	end
@@ -408,6 +495,7 @@ UIWrapGroup.OnCreate = OnCreate
 UIWrapGroup.SetOnRefresh = SetOnRefresh
 UIWrapGroup.SetOnClick = SetOnClick
 UIWrapGroup.SetLength = SetLength
+UIWrapGroup.SetSourceListTypeCSOrLua = SetSourceListTypeCSOrLua
 UIWrapGroup.AddComponent = AddComponent
 UIWrapGroup.AddButtonGroup = AddButtonGroup
 UIWrapGroup.AddButton = AddButton
